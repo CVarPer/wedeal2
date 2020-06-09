@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_informacion"
+            android:icon="@drawable/mi_tienda"
+            android:iconTint="@color/colorPrimary"
+            android:title="Mi negocio" />
+        <item
+            android:id="@+id/nav_ventas"
+            android:icon="@drawable/ic_ventas"
+            android:iconTint="@color/colorPrimary"
+            android:title="Ventas" />
+        <item
+            android:id="@+id/nav_inventario"
+            android:icon="@drawable/ic_inventario"
+            android:title="Inventario"
+            android:iconTint="@color/colorPrimary"/>
+        <item
+            android:id="@+id/nav_informes"
+            android:icon="@drawable/ic_informes"
+            android:title="Informes"
+            android:iconTint="@color/colorPrimary"/>
+    </group>
+
+
+    <item android:title="Otros">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_message"
+                android:title="Compartir"
+                android:iconTint="@color/colorPrimary"/>
+            <item
+                android:id="@+id/nav_ajustes"
+                android:icon="@drawable/ic_ajustes"
+                android:title="Ajustes"
+                android:iconTint="@color/colorPrimary"/>
+        </menu>
+    </item>
+
+</menu>

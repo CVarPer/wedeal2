@@ -21,7 +21,7 @@
                 android:id="@+id/tab_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:icon="@drawable/mi_tienda"
+                android:icon="@drawable/ic_tienda"
                 android:text="Tienda" />
 
             <com.google.android.material.tabs.TabItem

@@ -8,121 +8,107 @@
 
 
     <LinearLayout
+        android:id="@+id/creacion_prod"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="5dp">
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="0dp"
+        android:orientation="vertical">
 
+
+        <ImageView
+            android:id="@+id/wedeal3"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="0dp"
+            android:backgroundTint="#FFFFFF"
+            android:clickable="false"
+            app:layout_constraintBottom_toTopOf="@id/nombreproducto"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/wedeal_icon_" />
 
         <EditText
-            android:id="@+id/nombreempleado"
+            android:id="@+id/codigo_producto"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:layout_marginRight="30dp"
             android:backgroundTint="@color/colorPrimary"
-            android:hint="Nombre"
-            android:inputType="textEmailAddress"
-            android:paddingLeft="10dp"
-            android:textColor="@color/colorPrimaryText"
-            android:autofillHints="" />
-
-        <EditText
-            android:id="@+id/cargoempleado"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="30dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:hint="Cargo"
-            android:inputType="textEmailAddress"
-            android:paddingLeft="10dp"
-            android:textColor="@color/colorPrimaryText"
-            android:autofillHints="" />
-
-        <EditText
-            android:id="@+id/telefonoempleado"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="30dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:hint="Teléfono"
-            android:inputType="textEmailAddress"
-            android:paddingStart="10dp"
-            android:textColor="@color/colorPrimaryText"
-            android:autofillHints=""
-            tools:ignore="HardcodedText" />
-
-        <EditText
-            android:id="@+id/salarioempleado"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="30dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:hint="Salario"
-            android:inputType="textEmailAddress"
-            android:paddingLeft="10dp"
-            android:textColor="@color/colorPrimaryText"
-            tools:ignore="HardcodedText" />
-
-        <EditText
-            android:id="@+id/usuarioempleado"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginRight="30dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:hint="Correo del empleado"
-            android:inputType="textEmailAddress"
+            android:hint="Código del producto"
+            android:inputType="text"
             android:paddingLeft="10dp"
             android:textColor="@color/colorPrimaryText" />
 
         <EditText
-            android:id="@+id/contraempleado"
+            android:id="@+id/nombreproducto"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="30dp"
             android:backgroundTint="@color/colorPrimary"
-            android:hint="Contraseña"
+            android:hint="Nombre del producto"
             android:inputType="text"
             android:paddingLeft="10dp"
             android:textColor="@color/colorPrimaryText" />
 
 
         <EditText
-            android:id="@+id/confir_contraempleado"
+            android:id="@+id/precio"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="30dp"
-            android:layout_marginBottom="30dp"
             android:backgroundTint="@color/colorPrimary"
-            android:hint="Confirmar Contraseña"
+            android:hint="Precio"
             android:inputType="text"
             android:paddingLeft="10dp"
+            android:textColor="@color/colorPrimaryText" />
+
+        <EditText
+            android:id="@+id/nmejemplaresproducto"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:hint="Stock"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:textColor="@color/colorPrimaryText" />
+
+        <EditText
+            android:id="@+id/descripcionproducto"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:hint="Descripción del producto"
+            android:inputType="textMultiLine"
+            android:paddingLeft="10dp"
+            android:textAlignment="textStart"
             android:textColor="@color/colorPrimaryText" />
 
         <Button
-            android:id="@+id/registrarempleado"
+            android:id="@+id/anadirproducto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
+            android:layout_marginTop="25dp"
             android:layout_marginRight="30dp"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/delinear_boton"
-            android:text="Registrar Empleado"
-            tools:ignore="HardcodedText" />
+            android:text="Añadir Producto" />
 
 
     </LinearLayout>

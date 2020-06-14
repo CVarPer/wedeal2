@@ -61,7 +61,7 @@ public class Dueno extends AppCompatActivity implements NavigationView.OnNavigat
                 Toast.makeText(this, "Compartir", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_ajustes:
-                Toast.makeText(this, "Ajustes", Toast.LENGTH_SHORT).show();
+                getSupportFragmentManager().beginTransaction().replace(R.id.cont_fragmentos, new ajustes_Fragment()).commit();
                 break;
 
         }

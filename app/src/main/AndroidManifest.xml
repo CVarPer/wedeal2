@@ -17,20 +17,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".registro_usuario">
-        </activity>
+        <activity android:name=".registro_usuario"></activity>
         <activity
             android:name=".Dueno"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity
-            android:name=".crear_nuevo_empleado">
-        </activity>
-        <activity
-            android:name=".crear_nuevo_cliente">
-        </activity>
+        <activity android:name=".crear_nuevo_empleado" />
+        <activity android:name=".crear_nuevo_cliente" />
+        <activity android:name=".crear_nuevo_proveedor" />
+        <activity android:name=".crear_nuevo_producto" />
+        <activity android:name=".cerrar_sesion" />
+
     </application>
 
 </manifest>

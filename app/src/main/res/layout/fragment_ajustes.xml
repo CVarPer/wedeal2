@@ -1,9 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorFragment">
+    tools:context=".ajustes_Fragment">
 
+    <Button
+        android:id="@+id/registrarse7"
+        android:layout_width="match_parent"
+        android:layout_height="59dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/delinear_boton"
+        android:text="Dar Permisos especiales" />
 
+    <Button
+        android:id="@+id/registrarse6"
+        android:layout_width="match_parent"
+        android:layout_height="59dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/delinear_boton"
+        android:text="Eliminar usuarios, etc..." />
 
-</RelativeLayout>
+    <Button
+        android:id="@+id/registrarse3"
+        android:layout_width="match_parent"
+        android:layout_height="59dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/delinear_boton"
+        android:text="Cambiar contraseña, etc..." />
+
+    <Button
+        android:id="@+id/cerrarsesion"
+        android:layout_width="match_parent"
+        android:layout_height="59dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="280dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/delinear_boton"
+        android:text="Cerrar Sesión" />
+</FrameLayout>

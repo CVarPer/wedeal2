@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.content.SharedPreferences;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,6 +27,7 @@ public class registro_usuario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
         Button registro_2 = findViewById(R.id.registrarse);
+
         inicializarFirebase();
 
 
@@ -33,7 +35,11 @@ public class registro_usuario extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                String usuario = ((EditText) findViewById(R.id.registro_user)).getText().toString().trim();
+
+                SharedPreferences preferences = getSharedPreferences("Registro",0);
+
+
+                String usuario = ((EditText) findViewById(R.id.usuario)).getText().toString().trim();
                 String password = ((EditText) findViewById(R.id.contra)).getText().toString().trim();
 
                 String confpass = ((EditText) findViewById(R.id.confir_contra)).getText().toString().trim();
@@ -64,13 +70,20 @@ public class registro_usuario extends AppCompatActivity {
                     Toast.makeText(registro_usuario.this, "Ingrese la dirección del negocio", Toast.LENGTH_LONG).show();
                 }
                 else if (Telefono.length() != 7 && Telefono.length() != 9){
-                    Toast.makeText(registro_usuario.this, "Ingrese un téléfono para su negocio", Toast.LENGTH_LONG).show();
+                    Toast.makeText(registro_usuario.this, "Ingrese un téléfono válido para su negocio", Toast.LENGTH_LONG).show();
                 }
                 else if (password.equals(confpass)){
+
                     databaseReference.child(Negocio).child("Usuarios de " + Negocio).child(usuario.replace(".","")).child("Usuario").setValue(usuario.replace(".",""));
                     databaseReference.child(Negocio).child("Usuarios de " + Negocio).child(usuario.replace(".","")).child("Contraseña").setValue(password);
-                    databaseReference.child(Negocio).child("Información negocio").setValue(informacion_negocio);
-                    databaseReference.child(Negocio).child("Usuarios de " + Negocio).child(usuario.replace(".","")).child("Permisos").setValue("True");
+                    databaseReference.child(Negocio).child("Información de negocio" + Negocio).setValue(informacion_negocio);
+                    databaseReference.child(Negocio).child("Usuarios de " + Negocio).child(usuario.replace(".","")).child("Permisos").setValue("Admin");
+
+                    SharedPreferences.Editor edit = preferences.edit();
+                    edit.putString("Usuario",usuario);
+                    edit.putString("Contraseña",password);
+                    edit.putString("Negocio",Negocio);
+                    edit.apply();
 
                     finish();
                     Toast.makeText(registro_usuario.this, "Usuario creado con éxito", Toast.LENGTH_LONG).show();

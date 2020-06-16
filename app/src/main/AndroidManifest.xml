@@ -28,6 +28,12 @@
         <activity
             android:name=".crear_nuevo_empleado">
         </activity>
+
+        <activity
+            android:name=".cerrar_sesion">
+
+        </activity>
+
         <activity
             android:name=".crear_nuevo_cliente">
         </activity>

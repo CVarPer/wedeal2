@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         String userSHP = pref.getString("Usuario", "");
 
-        if (userSHP.contains("@")) {
+        if (!userSHP.equals("u")) {
             Intent logear = new Intent(MainActivity.this, Dueno.class);
             startActivity(logear);
         }

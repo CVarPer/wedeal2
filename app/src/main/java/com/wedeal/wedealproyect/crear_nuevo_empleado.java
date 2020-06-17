@@ -14,7 +14,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class crear_nuevo_empleado extends MainActivity {
+public class crear_nuevo_empleado extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
@@ -25,7 +25,6 @@ public class crear_nuevo_empleado extends MainActivity {
         setContentView(R.layout.creacion_empleado);
         Button registro_2 = findViewById(R.id.registrarempleado);
 
-        neg_log = (EditText) findViewById(R.id.neg);
         inicializarFirebase();
 
 
@@ -34,13 +33,17 @@ public class crear_nuevo_empleado extends MainActivity {
             @Override
             public void onClick(View v) {
 
+                SharedPreferences pref = getSharedPreferences("Registro", 0);
+
+                String negocio = pref.getString("Negocio", "");
+
+                String cargoemp = ((EditText) findViewById(R.id.cargoempleado)).getText().toString().trim();
+                String telefonoemp = ((EditText) findViewById(R.id.telefonoempleado)).getText().toString().trim();
+                String salarioemp = ((EditText) findViewById(R.id.salarioempleado)).getText().toString().trim();
                 String emp = ((EditText) findViewById(R.id.usuarioempleado)).getText().toString().trim();
                 String passemp = ((EditText) findViewById(R.id.contraempleado)).getText().toString().trim();
-
-                neg_log = (EditText) findViewById(R.id.neg);
-                String negocio = neg_log.getText().toString().trim();
-
                 String confpassemp = ((EditText) findViewById(R.id.confir_contraempleado)).getText().toString().trim();
+
 
                 if(emp.length() <= 0){
                     Toast.makeText(crear_nuevo_empleado.this, "Ingrese un correo válido", Toast.LENGTH_LONG).show();
@@ -53,9 +56,16 @@ public class crear_nuevo_empleado extends MainActivity {
                 }
 
                 else if (passemp.equals(confpassemp)){
+
+                    assert negocio != null;
+
+                    databaseReference.child(negocio).child("Usuarios de " + negocio).child(emp.replace(".","")).child("Cargo").setValue(cargoemp.replace(".",""));
+                    databaseReference.child(negocio).child("Usuarios de " + negocio).child(emp.replace(".","")).child("Telefono").setValue(telefonoemp);
+                    databaseReference.child(negocio).child("Usuarios de " + negocio).child(emp.replace(".","")).child("Salario").setValue(salarioemp);
+
                     databaseReference.child(negocio).child("Usuarios de " + negocio).child(emp.replace(".","")).child("Usuario").setValue(emp.replace(".",""));
                     databaseReference.child(negocio).child("Usuarios de " + negocio).child(emp.replace(".","")).child("Contraseña").setValue(passemp);
-                    databaseReference.child(negocio).child("Usuarios de " + negocio).child(emp.replace(".","")).child("Permisos").setValue("False");
+                    databaseReference.child(negocio).child("Usuarios de " + negocio).child(emp.replace(".","")).child("Permisos").setValue("Empleado");
 
                     finish();
                     Toast.makeText(crear_nuevo_empleado.this, "Empleado registrado con éxito", Toast.LENGTH_LONG).show();

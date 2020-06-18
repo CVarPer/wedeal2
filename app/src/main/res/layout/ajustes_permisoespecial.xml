@@ -16,40 +16,28 @@
 
 
         <EditText
-            android:id="@+id/cargoempleado"
+            android:id="@+id/usuarioadmin"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="180dp"
             android:layout_marginRight="30dp"
             android:backgroundTint="@color/colorPrimary"
-            android:hint="Cargo"
-            android:inputType="text"
+            android:hint="Ingrese su correo"
+            android:inputType="textEmailAddress"
             android:paddingLeft="10dp"
             android:textColor="@color/colorPrimaryText" />
 
         <EditText
-            android:id="@+id/telefonoempleado"
+            android:id="@+id/contraadmin"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="30dp"
             android:backgroundTint="@color/colorPrimary"
-            android:hint="Teléfono"
+            android:hint="Ingrese su contraseña"
             android:inputType="text"
-            android:paddingLeft="10dp"
-            android:textColor="@color/colorPrimaryText" />
-
-        <EditText
-            android:id="@+id/salarioempleado"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="30dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:hint="Salario"
             android:paddingLeft="10dp"
             android:textColor="@color/colorPrimaryText" />
 
@@ -58,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="30dp"
             android:backgroundTint="@color/colorPrimary"
             android:hint="Correo del empleado"
@@ -66,43 +54,16 @@
             android:paddingLeft="10dp"
             android:textColor="@color/colorPrimaryText" />
 
-        <EditText
-            android:id="@+id/contraempleado"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="30dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:hint="Contraseña"
-            android:inputType="text"
-            android:paddingLeft="10dp"
-            android:textColor="@color/colorPrimaryText" />
-
-
-        <EditText
-            android:id="@+id/confir_contraempleado"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="30dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:hint="Confirmar Contraseña"
-            android:inputType="text"
-            android:paddingLeft="10dp"
-            android:textColor="@color/colorPrimaryText" />
-
         <Button
-            android:id="@+id/registrarempleado"
+            android:id="@+id/darpermiso"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="50dp"
             android:layout_marginRight="30dp"
             android:layout_marginBottom="40dp"
             android:background="@drawable/delinear_boton"
-            android:text="Registrar Empleado" />
+            android:text="Dar permisos de Dueño" />
 
 
     </LinearLayout>

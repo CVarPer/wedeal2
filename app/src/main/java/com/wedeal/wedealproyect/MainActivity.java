@@ -36,8 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         String userSHP = pref.getString("Usuario", "");
 
-        assert userSHP != null;
-        if (!userSHP.equals("u")) {
+        if (userSHP.length()>2) {
             Intent logear = new Intent(MainActivity.this, Dueno.class);
             startActivity(logear);
         }

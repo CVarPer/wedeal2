@@ -6,44 +6,44 @@
     tools:context=".info">
 
     <Button
-        android:id="@+id/registrarse7"
+        android:id="@+id/permisoespecial"
         android:layout_width="match_parent"
         android:layout_height="59dp"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="240dp"
         android:layout_marginRight="30dp"
         android:layout_marginBottom="30dp"
         android:background="@drawable/delinear_boton"
         android:text="Dar Permisos especiales" />
 
     <Button
-        android:id="@+id/registrarse6"
+        android:id="@+id/modificarcuentaempleado"
         android:layout_width="match_parent"
         android:layout_height="59dp"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="160dp"
         android:layout_marginRight="30dp"
         android:layout_marginBottom="30dp"
         android:background="@drawable/delinear_boton"
-        android:text="Eliminar usuarios, etc..." />
+        android:text="Modificar cuenta empleado" />
 
     <Button
-        android:id="@+id/registrarse3"
+        android:id="@+id/eliminarusuario"
         android:layout_width="match_parent"
         android:layout_height="59dp"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="320dp"
         android:layout_marginRight="30dp"
         android:layout_marginBottom="30dp"
         android:background="@drawable/delinear_boton"
-        android:text="Cambiar contraseña, etc..." />
+        android:text="Eliminar usuarios" />
 
     <Button
         android:id="@+id/cerrarsesion"
         android:layout_width="match_parent"
         android:layout_height="59dp"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="280dp"
+        android:layout_marginTop="400dp"
         android:layout_marginRight="30dp"
         android:layout_marginBottom="30dp"
         android:background="@drawable/delinear_boton"

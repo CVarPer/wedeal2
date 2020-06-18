@@ -1,19 +1,58 @@
 package com.wedeal.wedealproyect;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class inventario_Fragment extends Fragment {
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_inventario, container, false);
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class inventario_Fragment extends Fragment {
+    FloatingActionButton fab;
+    ListView listView;
+    CustomAdapter_Inventario customAdapterInventario;
+    private String[][] info_productos = {
+            {"Silla", "3116214856","Cajero","$899,500"},
+            {"Mesa", "3158662830","Gerente", "1200,000"},
+            {"Cama", "3183976980 ","Asesor en tienda", "$360,000"}
+
+    };
+    private int[] foto_empl = {R.drawable.empleado_ej1,R.drawable.empleada_ej2,R.drawable.empleada_ej2};
+
+    public inventario_Fragment() {
+        // Required empty public constructor
+    }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_inventario, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        listView = getView().findViewById(R.id.listView);
+        customAdapterInventario = new CustomAdapter_Inventario(getActivity().getApplicationContext(), info_productos, foto_empl);
+        listView.setAdapter(customAdapterInventario);
+        fab = getView().findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //Snackbar.make(v, "Agregar empleado", Snackbar.LENGTH_LONG).setAction("Action",null).show();
+                Intent intent = new Intent(getActivity(),crear_nuevo_producto.class);
+                getActivity().startActivity(intent);
+            }
+        });
     }
 }

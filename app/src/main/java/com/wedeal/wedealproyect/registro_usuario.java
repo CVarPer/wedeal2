@@ -14,9 +14,6 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class registro_usuario extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase;
@@ -47,10 +44,6 @@ public class registro_usuario extends AppCompatActivity {
                 String Direccion = ((EditText) findViewById(R.id.direccion_neg)).getText().toString().trim();
                 String Telefono = ((EditText) findViewById(R.id.tel_neg)).getText().toString().trim();
 
-                List<String> informacion_negocio = new ArrayList<>();
-                informacion_negocio.add(Direccion);
-                informacion_negocio.add(Telefono);
-
 
 
                 if(usuario.length() <= 0){
@@ -76,10 +69,14 @@ public class registro_usuario extends AppCompatActivity {
 
                     databaseReference.child(Negocio).child("Usuarios de " + Negocio).child(usuario.replace(".","")).child("Usuario").setValue(usuario.replace(".",""));
                     databaseReference.child(Negocio).child("Usuarios de " + Negocio).child(usuario.replace(".","")).child("Contraseña").setValue(password);
-                    databaseReference.child(Negocio).child("Información de negocio" + Negocio).setValue(informacion_negocio);
                     databaseReference.child(Negocio).child("Usuarios de " + Negocio).child(usuario.replace(".","")).child("Permisos").setValue("Admin");
+                    databaseReference.child(Negocio).child("Información de negocio " + Negocio).child("Teléfono").child(Direccion);
+                    databaseReference.child(Negocio).child("Información de negocio " + Negocio).child("Teléfono").child(Telefono);
 
                     SharedPreferences.Editor edit = preferences.edit();
+                    edit.clear();
+                    edit.apply();
+
                     edit.putString("Usuario",usuario);
                     edit.putString("Contraseña",password);
                     edit.putString("Negocio",Negocio);

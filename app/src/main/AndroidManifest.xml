@@ -30,13 +30,30 @@
         </activity>
 
         <activity
-            android:name=".cerrar_sesion">
+            android:name=".ajustes_cerrar_sesion">
 
         </activity>
 
         <activity
             android:name=".crear_nuevo_cliente">
         </activity>
+
+        <activity
+            android:name=".crear_nuevo_producto">
+        </activity>
+
+        <activity
+            android:name=".ajustes_permiso_especial">
+        </activity>
+
+        <activity
+            android:name=".ajustes_modificar_empleado">
+        </activity>
+
+        <activity
+            android:name=".ajustes_eliminar_empleado">
+        </activity>
+
     </application>
 
 </manifest>

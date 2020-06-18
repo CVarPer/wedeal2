@@ -9,101 +9,75 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="627dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_marginTop="30dp"
-        android:layout_marginBottom="10dp"
-        android:orientation="vertical">
+        android:layout_marginBottom="10dp">
 
 
         <EditText
-            android:id="@+id/usuario"
+            android:id="@+id/correoemp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="130dp"
             android:layout_marginRight="30dp"
             android:backgroundTint="@color/colorPrimary"
-            android:hint="Correo electrónico"
+            android:hint="Ingrese el correo del empleado"
             android:inputType="textEmailAddress"
             android:paddingLeft="10dp"
             android:textColor="@color/colorPrimaryText" />
 
         <EditText
-            android:id="@+id/contra"
+            android:id="@+id/nuevocargo"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="30dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:hint="Nuevo Cargo"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:textColor="@color/colorPrimaryText" />
+
+        <EditText
+            android:id="@+id/nuevotelefono"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="30dp"
             android:backgroundTint="@color/colorPrimary"
-            android:hint="Contraseña"
+            android:hint="Nuevo Teléfono"
             android:inputType="text"
             android:paddingLeft="10dp"
             android:textColor="@color/colorPrimaryText" />
 
         <EditText
-            android:id="@+id/confir_contra"
+            android:id="@+id/nuevosalario"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="30dp"
             android:backgroundTint="@color/colorPrimary"
-            android:hint="Confirmar contraseña"
+            android:hint="Nuevo salario"
             android:inputType="text"
             android:paddingLeft="10dp"
             android:textColor="@color/colorPrimaryText" />
-
-        <EditText
-            android:id="@+id/nombre_neg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginRight="30dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:hint="Nombre del Negocio"
-            android:inputType="textEmailAddress"
-            android:paddingLeft="10dp"
-            android:textColor="@color/colorPrimaryText" />
-
-        <EditText
-            android:id="@+id/direccion_neg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="30dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:hint="Dirección"
-            android:inputType="text"
-            android:paddingLeft="10dp"
-            android:textColor="@color/colorPrimaryText" />
-
-        <EditText
-            android:id="@+id/tel_neg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="30dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:hint="Teléfono"
-            android:inputType="text"
-            android:paddingLeft="10dp"
-            android:textColor="@color/colorPrimaryText" />
-
 
         <Button
-            android:id="@+id/registrarse"
+            android:id="@+id/guardarcambios"
             android:layout_width="match_parent"
-            android:layout_height="59dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="50dp"
             android:layout_marginRight="30dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="40dp"
             android:background="@drawable/delinear_boton"
-            android:text="Registrarse" />
+            android:text="Guardar Cambios" />
+
 
     </LinearLayout>
 

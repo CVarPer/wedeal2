@@ -13,14 +13,14 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class Dueno extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class sesion_de_empleado extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dueno);
+        setContentView(R.layout.activity_empleado);
 
         //Como se quitó la ActionBar en esta pantalla, se agrega una barra de herramientas en su lugar, de la siguiente manera
         Toolbar barra = findViewById(R.id.barra_tareas);
@@ -38,7 +38,7 @@ public class Dueno extends AppCompatActivity implements NavigationView.OnNavigat
         //Rota el hamburger icon (el cuadro que abre el drawer)
         tog.syncState();
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.cont_fragmentos, new miTienda_Fragment()).commit(); //Inicia con la actividad información en primer lugar, no vacío
+            getSupportFragmentManager().beginTransaction().replace(R.id.cont_fragmentos, new miTienda_empleado_Fragment()).commit(); //Inicia con la actividad información en primer lugar, no vacío
             nav_view.setCheckedItem(R.id.nav_informacion);
         }
     }
@@ -46,7 +46,7 @@ public class Dueno extends AppCompatActivity implements NavigationView.OnNavigat
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.nav_informacion:
-                getSupportFragmentManager().beginTransaction().replace(R.id.cont_fragmentos, new miTienda_Fragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.cont_fragmentos, new miTienda_empleado_Fragment()).commit();
                 break;
             case R.id.nav_ventas:
                 getSupportFragmentManager().beginTransaction().replace(R.id.cont_fragmentos, new ventas_Fragment()).commit();
@@ -61,7 +61,7 @@ public class Dueno extends AppCompatActivity implements NavigationView.OnNavigat
                 Toast.makeText(this, "Compartir", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_ajustes:
-                getSupportFragmentManager().beginTransaction().replace(R.id.cont_fragmentos, new ajustes_Fragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.cont_fragmentos, new ajustes_empleadoFragment()).commit();
                 break;
 
         }

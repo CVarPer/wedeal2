@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".empleados">
 
     <!-- TODO: Update blank fragment layout -->
@@ -28,6 +28,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:src="@drawable/agregar"
-        app:backgroundTint="#E91E63" />
+        app:backgroundTint="#E91E63"
+        tools:ignore="RtlHardcoded" />
 
 </RelativeLayout>

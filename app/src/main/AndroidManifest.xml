@@ -17,16 +17,47 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".registro_usuario"></activity>
         <activity
-            android:name=".Dueno"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".registro_negocio">
+        </activity>
+        <activity
+            android:name=".sesion_de_dueno"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".sesion_de_empleado"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
 
-        <activity android:name=".crear_nuevo_empleado" />
-        <activity android:name=".crear_nuevo_cliente" />
-        <activity android:name=".crear_nuevo_proveedor" />
-        <activity android:name=".crear_nuevo_producto" />
-        <activity android:name=".cerrar_sesion" />
+        <activity
+            android:name=".crear_nuevo_empleado">
+        </activity>
+
+        <activity
+            android:name=".ajustes_cerrar_sesion">
+
+        </activity>
+
+        <activity
+            android:name=".crear_nuevo_cliente">
+        </activity>
+
+        <activity
+            android:name=".crear_nuevo_producto">
+        </activity>
+
+        <activity
+            android:name=".ajustes_permiso_especial">
+        </activity>
+
+        <activity
+            android:name=".ajustes_modificar_empleado">
+        </activity>
+
+        <activity
+            android:name=".ajustes_eliminar_empleado">
+        </activity>
+
 
     </application>
 

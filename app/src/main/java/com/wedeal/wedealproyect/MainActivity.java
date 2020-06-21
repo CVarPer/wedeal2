@@ -1,3 +1,4 @@
+
 package com.wedeal.wedealproyect;
 
 import android.content.Intent;
@@ -11,7 +12,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,9 +36,37 @@ public class MainActivity extends AppCompatActivity {
 
         String userSHP = pref.getString("Usuario", "");
 
-        if (userSHP.length()>2) {
-            Intent logear = new Intent(MainActivity.this, Dueno.class);
-            startActivity(logear);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+       if (userSHP.length()>2) {
+
+            mDatabase.addValueEventListener(new ValueEventListener() {
+
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    SharedPreferences preferences = getSharedPreferences("Registro", 0);
+
+                    String negocio = preferences.getString("Negocio", "");
+                    String usuarioSHP = preferences.getString("Usuario", "");
+
+                    String permiso = Objects.requireNonNull(dataSnapshot.child(negocio).child("Usuarios de " + negocio).child(usuarioSHP.replace(".", "")).child("Permisos").getValue()).toString();
+
+                    if (permiso.equals("Admin")){
+                        Intent dueno = new Intent(MainActivity.this, sesion_de_dueno.class);
+                        startActivity(dueno);
+                    }
+                    else if (permiso.equals("Empleado")){
+                        Intent empleado = new Intent(MainActivity.this, sesion_de_empleado.class);
+                        startActivity(empleado);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
         }
 
         else {
@@ -51,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             registro.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent selec_usuario = new Intent(MainActivity.this, registro_usuario.class);
+                    Intent selec_usuario = new Intent(MainActivity.this, registro_negocio.class);
                     startActivity(selec_usuario);
                 }
             });
@@ -87,8 +115,17 @@ public class MainActivity extends AppCompatActivity {
                                 edit.putString("Negocio", negocio);
                                 edit.apply();
 
-                                Intent logear = new Intent(MainActivity.this, Dueno.class);
-                                startActivity(logear);
+                                String permiso = Objects.requireNonNull(dataSnapshot.child(negocio).child("Usuarios de " + negocio).child(user.replace(".", "")).child("Permisos").getValue()).toString();
+
+
+                                if (permiso.equals("Admin")){
+                                    Intent dueno = new Intent(MainActivity.this, sesion_de_dueno.class);
+                                    startActivity(dueno);
+                                }
+                                else if (permiso.equals("Empleado")){
+                                    Intent empleado = new Intent(MainActivity.this, sesion_de_empleado.class);
+                                    startActivity(empleado);
+                                }
                             } else {
                                 Toast.makeText(MainActivity.this, "Usuario y/o contraseña y/o negocio incorrectos", Toast.LENGTH_LONG).show();
                             }
@@ -110,7 +147,6 @@ public class MainActivity extends AppCompatActivity {
                 //EditText verifica si el usuario existe
                 String user = pref.getString("Usuario", "");
                 String contraseña = pref.getString("Contraseña", "");
-
                 if (usuario_log.getText().toString().trim().length() == 0 && contralog.getText().toString().trim().length() == 0) {
                     Toast.makeText(MainActivity.this, "Los campos están vacíos", Toast.LENGTH_LONG).show();
                 }

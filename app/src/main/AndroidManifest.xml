@@ -18,10 +18,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".registro_usuario">
+            android:name=".registro_negocio">
         </activity>
         <activity
-            android:name=".Dueno"
+            android:name=".sesion_de_dueno"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".sesion_de_empleado"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
@@ -53,6 +57,7 @@
         <activity
             android:name=".ajustes_eliminar_empleado">
         </activity>
+
 
     </application>
 

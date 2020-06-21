@@ -10,19 +10,34 @@
     <EditText
         android:id="@+id/neg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="50dp"
+        android:layout_marginBottom="12dp"
         android:autofillHints=""
-        android:backgroundTint="@color/colorPrimary"
+        android:background="@drawable/borde_textos"
         android:ems="10"
         android:hint="Negocio"
         android:inputType="textPersonName"
+        android:paddingStart="10sp"
+        app:layout_constraintBottom_toTopOf="@+id/email"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/wedeal" />
+
+    <ImageView
+        android:id="@+id/nego"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/neg"
+        app:layout_constraintEnd_toEndOf="@+id/email"
+        app:layout_constraintHorizontal_bias="0.927"
+        app:layout_constraintStart_toStartOf="@+id/neg"
+        app:layout_constraintTop_toTopOf="@+id/neg"
+        app:layout_constraintVertical_bias="0.437"
+        app:srcCompat="@drawable/mi_tienda" />
 
     <ImageView
         android:id="@+id/wedeal"
@@ -42,36 +57,62 @@
     <EditText
         android:id="@+id/email"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="96dp"
         android:layout_marginEnd="50dp"
         android:autofillHints=""
-        android:backgroundTint="@color/colorPrimary"
+        android:background="@drawable/borde_textos"
         android:ems="10"
-        android:hint="E-mail"
-        android:inputType="textPersonName"
+        android:hint= "E-mail"
+        android:inputType="textEmailAddress"
+        android:paddingStart="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wedeal" />
+        app:layout_constraintTop_toBottomOf="@+id/wedeal"
+        tools:ignore="HardcodedText" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/email"
+        app:layout_constraintEnd_toEndOf="@+id/email"
+        app:layout_constraintHorizontal_bias="0.927"
+        app:layout_constraintStart_toStartOf="@+id/email"
+        app:layout_constraintTop_toTopOf="@+id/email"
+        app:layout_constraintVertical_bias="0.437"
+        app:srcCompat="@drawable/ic_message" />
 
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="50dp"
-        android:backgroundTint="@color/colorPrimary"
+        android:background="@drawable/borde_textos"
         android:ems="10"
         android:hint="Contraseña"
         android:inputType="textPassword"
+        android:paddingStart="10sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email"
         tools:ignore="HardcodedText" />
+
+    <ImageView
+        android:id="@+id/contra"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/password"
+        app:layout_constraintEnd_toEndOf="@+id/password"
+        app:layout_constraintHorizontal_bias="0.927"
+        app:layout_constraintStart_toStartOf="@+id/password"
+        app:layout_constraintTop_toTopOf="@+id/password"
+        app:srcCompat="@drawable/ic_contra" />
 
     <Button
         android:id="@+id/ingreso"

@@ -8,11 +8,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class crear_nuevo_empleado extends AppCompatActivity {
 
@@ -33,15 +42,17 @@ public class crear_nuevo_empleado extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                databaseReference = FirebaseDatabase.getInstance().getReference();
+
                 SharedPreferences pref = getSharedPreferences("Registro", 0);
 
-                String negocio = pref.getString("Negocio", "");
+                final String negocio = pref.getString("Negocio", "");
 
-                String cargoemp = ((EditText) findViewById(R.id.cargoempleado)).getText().toString().trim();
-                String telefonoemp = ((EditText) findViewById(R.id.telefonoempleado)).getText().toString().trim();
-                String salarioemp = ((EditText) findViewById(R.id.salarioempleado)).getText().toString().trim();
-                String emp = ((EditText) findViewById(R.id.usuarioempleado)).getText().toString().trim();
-                String passemp = ((EditText) findViewById(R.id.contraempleado)).getText().toString().trim();
+                final String cargoemp = ((EditText) findViewById(R.id.cargoempleado)).getText().toString().trim();
+                final String telefonoemp = ((EditText) findViewById(R.id.telefonoempleado)).getText().toString().trim();
+                final String salarioemp = ((EditText) findViewById(R.id.salarioempleado)).getText().toString().trim();
+                final String emp = ((EditText) findViewById(R.id.usuarioempleado)).getText().toString().trim();
+                final String passemp = ((EditText) findViewById(R.id.contraempleado)).getText().toString().trim();
                 String confpassemp = ((EditText) findViewById(R.id.confir_contraempleado)).getText().toString().trim();
 
 
@@ -58,19 +69,32 @@ public class crear_nuevo_empleado extends AppCompatActivity {
                 else if (passemp.equals(confpassemp)){
 
                     assert negocio != null;
+                    databaseReference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    databaseReference.child(negocio).child("Usuarios de " + negocio).child(emp.replace(".","")).child("Cargo").setValue(cargoemp.replace(".",""));
-                    databaseReference.child(negocio).child("Usuarios de " + negocio).child(emp.replace(".","")).child("Telefono").setValue(telefonoemp);
-                    databaseReference.child(negocio).child("Usuarios de " + negocio).child(emp.replace(".","")).child("Salario").setValue(salarioemp);
 
-                    databaseReference.child(negocio).child("Usuarios de " + negocio).child(emp.replace(".","")).child("Usuario").setValue(emp.replace(".",""));
-                    databaseReference.child(negocio).child("Usuarios de " + negocio).child(emp.replace(".","")).child("Contraseña").setValue(passemp);
-                    databaseReference.child(negocio).child("Usuarios de " + negocio).child(emp.replace(".","")).child("Permisos").setValue("Empleado");
+                            databaseReference.child(negocio).child("Usuarios de " + negocio).child(emp.replace(".","")).child("Cargo").setValue(cargoemp.replace(".",""));
+                            databaseReference.child(negocio).child("Usuarios de " + negocio).child(emp.replace(".","")).child("Teléfono").setValue(telefonoemp);
+                            databaseReference.child(negocio).child("Usuarios de " + negocio).child(emp.replace(".","")).child("Salario").setValue(salarioemp);
 
-                    finish();
-                    Toast.makeText(crear_nuevo_empleado.this, "Empleado registrado con éxito", Toast.LENGTH_LONG).show();
-                    Intent acceso = new Intent(crear_nuevo_empleado.this, Dueno.class);
-                    startActivity(acceso);
+                            databaseReference.child(negocio).child("Usuarios de " + negocio).child(emp.replace(".","")).child("Usuario").setValue(emp.replace(".",""));
+                            databaseReference.child(negocio).child("Usuarios de " + negocio).child(emp.replace(".","")).child("Contraseña").setValue(passemp);
+                            databaseReference.child(negocio).child("Usuarios de " + negocio).child(emp.replace(".","")).child("Permisos").setValue("Empleado");
+
+                            finish();
+                            Toast.makeText(crear_nuevo_empleado.this, "Empleado registrado con éxito", Toast.LENGTH_LONG).show();
+                            Intent acceso = new Intent(crear_nuevo_empleado.this, sesion_de_dueno.class);
+                            startActivity(acceso);
+
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+
+                    });
+
                 }
                 else{
                     Toast.makeText(crear_nuevo_empleado.this, "Las contraseñas no coinciden", Toast.LENGTH_LONG).show();

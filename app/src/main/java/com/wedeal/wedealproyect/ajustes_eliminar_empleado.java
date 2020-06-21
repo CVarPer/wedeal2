@@ -82,7 +82,7 @@ public class ajustes_eliminar_empleado extends AppCompatActivity {
                             nDatabase.child(negocio).child("Usuarios de " + negocio).child(usuarioempleado2.replace(".","")).removeValue();
                             finish();
                             Toast.makeText(ajustes_eliminar_empleado.this, "El usuario ha sido eliminado", Toast.LENGTH_LONG).show();
-                            Intent acceso = new Intent(ajustes_eliminar_empleado.this, Dueno.class);
+                            Intent acceso = new Intent(ajustes_eliminar_empleado.this, sesion_de_dueno.class);
                             startActivity(acceso);
 
                         }

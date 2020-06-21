@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".registro_usuario">
+    tools:context=".registro_negocio">
 
 
     <LinearLayout
@@ -12,21 +12,36 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="30dp"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="5dp">
 
+
+        <EditText
+            android:id="@+id/nombreempleado"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:hint="Nombre"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="10dp"
+            android:textColor="@color/colorPrimaryText"
+            android:autofillHints="" />
 
         <EditText
             android:id="@+id/cargoempleado"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="30dp"
             android:backgroundTint="@color/colorPrimary"
             android:hint="Cargo"
-            android:inputType="text"
+            android:inputType="textEmailAddress"
             android:paddingLeft="10dp"
-            android:textColor="@color/colorPrimaryText" />
+            android:textColor="@color/colorPrimaryText"
+            android:autofillHints="" />
 
         <EditText
             android:id="@+id/telefonoempleado"
@@ -37,9 +52,11 @@
             android:layout_marginRight="30dp"
             android:backgroundTint="@color/colorPrimary"
             android:hint="Teléfono"
-            android:inputType="text"
-            android:paddingLeft="10dp"
-            android:textColor="@color/colorPrimaryText" />
+            android:inputType="textEmailAddress"
+            android:paddingStart="10dp"
+            android:textColor="@color/colorPrimaryText"
+            android:autofillHints=""
+            tools:ignore="HardcodedText" />
 
         <EditText
             android:id="@+id/salarioempleado"
@@ -50,15 +67,17 @@
             android:layout_marginRight="30dp"
             android:backgroundTint="@color/colorPrimary"
             android:hint="Salario"
+            android:inputType="textEmailAddress"
             android:paddingLeft="10dp"
-            android:textColor="@color/colorPrimaryText" />
+            android:textColor="@color/colorPrimaryText"
+            tools:ignore="HardcodedText" />
 
         <EditText
             android:id="@+id/usuarioempleado"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="40dp"
             android:layout_marginRight="30dp"
             android:backgroundTint="@color/colorPrimary"
             android:hint="Correo del empleado"
@@ -87,6 +106,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="30dp"
+            android:layout_marginBottom="30dp"
             android:backgroundTint="@color/colorPrimary"
             android:hint="Confirmar Contraseña"
             android:inputType="text"
@@ -98,11 +118,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="60dp"
             android:layout_marginRight="30dp"
             android:layout_marginBottom="40dp"
             android:background="@drawable/delinear_boton"
-            android:text="Registrar Empleado" />
+            android:text="Registrar Empleado"
+            tools:ignore="HardcodedText" />
 
 
     </LinearLayout>

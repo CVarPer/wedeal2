@@ -57,7 +57,7 @@ public class ajustes_modificar_empleado extends AppCompatActivity {
 
                     finish();
                     Toast.makeText(ajustes_modificar_empleado.this, "Cambios guardados", Toast.LENGTH_LONG).show();
-                    Intent acceso = new Intent(ajustes_modificar_empleado.this, Dueno.class);
+                    Intent acceso = new Intent(ajustes_modificar_empleado.this, sesion_de_dueno.class);
                     startActivity(acceso);
                 }
 

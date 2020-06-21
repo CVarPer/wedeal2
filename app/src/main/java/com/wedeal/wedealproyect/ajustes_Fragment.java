@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment;
  * A simple {@link Fragment} subclass.
  */
 public class ajustes_Fragment extends Fragment {
-    Button permisoespecial, cerrarsesion, modificarempleado,eliminarempleado;
+    Button permisoespecial, cerrarsesion, modificarempleado, eliminarempleado;
     Context mContext;
 
     public ajustes_Fragment() {
@@ -27,6 +27,7 @@ public class ajustes_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_ajustes_admin, container, false);
 
     }

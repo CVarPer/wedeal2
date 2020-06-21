@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".registro_usuario">
+    tools:context=".registro_negocio">
 
 
     <LinearLayout
@@ -15,27 +15,12 @@
         android:layout_marginBottom="10dp">
 
 
-        <ImageView
-            android:id="@+id/wedeal3"
-            android:layout_width="410dp"
-            android:layout_height="224dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="0dp"
-            android:backgroundTint="#FFFFFF"
-            android:clickable="false"
-            app:layout_constraintBottom_toTopOf="@id/nombreproducto"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/wedeal_icon_" />
-
         <EditText
             android:id="@+id/nombreproducto"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="130dp"
             android:layout_marginRight="30dp"
             android:backgroundTint="@color/colorPrimary"
             android:hint="Nombre del producto"
@@ -43,6 +28,19 @@
             android:paddingLeft="10dp"
             android:textColor="@color/colorPrimaryText" />
 
+
+        <EditText
+            android:id="@+id/precioproducto"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:hint="Precio de la unidad"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:textColor="@color/colorPrimaryText" />
 
         <EditText
             android:id="@+id/nmejemplaresproducto"
@@ -60,7 +58,7 @@
         <EditText
             android:id="@+id/descripcionproducto"
             android:layout_width="match_parent"
-            android:layout_height="77dp"
+            android:layout_height="50dp"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="30dp"
@@ -68,7 +66,6 @@
             android:hint="Descripción del producto"
             android:inputType="textMultiLine"
             android:paddingLeft="10dp"
-            android:textAlignment="textStart"
             android:textColor="@color/colorPrimaryText" />
 
         <Button

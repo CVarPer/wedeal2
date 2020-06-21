@@ -75,7 +75,7 @@ public class ajustes_permiso_especial extends AppCompatActivity {
                             nDatabase.child(negocio).child("Usuarios de " + negocio).child(usuarioempleado.replace(".","")).child("Permisos").setValue("Admin");
                             finish();
                             Toast.makeText(ajustes_permiso_especial.this, usuarioempleado + " ahora tiene permisos de administrador", Toast.LENGTH_LONG).show();
-                            Intent acceso = new Intent(ajustes_permiso_especial.this, Dueno.class);
+                            Intent acceso = new Intent(ajustes_permiso_especial.this, sesion_de_dueno.class);
                             startActivity(acceso);
 
                         }

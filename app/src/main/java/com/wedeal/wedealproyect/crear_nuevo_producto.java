@@ -38,13 +38,18 @@ public class crear_nuevo_producto extends AppCompatActivity {
                 String negocio = pref.getString("Negocio", "");
 
                 String producto = ((EditText) findViewById(R.id.nombreproducto)).getText().toString().trim();
+                String precio = ((EditText) findViewById(R.id.precioproducto)).getText().toString().trim();
                 String numeroejemplares = ((EditText) findViewById(R.id.nmejemplaresproducto)).getText().toString().trim();
                 String descripcion = ((EditText) findViewById(R.id.descripcionproducto)).getText().toString().trim();
 
 
 
                 if(producto.length() <= 0) {
-                    Toast.makeText(crear_nuevo_producto.this, "Ingrese un correo válido", Toast.LENGTH_LONG).show();
+                    Toast.makeText(crear_nuevo_producto.this, "Ingrese un producto", Toast.LENGTH_LONG).show();
+                }
+
+                if(precio.length() <= 0) {
+                    Toast.makeText(crear_nuevo_producto.this, "Ingrese un precio", Toast.LENGTH_LONG).show();
                 }
 
                 else{
@@ -52,11 +57,12 @@ public class crear_nuevo_producto extends AppCompatActivity {
                     assert negocio != null;
 
                     databaseReference.child(negocio).child("Productos de " + negocio).child(producto).child("Nombre").setValue(producto);
+                    databaseReference.child(negocio).child("Productos de " + negocio).child(producto).child("Precio").setValue(precio);
                     databaseReference.child(negocio).child("Productos de " + negocio).child(producto).child("Cantidad").setValue(numeroejemplares);
                     databaseReference.child(negocio).child("Productos de " + negocio).child(producto).child("Descripción").setValue(descripcion);
                     finish();
                     Toast.makeText(crear_nuevo_producto.this, "Producto añadido con éxito", Toast.LENGTH_LONG).show();
-                    Intent acceso = new Intent(crear_nuevo_producto.this, Dueno.class);
+                    Intent acceso = new Intent(crear_nuevo_producto.this, sesion_de_dueno.class);
                     startActivity(acceso);
                 }
 

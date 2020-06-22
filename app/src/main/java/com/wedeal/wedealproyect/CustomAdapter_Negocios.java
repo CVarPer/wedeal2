@@ -14,13 +14,13 @@ import androidx.annotation.Nullable;
 import java.util.List;
 
 
-public class CustomAdapter_Empleados extends ArrayAdapter<modelo_empleado> {
+public class CustomAdapter_Negocios extends ArrayAdapter<modelo_negocio> {
 
-    private List<modelo_empleado> mList;
+    private List<modelo_negocio> mList;
     private Context mContext;
     private int resourceLayout;
 
-    public CustomAdapter_Empleados(@NonNull Context context, int resource, List<modelo_empleado> objects) {
+    public CustomAdapter_Negocios(@NonNull Context context, int resource, List<modelo_negocio> objects) {
         super(context, resource, objects);
         this.mList = objects;
         this.mContext = context;
@@ -34,25 +34,19 @@ public class CustomAdapter_Empleados extends ArrayAdapter<modelo_empleado> {
         if (view == null)
             view = LayoutInflater.from(mContext).inflate(resourceLayout, null);
 
-        modelo_empleado modelo = mList.get(position);
+        modelo_negocio modelo = mList.get(position);
 
         ImageView imgs = view.findViewById((R.id.foto_empl));
         imgs.setImageResource(modelo.getImgs());
 
-        TextView textoNombre = view.findViewById((R.id.nombre_empl));
+        TextView textoNombre = view.findViewById((R.id.nombre_neg));
         textoNombre.setText(modelo.getNombre());
 
-        TextView textoTelefono = view.findViewById((R.id.tel_empl));
-        String tel = "Teléfono: " + modelo.getTelefono();
-        textoTelefono.setText(tel);
+        TextView textoTelefono = view.findViewById((R.id.tel_neg));
+        textoTelefono.setText(modelo.getTelefono());
 
-        TextView textoSalario = view.findViewById((R.id.salario_empl));
-        String salario = "Salario: " + modelo.getSalario();
-        textoSalario.setText(salario);
-
-        TextView textoCargo = view.findViewById((R.id.rol));
-        String cargo = "Cargo: " + modelo.getCargo();
-        textoCargo.setText(cargo);
+        TextView textoDireccion = view.findViewById((R.id.direcc_neg));
+        textoDireccion.setText(modelo.getDireccion());
 
         return view;
 

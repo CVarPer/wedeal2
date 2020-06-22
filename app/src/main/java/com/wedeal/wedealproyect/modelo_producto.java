@@ -1,13 +1,13 @@
 package com.wedeal.wedealproyect;
 
-public class Modelo_productos {
+public class modelo_producto {
     private String codigo;
     private String nombre;
     private String precio;
     private String stock;
     private int fotoProd;
 
-    public Modelo_productos(String codigo, String nombre, String precio, String stock, int fotoProd) {
+    public modelo_producto(String codigo, String nombre, String precio, String stock, int fotoProd) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.precio = precio;

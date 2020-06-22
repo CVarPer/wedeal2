@@ -1,6 +1,6 @@
 package com.wedeal.wedealproyect;
 
-public class Modelo {
+public class modelo_empleado {
     private String nombre;
     private String cargo;
     private String telefono;
@@ -48,7 +48,7 @@ public class Modelo {
         this.imgs = imgs;
     }
 
-    public Modelo(String nombre, String cargo, String telefono, String salario, int imgs) {
+    public modelo_empleado(String nombre, String cargo, String telefono, String salario, int imgs) {
         this.nombre = nombre;
         this.cargo = cargo;
         this.telefono = telefono;

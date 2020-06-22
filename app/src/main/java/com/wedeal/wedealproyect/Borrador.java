@@ -35,7 +35,7 @@ public class CustomAdapter_Empleados extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        @SuppressLint({"ViewHolder", "InflateParams"}) View view = inflater.inflate(R.layout.elemento_listas, null);
+        @SuppressLint({"ViewHolder", "InflateParams"}) View view = inflater.inflate(R.layout.elemento_listas_empleados, null);
 
         TextView nombretxt = view.findViewById(R.id.nombre_empl);
         TextView telefonotxt = view.findViewById(R.id.tel_empl);

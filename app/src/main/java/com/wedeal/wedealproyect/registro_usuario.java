@@ -44,7 +44,7 @@ public class registro_usuario extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                String usuario = ((EditText) findViewById(R.id.registro_user)).getText().toString().trim();
+                String usuario = ((EditText) findViewById(R.id.usuario)).getText().toString().trim();
                 String password = ((EditText) findViewById(R.id.contra)).getText().toString().trim();
 
                 String confpass = ((EditText) findViewById(R.id.confir_contra)).getText().toString().trim();
@@ -89,7 +89,7 @@ public class registro_usuario extends AppCompatActivity {
                     finish();
 
                     Toast.makeText(registro_usuario.this, "Usuario creado con éxito", Toast.LENGTH_LONG).show();
-                    Intent acceso = new Intent(registro_usuario.this, Dueno.class);
+                    Intent acceso = new Intent(registro_usuario.this, sesion_de_dueno.class);
                     startActivity(acceso);
                 } else {
                     Toast.makeText(registro_usuario.this, "Las contraseñas no coinciden", Toast.LENGTH_LONG).show();

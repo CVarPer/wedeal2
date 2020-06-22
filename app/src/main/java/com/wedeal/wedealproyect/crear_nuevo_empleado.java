@@ -73,7 +73,7 @@ public class crear_nuevo_empleado extends AppCompatActivity {
                             databaseReference.child(negocio).child("Usuarios de " + negocio).child(emp.replace(".", "")).child("Permisos").setValue("Empleado");
 
                             Toast.makeText(crear_nuevo_empleado.this, "Empleado registrado con éxito", Toast.LENGTH_LONG).show();
-                            Intent acceso = new Intent(crear_nuevo_empleado.this, Dueno.class);
+                            Intent acceso = new Intent(crear_nuevo_empleado.this, sesion_de_dueno.class);
                             startActivity(acceso);
                         }
 

@@ -88,7 +88,7 @@ public class miTienda_Fragment extends Fragment {
                 case 2:
                     return new clientes();
                 case 3:
-                    return new Proveedores();
+                    return new proveedores();
                 default:
                     return null;
             }

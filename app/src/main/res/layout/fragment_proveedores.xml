@@ -2,22 +2,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Proveedores">
+    android:orientation="vertical"
+    tools:context=".proveedores">
 
     <!-- TODO: Update blank fragment layout -->
 
 
     <ListView
-        android:id="@+id/listView_prov"
+        android:id="@+id/listView2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" />
+        android:layout_height="wrap_content" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_prov"
+        android:id="@+id/fab2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -29,6 +28,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:src="@drawable/agregar"
-        app:backgroundTint="#E91E63" />
+        app:backgroundTint="#E91E63"
+        tools:ignore="RtlHardcoded" />
 
 </RelativeLayout>

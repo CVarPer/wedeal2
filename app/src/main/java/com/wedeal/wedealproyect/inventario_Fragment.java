@@ -23,14 +23,15 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class inventario_Fragment extends Fragment {
     FloatingActionButton fab;
 
 
-    GridView gridView;
-    Custom_Adapter_GridView_Productos customAdapterGridViewProductos;
-    List<Modelo_productos> info_productos = new ArrayList<>();
+    private GridView gridView;
+    CustomAdapter_GridView_Productos customAdapterGridViewProductos;
+    private List<modelo_producto> info_productos = new ArrayList<>();
     int foto_producto;
 
     @Nullable
@@ -43,7 +44,7 @@ public class inventario_Fragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        gridView = getView().findViewById(R.id.grid_view_image_text);
+        gridView = requireView().findViewById(R.id.grid_view_image_text);
         SharedPreferences pref = getActivity().getSharedPreferences("Registro", 0);
         final String Negocio = pref.getString("Negocio", "");
 
@@ -64,10 +65,10 @@ public class inventario_Fragment extends Fragment {
                                 String precio = objSnapshot.child("Precio").getValue().toString();
                                 String stock = objSnapshot.child("Stock").getValue().toString();
 
-                                info_productos.add(new Modelo_productos(codigo, nombre, precio, stock, R.drawable.product));
+                                info_productos.add(new modelo_producto(codigo, nombre, precio, stock, R.drawable.product));
 
-                                customAdapterGridViewProductos = new Custom_Adapter_GridView_Productos
-                                        (getActivity().getApplicationContext(), foto_producto, info_productos);
+                                customAdapterGridViewProductos = new CustomAdapter_GridView_Productos
+                                        (requireActivity().getApplicationContext(), foto_producto, info_productos);
                                 gridView.setAdapter(customAdapterGridViewProductos);
                                 gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

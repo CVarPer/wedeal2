@@ -59,7 +59,7 @@ public class crear_nuevo_producto extends AppCompatActivity {
                     databaseReference.child(negocio).child("Productos de " + negocio).child(producto).child("Descripción").setValue(descripcion);
 
                     Toast.makeText(crear_nuevo_producto.this, "Producto añadido con éxito", Toast.LENGTH_LONG).show();
-                    Intent acceso = new Intent(crear_nuevo_producto.this, Dueno.class);
+                    Intent acceso = new Intent(crear_nuevo_producto.this, sesion_de_dueno.class);
                     startActivity(acceso);
                 }
 

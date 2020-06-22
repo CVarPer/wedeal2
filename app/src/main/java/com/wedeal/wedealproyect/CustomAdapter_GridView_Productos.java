@@ -14,17 +14,19 @@ import androidx.annotation.Nullable;
 import java.util.List;
 
 
-public class Custom_Adapter_GridView_Productos extends ArrayAdapter<Modelo_productos> {
+public class CustomAdapter_GridView_Productos extends ArrayAdapter<modelo_producto> {
 
-    private List<Modelo_productos> mList;
+    private List<modelo_producto> mList;
     private Context Context;
     private int resourceLayout;
+    private LayoutInflater thisInflater;
 
-    public Custom_Adapter_GridView_Productos(@NonNull Context context, int resource, List<Modelo_productos> objects) {
+    public CustomAdapter_GridView_Productos(@NonNull Context context, int resource, List<modelo_producto> objects) {
         super(context, resource, objects);
         this.mList = objects;
         this.Context = context;
         this.resourceLayout = resource;
+        this.thisInflater = LayoutInflater.from(context);
     }
 
     @NonNull
@@ -32,11 +34,11 @@ public class Custom_Adapter_GridView_Productos extends ArrayAdapter<Modelo_produ
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
         if (view == null) {
-            view = LayoutInflater.from(Context).inflate(resourceLayout, null);
+            view = thisInflater.inflate( R.layout.elemento_lista_producto, parent, false );
         }
 
 
-        Modelo_productos modelo = mList.get(position);
+        modelo_producto modelo = mList.get(position);
 
         ImageView imgs = view.findViewById((R.id.foto_producto));
         imgs.setImageResource(modelo.getFotoProd());

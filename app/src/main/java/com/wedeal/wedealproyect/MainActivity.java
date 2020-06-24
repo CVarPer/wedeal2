@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
        if (userSHP.length()>2) {
 
+
+
             mDatabase.addValueEventListener(new ValueEventListener() {
 
                 @Override
@@ -49,8 +51,19 @@ public class MainActivity extends AppCompatActivity {
 
                     String negocio = preferences.getString("Negocio", "");
                     String usuarioSHP = preferences.getString("Usuario", "");
+                    String contraSHP = preferences.getString("Contraseña", "");
 
                     String permiso = Objects.requireNonNull(dataSnapshot.child(negocio).child("Usuarios de " + negocio).child(usuarioSHP.replace(".", "")).child("Permisos").getValue()).toString();
+
+                    SharedPreferences.Editor preferencesEditor = preferences.edit();
+                    preferencesEditor.clear();
+                    preferencesEditor.apply();
+
+                    preferencesEditor.putString("Usuario", usuarioSHP);
+                    preferencesEditor.putString("Contraseña", contraSHP);
+                    preferencesEditor.putString("Negocio", negocio);
+                    preferencesEditor.apply();
+
 
                     if (permiso.equals("Admin")){
                         Intent dueno = new Intent(MainActivity.this, sesion_de_dueno.class);
@@ -116,6 +129,15 @@ public class MainActivity extends AppCompatActivity {
                                 edit.apply();
 
                                 String permiso = Objects.requireNonNull(dataSnapshot.child(negocio).child("Usuarios de " + negocio).child(user.replace(".", "")).child("Permisos").getValue()).toString();
+
+                                SharedPreferences.Editor preferencesEditor = preferences.edit();
+                                preferencesEditor.clear();
+                                preferencesEditor.apply();
+
+                                preferencesEditor.putString("Usuario", user);
+                                preferencesEditor.putString("Contraseña", pass);
+                                preferencesEditor.putString("Negocio", negocio);
+                                preferencesEditor.apply();
 
 
                                 if (permiso.equals("Admin")){

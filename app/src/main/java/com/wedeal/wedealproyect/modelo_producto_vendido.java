@@ -1,21 +1,20 @@
 package com.wedeal.wedealproyect;
 
-public class modelo_producto {
+public class modelo_producto_vendido {
     private String codigo;
     private String nombre;
     private String precio;
     private String stock;
     private int fotoProd;
 
-    public modelo_producto(String codigo, String nombre, String precio, String stock, int fotoProd) {
+    public modelo_producto_vendido(String codigo, String nombre, String precio, String stock) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.precio = precio;
         this.stock = stock;
-        this.fotoProd = fotoProd;
     }
 
-    public modelo_producto(){
+    public modelo_producto_vendido(){
 
     }
 
@@ -51,11 +50,5 @@ public class modelo_producto {
         this.stock = stock;
     }
 
-    public int getFotoProd() {
-        return fotoProd;
-    }
 
-    public void setFotoProd(int fotoProd) {
-        this.fotoProd = fotoProd;
-    }
 }

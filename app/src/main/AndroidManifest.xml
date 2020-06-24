@@ -58,6 +58,22 @@
             android:name=".ajustes_eliminar_empleado">
         </activity>
 
+        <activity
+            android:name=".venta">
+        </activity>
+
+        <activity
+            android:name=".venta_tramite">
+        </activity>
+
+        <activity
+            android:name=".venta_carrito">
+        </activity>
+
+        <activity
+            android:name=".crear_nuevo_proveedor">
+        </activity>
+
 
     </application>
 

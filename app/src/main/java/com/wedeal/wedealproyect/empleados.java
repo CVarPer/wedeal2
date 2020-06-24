@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -33,18 +34,12 @@ public class empleados extends Fragment {
     private ListView mListView;
     private List<modelo_empleado> mLista = new ArrayList<>();
     ListAdapter mAdapter;
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_empleados, container, false);
-    }
+    modelo_empleado modelo;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
 
         mListView = getView().findViewById(R.id.listView);
         SharedPreferences pref = getActivity().getSharedPreferences("Registro", 0);
@@ -61,17 +56,23 @@ public class empleados extends Fragment {
                 for (DataSnapshot objSnapshot : dataSnapshot.getChildren()) {
 
 
-                    if (objSnapshot.child("Permisos").getValue().toString().equals("Empleado")) {
+                    if (Objects.requireNonNull(objSnapshot.child("Permisos").getValue()).toString().equals("Empleado")) {
                         String nombre = objSnapshot.child("Nombre").getValue().toString();
                         String telefono = objSnapshot.child("Teléfono").getValue().toString();
                         String cargo = objSnapshot.child("Cargo").getValue().toString();
                         String salario = objSnapshot.child("Salario").getValue().toString();
 
+                        modelo = new modelo_empleado();
+                        modelo.setTelefono(telefono);
+                        modelo.setNombre(nombre);
+                        modelo.setCargo(cargo);
+                        modelo.setSalario(salario);
+                        modelo.setImgs(R.drawable.empleado_ej1);
 
-                        mLista.add(new modelo_empleado(nombre, cargo, telefono, salario, R.drawable.empleado_ej1));
+                        mLista.add(modelo);
 
                         //Toast.makeText(requireActivity().getApplicationContext(), "hola"+mLista, Toast.LENGTH_SHORT).show();
-                        mAdapter = new CustomAdapter_Empleados(requireActivity().getApplicationContext(), R.layout.elemento_listas_empleados, mLista);
+                        mAdapter = new CustomAdapter_Empleados(getActivity(), R.layout.elemento_listas_empleados, mLista);
 
                         mListView.setAdapter(mAdapter);
 
@@ -98,6 +99,14 @@ public class empleados extends Fragment {
             }
         });
 
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_empleados, container, false);
     }
 
 

@@ -36,17 +36,19 @@ public class CustomAdapter_Negocios extends ArrayAdapter<modelo_negocio> {
 
         modelo_negocio modelo = mList.get(position);
 
-        ImageView imgs = view.findViewById((R.id.foto_empl));
+        ImageView imgs = view.findViewById((R.id.foto_prov));
         imgs.setImageResource(modelo.getImgs());
 
         TextView textoNombre = view.findViewById((R.id.nombre_neg));
         textoNombre.setText(modelo.getNombre());
 
         TextView textoTelefono = view.findViewById((R.id.tel_neg));
-        textoTelefono.setText(modelo.getTelefono());
+        String tel = "Teléfono: "+modelo.getTelefono();
+        textoTelefono.setText(tel);
 
         TextView textoDireccion = view.findViewById((R.id.direcc_neg));
-        textoDireccion.setText(modelo.getDireccion());
+        String direc = "Dirección: "+modelo.getDireccion();
+        textoDireccion.setText(direc);
 
         return view;
 

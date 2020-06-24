@@ -14,6 +14,8 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.concurrent.TimeUnit;
+
 public class crear_nuevo_producto extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase;
@@ -58,9 +60,17 @@ public class crear_nuevo_producto extends AppCompatActivity {
                     databaseReference.child(negocio).child("Productos de " + negocio).child(producto).child("Stock").setValue(numeroejemplares);
                     databaseReference.child(negocio).child("Productos de " + negocio).child(producto).child("Descripción").setValue(descripcion);
 
-                    Toast.makeText(crear_nuevo_producto.this, "Producto añadido con éxito", Toast.LENGTH_LONG).show();
-                    Intent acceso = new Intent(crear_nuevo_producto.this, sesion_de_dueno.class);
-                    startActivity(acceso);
+                    try {
+                        TimeUnit.SECONDS.sleep(2);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    Intent inventario = new Intent(crear_nuevo_producto.this, inventario_Fragment.class);
+                    startActivity(inventario);
+
+
+
                 }
 
             }

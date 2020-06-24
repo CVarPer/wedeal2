@@ -1,5 +1,6 @@
 package com.wedeal.wedealproyect;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,10 +21,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.wedeal.wedealproyect.CustomAdapter_Empleados;
-import com.wedeal.wedealproyect.R;
-import com.wedeal.wedealproyect.crear_nuevo_empleado;
-import com.wedeal.wedealproyect.modelo_empleado;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +31,18 @@ import java.util.List;
  */
 public class proveedores extends Fragment {
 
+    Context contexto;
     private ListView mListView;
     private List<modelo_negocio> mLista = new ArrayList<>();
     ListAdapter mAdapter;
     FloatingActionButton fab;
 
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        contexto = context;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,12 +56,13 @@ public class proveedores extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         mListView = getView().findViewById(R.id.listView2);
-        SharedPreferences pref = getActivity().getSharedPreferences("Registro", 0);
+        SharedPreferences pref = contexto.getSharedPreferences("Registro", 0);
         String Negocio = pref.getString("Negocio", "");
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
 
+        assert Negocio != null;
         databaseReference.child(Negocio).child("Proveedores de "+Negocio).addValueEventListener(new ValueEventListener() {
 
             @Override
@@ -65,12 +70,12 @@ public class proveedores extends Fragment {
 
                 for (DataSnapshot objSnapshot : dataSnapshot.getChildren()) {
 
-                    String nombre = objSnapshot.child("Nombre").getValue().toString();
-                    String telefono = objSnapshot.child("Teléfono").getValue().toString();
-                    String direccion = objSnapshot.child("Dirección").getValue().toString();
+                    String nombre = objSnapshot.child("Nombre").getValue(String.class);
+                    String telefono = objSnapshot.child("Teléfono").getValue(String.class);
+                    String direccion = objSnapshot.child("Dirección").getValue(String.class);
 
                     mLista.add(new modelo_negocio(nombre,direccion,telefono,R.drawable.empleado_ej1));
-                    Toast.makeText(requireActivity().getApplicationContext(), "hola"+mLista, Toast.LENGTH_SHORT).show();
+                     Toast.makeText(contexto.getApplicationContext(), "hola"+mLista, Toast.LENGTH_SHORT).show();
                     mAdapter = new CustomAdapter_Negocios(requireActivity().getApplicationContext(), R.layout.elemento_listas_negocios,mLista);
 
                     mListView.setAdapter(mAdapter);
@@ -93,7 +98,7 @@ public class proveedores extends Fragment {
             public void onClick(View v) {
                 //Snackbar.make(v, "Agregar empleado", Snackbar.LENGTH_LONG).setAction("Action",null).show();
                 Intent intent = new Intent(getActivity(), crear_nuevo_proveedor.class);
-                getActivity().startActivity(intent);
+                contexto.startActivity(intent);
             }
         });
 

@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/imagen_negocio"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
         android:layout_marginBottom="100dp"
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="230dp"
+        android:layout_marginTop="280dp"
         android:background="@drawable/paneles_info">
 
 
@@ -66,7 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="350dp"
+        android:layout_marginTop="400dp"
         android:background="@drawable/paneles_info">
 
         <TextView
@@ -112,7 +112,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="470dp"
+        android:layout_marginTop="520dp"
         android:background="@drawable/paneles_info">
 
         <TextView
@@ -147,6 +147,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/direccion" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="206dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_img" />
 
 
 </FrameLayout>

@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wedeal.wedealproyect">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -56,6 +59,22 @@
 
         <activity
             android:name=".ajustes_eliminar_empleado">
+        </activity>
+
+        <activity
+            android:name=".venta">
+        </activity>
+
+        <activity
+            android:name=".venta_tramite">
+        </activity>
+
+        <activity
+            android:name=".venta_carrito">
+        </activity>
+
+        <activity
+            android:name=".crear_nuevo_proveedor">
         </activity>
 
 

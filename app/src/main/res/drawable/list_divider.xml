@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="line" >
+
+    <!-- width: altura de la línea -->
+    <stroke
+        android:width="2dp"
+        android:color="@color/colorPrimary" />
+
+    <!-- altura del drawable, siempre debe ser superior al width anterior -->
+    <size android:height="3dp" />
+</shape>

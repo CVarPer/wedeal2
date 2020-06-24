@@ -8,6 +8,10 @@ public class modelo_empleado {
 
     private int imgs;
 
+    public modelo_empleado(){
+
+    }
+
     public String getNombre() {
         return nombre;
     }

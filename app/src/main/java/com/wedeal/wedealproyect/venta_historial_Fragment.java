@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ventas_Fragment extends Fragment {
+public class venta_historial_Fragment extends Fragment {
     FloatingActionButton fab;
     private ListView listView;
     private List<modelo_producto_vendido> lista_ventas = new ArrayList<>();
@@ -71,7 +71,7 @@ public class ventas_Fragment extends Fragment {
 
                             }
 
-                            customAdapterGridViewProductos2 = new CustomAdapter_GridView_Productos_vendidos(requireActivity().getApplicationContext(),info_producto, lista_ventas);
+                            customAdapterGridViewProductos2 = new CustomAdapter_GridView_Productos_vendidos(requireActivity(),info_producto, lista_ventas);
                             listView.setAdapter(customAdapterGridViewProductos2);
 
 

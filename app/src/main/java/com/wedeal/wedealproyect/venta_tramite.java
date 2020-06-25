@@ -37,7 +37,7 @@ public class venta_tramite extends venta {
         pDatabase.child(negocio).child("Productos en trámite").child(nombre).child("Stock").setValue(f);
 
         Intent intent = new Intent(venta_tramite.this, venta.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
+
     }
 }

@@ -1,4 +1,4 @@
-package com.wedeal.wedealproyect;
+/*package com.wedeal.wedealproyect;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -72,7 +72,7 @@ public class registro_usuario extends AppCompatActivity {
                 /*else if (Telefono.length() != 7 && Telefono.length() != 9){
                     Toast.makeText(registro_usuario.this, "Ingrese un téléfono válido", Toast.LENGTH_LONG).show();
                 }*/
-                else if (password.equals(confpass)) {
+                /*else if (password.equals(confpass)) {
                     databaseReference.child(Negocio).child("Usuarios de " + Negocio).child(usuario.replace(".", "")).child("Usuario").setValue(usuario.replace(".", ""));
                     databaseReference.child(Negocio).child("Usuarios de " + Negocio).child(usuario.replace(".", "")).child("Contraseña").setValue(password);
                     databaseReference.child(Negocio).child("Usuarios de " + Negocio).child(usuario.replace(".", "")).child("Permisos").setValue("Admin");
@@ -112,7 +112,7 @@ public class registro_usuario extends AppCompatActivity {
     }
 
 
-}
+}*/
 
             /*@Override
             public void onClick(View v) {

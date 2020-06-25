@@ -28,8 +28,6 @@ public class registro_negocio extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
         Button registro_2 = findViewById(R.id.registrarse);
-
-
         inicializarFirebase();
 
 
@@ -77,8 +75,9 @@ public class registro_negocio extends AppCompatActivity {
                     databaseReference.child(Negocio).child("Usuarios de " + Negocio).child(usuario.replace(".","")).child("Contraseña").setValue(password);
                     databaseReference.child(Negocio).child("Usuarios de " + Negocio).child(usuario.replace(".","")).child("Permisos").setValue("Admin");
 
-                    databaseReference.child(Negocio).child("Información del negocio " + Negocio).child("Direccion").setValue(Direccion);
-                    databaseReference.child(Negocio).child("Información del negocio " + Negocio).child("Telefono").setValue(Telefono);
+                    databaseReference.child(Negocio).child("Información del negocio " + Negocio).child("Dirección").setValue(Direccion);
+                    databaseReference.child(Negocio).child("Información del negocio " + Negocio).child("Teléfono").setValue(Telefono);
+                    databaseReference.child(Negocio).child("Información del negocio " + Negocio).child("Nombre").setValue(Negocio);
 
 
 

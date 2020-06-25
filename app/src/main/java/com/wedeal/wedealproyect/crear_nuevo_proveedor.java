@@ -58,8 +58,8 @@ public class crear_nuevo_proveedor extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                            String telefonoprov = dataSnapshot.child(nombreprov).child("Información negocio").child("Teléfono").getValue().toString();
-                            String direccionprov = dataSnapshot.child(nombreprov).child("Información negocio").child("Dirección").getValue().toString();
+                            String telefonoprov = dataSnapshot.child(nombreprov).child("Información del negocio "+nombreprov).child("Teléfono").getValue().toString();
+                            String direccionprov = dataSnapshot.child(nombreprov).child("Información del negocio "+nombreprov).child("Dirección").getValue().toString();
 
 
 

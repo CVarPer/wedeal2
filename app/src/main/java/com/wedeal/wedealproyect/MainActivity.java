@@ -80,9 +80,9 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
-        }
+       }
 
-        else {
+       else {
             usuario_log = (EditText) findViewById(R.id.email);
             contra_log = (EditText) findViewById(R.id.password);
             neg_log = (EditText) findViewById(R.id.neg);
@@ -102,68 +102,68 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
+                    final String negocio = neg_log.getText().toString().trim();
+                    final String user = usuario_log.getText().toString().trim();
+                    final String pass = contra_log.getText().toString().trim();
 
-                    mDatabase.addValueEventListener(new ValueEventListener() {
+                    if (user.length() == 0 | pass.length() == 0 | negocio.length() == 0) {
+                        Toast.makeText(MainActivity.this, "Porfavor llenar todos los campos", Toast.LENGTH_LONG).show();
+                    }
 
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                            SharedPreferences preferences = getSharedPreferences("Registro", 0);
-
-                            String negocio = neg_log.getText().toString().trim();
-                            String user = usuario_log.getText().toString().trim();
-                            String pass = contra_log.getText().toString().trim();
+                    else {
 
 
-                            String usuarioenfirebase = Objects.requireNonNull(dataSnapshot.child(negocio).child("Usuarios de " + negocio).child(user.replace(".", "")).child("Usuario").getValue()).toString();
-                            String contrasenaenfirebase = Objects.requireNonNull(dataSnapshot.child(negocio).child("Usuarios de " + negocio).child(user.replace(".", "")).child("Contraseña").getValue()).toString();
+                        mDatabase.addValueEventListener(new ValueEventListener() {
 
-                            if (user.length() == 0 | pass.length() == 0 | negocio.length() == 0) {
-                                Toast.makeText(MainActivity.this, "Porfavor llenar todos los campos", Toast.LENGTH_LONG).show();
-                            } else if (user.replace(".", "").equals(usuarioenfirebase) && pass.equals(contrasenaenfirebase)) {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                SharedPreferences.Editor edit = preferences.edit();
-                                edit.putString("Usuario", user);
-                                edit.putString("Contraseña", pass);
-                                edit.putString("Negocio", negocio);
-                                edit.apply();
-
-                                String permiso = Objects.requireNonNull(dataSnapshot.child(negocio).child("Usuarios de " + negocio).child(user.replace(".", "")).child("Permisos").getValue()).toString();
-
-                                SharedPreferences.Editor preferencesEditor = preferences.edit();
-                                preferencesEditor.clear();
-                                preferencesEditor.apply();
-
-                                preferencesEditor.putString("Usuario", user);
-                                preferencesEditor.putString("Contraseña", pass);
-                                preferencesEditor.putString("Negocio", negocio);
-                                preferencesEditor.apply();
+                                SharedPreferences preferences = getSharedPreferences("Registro", 0);
 
 
-                                if (permiso.equals("Admin")){
-                                    Intent dueno = new Intent(MainActivity.this, sesion_de_dueno.class);
-                                    startActivity(dueno);
+                                String usuarioenfirebase = Objects.requireNonNull(dataSnapshot.child(negocio).child("Usuarios de " + negocio).child(user.replace(".", "")).child("Usuario").getValue()).toString();
+                                String contrasenaenfirebase = Objects.requireNonNull(dataSnapshot.child(negocio).child("Usuarios de " + negocio).child(user.replace(".", "")).child("Contraseña").getValue()).toString();
+
+                                if (user.replace(".", "").equals(usuarioenfirebase) && pass.equals(contrasenaenfirebase)) {
+
+                                    SharedPreferences.Editor edit = preferences.edit();
+                                    edit.putString("Usuario", user);
+                                    edit.putString("Contraseña", pass);
+                                    edit.putString("Negocio", negocio);
+                                    edit.apply();
+
+                                    String permiso = Objects.requireNonNull(dataSnapshot.child(negocio).child("Usuarios de " + negocio).child(user.replace(".", "")).child("Permisos").getValue()).toString();
+
+                                    SharedPreferences.Editor preferencesEditor = preferences.edit();
+                                    preferencesEditor.clear();
+                                    preferencesEditor.apply();
+
+                                    preferencesEditor.putString("Usuario", user);
+                                    preferencesEditor.putString("Contraseña", pass);
+                                    preferencesEditor.putString("Negocio", negocio);
+                                    preferencesEditor.apply();
+
+
+                                    if (permiso.equals("Admin")) {
+                                        Intent dueno = new Intent(MainActivity.this, sesion_de_dueno.class);
+                                        startActivity(dueno);
+                                    } else if (permiso.equals("Empleado")) {
+                                        Intent empleado = new Intent(MainActivity.this, sesion_de_empleado.class);
+                                        startActivity(empleado);
+                                    }
+                                } else {
+                                    Toast.makeText(MainActivity.this, "Usuario y/o contraseña y/o negocio incorrectos", Toast.LENGTH_LONG).show();
                                 }
-                                else if (permiso.equals("Empleado")){
-                                    Intent empleado = new Intent(MainActivity.this, sesion_de_empleado.class);
-                                    startActivity(empleado);
-                                }
-                            } else {
-                                Toast.makeText(MainActivity.this, "Usuario y/o contraseña y/o negocio incorrectos", Toast.LENGTH_LONG).show();
+
+
                             }
 
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-
-
-
-
+                            }
+                        });
+                    }
 
                 /*SharedPreferences pref = getSharedPreferences("Registro", 0);
                 //EditText verifica si el usuario existe
@@ -181,10 +181,12 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Usuario y/o contraseña incorrectos", Toast.LENGTH_LONG).show();
                 }*/
 
+
+
                 }
             });
 
-        }
+       }
     }
 
 

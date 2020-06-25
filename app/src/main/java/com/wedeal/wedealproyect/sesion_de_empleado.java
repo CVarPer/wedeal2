@@ -49,7 +49,7 @@ public class sesion_de_empleado extends AppCompatActivity implements NavigationV
                 getSupportFragmentManager().beginTransaction().replace(R.id.cont_fragmentos, new miTienda_empleado_Fragment()).commit();
                 break;
             case R.id.nav_ventas:
-                getSupportFragmentManager().beginTransaction().replace(R.id.cont_fragmentos, new ventas_Fragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.cont_fragmentos, new venta_historial_Fragment()).commit();
                 break;
             case R.id.nav_inventario:
                 getSupportFragmentManager().beginTransaction().replace(R.id.cont_fragmentos, new inventario_Fragment()).commit();

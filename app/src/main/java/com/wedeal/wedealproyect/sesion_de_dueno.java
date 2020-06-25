@@ -49,7 +49,7 @@ public class sesion_de_dueno extends AppCompatActivity implements NavigationView
                 getSupportFragmentManager().beginTransaction().replace(R.id.cont_fragmentos, new miTienda_Fragment()).commit();
                 break;
             case R.id.nav_ventas:
-                getSupportFragmentManager().beginTransaction().replace(R.id.cont_fragmentos, new ventas_Fragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.cont_fragmentos, new ventasysolicitudes_Fragment()).commit();
                 break;
             case R.id.nav_inventario:
                 getSupportFragmentManager().beginTransaction().replace(R.id.cont_fragmentos, new inventario_Fragment()).commit();

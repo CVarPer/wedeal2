@@ -76,6 +76,20 @@
         <activity
             android:name=".crear_nuevo_proveedor">
         </activity>
+        <activity
+            android:name=".negocio_compras">
+        </activity>
+        <activity
+            android:name=".negocio_compras_tramite">
+        </activity>
+        <activity
+            android:name=".negocio_compras_carrito">
+        </activity>
+        <activity
+            android:name=".confirmar_solicitud">
+        </activity>
+
+
 
 
     </application>

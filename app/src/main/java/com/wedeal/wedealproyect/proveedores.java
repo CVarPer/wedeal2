@@ -1,18 +1,19 @@
 package com.wedeal.wedealproyect;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -21,9 +22,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.wedeal.wedealproyect.CustomAdapter_Empleados;
+import com.wedeal.wedealproyect.R;
+import com.wedeal.wedealproyect.crear_nuevo_empleado;
+import com.wedeal.wedealproyect.modelo_empleado;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -31,18 +38,11 @@ import java.util.List;
  */
 public class proveedores extends Fragment {
 
-    Context contexto;
     private ListView mListView;
     private List<modelo_negocio> mLista = new ArrayList<>();
     ListAdapter mAdapter;
     FloatingActionButton fab;
 
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        contexto = context;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,13 +56,12 @@ public class proveedores extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         mListView = getView().findViewById(R.id.listView2);
-        SharedPreferences pref = contexto.getSharedPreferences("Registro", 0);
+        SharedPreferences pref = getActivity().getSharedPreferences("Registro", 0);
         String Negocio = pref.getString("Negocio", "");
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
 
-        assert Negocio != null;
         databaseReference.child(Negocio).child("Proveedores de "+Negocio).addValueEventListener(new ValueEventListener() {
 
             @Override
@@ -70,15 +69,33 @@ public class proveedores extends Fragment {
 
                 for (DataSnapshot objSnapshot : dataSnapshot.getChildren()) {
 
-                    String nombre = objSnapshot.child("Nombre").getValue(String.class);
-                    String telefono = objSnapshot.child("Teléfono").getValue(String.class);
-                    String direccion = objSnapshot.child("Dirección").getValue(String.class);
+
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(300);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    final String nombre = objSnapshot.child("Nombre").getValue().toString();
+                    String telefono = objSnapshot.child("Teléfono").getValue().toString();
+                    String direccion = objSnapshot.child("Dirección").getValue().toString();
 
                     mLista.add(new modelo_negocio(nombre,direccion,telefono,R.drawable.empleado_ej1));
-                     Toast.makeText(contexto.getApplicationContext(), "hola"+mLista, Toast.LENGTH_SHORT).show();
                     mAdapter = new CustomAdapter_Negocios(requireActivity().getApplicationContext(), R.layout.elemento_listas_negocios,mLista);
 
                     mListView.setAdapter(mAdapter);
+
+                    mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
+                            Intent intent = new Intent(getActivity(), negocio_compras.class);
+                            //Intent intent = new Intent(proveedores.this, negocio_compras.class);
+                            intent.putExtra("proveedor", nombre);
+                            requireActivity().startActivity(intent);
+                        }
+                    });
 
 
 
@@ -98,12 +115,14 @@ public class proveedores extends Fragment {
             public void onClick(View v) {
                 //Snackbar.make(v, "Agregar empleado", Snackbar.LENGTH_LONG).setAction("Action",null).show();
                 Intent intent = new Intent(getActivity(), crear_nuevo_proveedor.class);
-                contexto.startActivity(intent);
+                getActivity().startActivity(intent);
             }
         });
 
 
     }
+
+
 
 
 }

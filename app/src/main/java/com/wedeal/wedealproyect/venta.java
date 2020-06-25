@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class venta extends AppCompatActivity implements AdapterView.OnItemClickListener{
+public class venta extends AppCompatActivity implements AdapterView.OnItemClickListener {
     FloatingActionButton fab;
     private DatabaseReference oDatabase;
     FirebaseDatabase firebaseDatabase;
@@ -50,9 +50,6 @@ public class venta extends AppCompatActivity implements AdapterView.OnItemClickL
         gridView.setOnItemClickListener(this);
         SharedPreferences pref = getSharedPreferences("Registro", 0);
         final String Negocio = pref.getString("Negocio", "");
-
-
-
 
 
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -79,15 +76,13 @@ public class venta extends AppCompatActivity implements AdapterView.OnItemClickL
                                 modelo.setPrecio(precio);
                                 modelo.setStock(stock);
 
-                                if(objSnapshot.child("Imagen").exists()){
+                                if (objSnapshot.child("Imagen").exists()) {
                                     String imagen = objSnapshot.child("Imagen").getValue(String.class);
                                     Bitmap image = BitmapFactory.decodeFile(imagen);
                                     modelo.setFotoProd(image);
-                                }
-                                else{
+                                } else {
                                     modelo.setFotoProd(BitmapFactory.decodeFile(String.valueOf(R.drawable.product)));
                                 }
-
 
 
                                 info_productos.add(modelo);
@@ -117,7 +112,6 @@ public class venta extends AppCompatActivity implements AdapterView.OnItemClickL
             }
 
 
-
         });
         fab = findViewById(R.id.fab_carrito);
 
@@ -144,9 +138,8 @@ public class venta extends AppCompatActivity implements AdapterView.OnItemClickL
     @Override
     public void onItemClick(AdapterView<?> AdapterView, View view, final int i, long id) {
 
-        if(!click){
+        if (!click) {
             click = true;
-
 
 
             inicializarFirebase();
@@ -166,7 +159,6 @@ public class venta extends AppCompatActivity implements AdapterView.OnItemClickL
                     /*String cod = Objects.requireNonNull(dataSnapshot.child(negocio).child("Productos de " + negocio).child(info_productos.get(i).getNombre()).child("Código").getValue().toString());
                     String precio = Objects.requireNonNull(dataSnapshot.child(negocio).child("Productos de " + negocio).child(info_productos.get(i).getNombre()).child("Precio").getValue().toString());
                     String nombre = Objects.requireNonNull(dataSnapshot.child(negocio).child("Productos de " + negocio).child(info_productos.get(i).getNombre()).child("Nombre").getValue().toString());
-
                     databaseReference.child(negocio).child("Productos en trámite").child(info_productos.get(i).getNombre()).child("Código").setValue(cod);
                     databaseReference.child(negocio).child("Productos en trámite").child(info_productos.get(i).getNombre()).child("Precio").setValue(precio);
                     databaseReference.child(negocio).child("Productos en trámite").child(info_productos.get(i).getNombre()).child("Nombre").setValue(nombre);
@@ -184,22 +176,20 @@ public class venta extends AppCompatActivity implements AdapterView.OnItemClickL
                     databaseReference.child(negocio).child("Productos en trámite").child(info_productos.get(i).getNombre()).child("Código").setValue(codigo);
                     databaseReference.child(negocio).child("Productos en trámite").child(info_productos.get(i).getNombre()).child("Stock").setValue("0");
 
-                    int b =  Integer.valueOf(existencias);
+                    int b = Integer.valueOf(existencias);
 
-                    if(!preferences.contains(nombre)){
+                    if (!preferences.contains(nombre)) {
                         SharedPreferences.Editor edit = preferences.edit();
                         edit.putInt(nombre, 0);
                         edit.apply();
                     }
 
-                    int k = preferences.getInt(nombre,0);
+                    int k = preferences.getInt(nombre, 0);
 
-                    if (k < b){
+                    if (k < b) {
                         k += 1;
-                    }
-
-                    else if (k == b){
-                        Toast.makeText(venta.this, "No hay más "+nombre+" disponibles", Toast.LENGTH_LONG).show();
+                    } else if (k == b) {
+                        Toast.makeText(venta.this, "No hay más " + nombre + " disponibles", Toast.LENGTH_LONG).show();
                     }
 
                     String f = String.valueOf(k);
@@ -210,8 +200,8 @@ public class venta extends AppCompatActivity implements AdapterView.OnItemClickL
 
                     Intent intent = new Intent(venta.this, venta_tramite.class);
                     intent.putExtra("negocio", negocio);
-                    intent.putExtra("nombre",nombre);
-                    intent.putExtra("f",f);
+                    intent.putExtra("nombre", nombre);
+                    intent.putExtra("f", f);
                     startActivity(intent);
 
                 }
@@ -223,10 +213,5 @@ public class venta extends AppCompatActivity implements AdapterView.OnItemClickL
             });
 
         }
-
-
-
-
-
     }
 }

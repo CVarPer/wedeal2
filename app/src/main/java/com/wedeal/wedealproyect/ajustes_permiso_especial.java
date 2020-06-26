@@ -44,7 +44,7 @@ public class ajustes_permiso_especial extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                nDatabase.addValueEventListener(new ValueEventListener() {
+                nDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
 
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

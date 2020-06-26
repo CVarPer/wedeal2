@@ -59,7 +59,7 @@ public class crear_nuevo_empleado extends AppCompatActivity {
                 } else if (confpassemp.length() < 5) {
                     Toast.makeText(crear_nuevo_empleado.this, "Confirme su contraseña", Toast.LENGTH_LONG).show();
                 } else if (passemp.equals(confpassemp)) {
-                    databaseReference.addValueEventListener(new ValueEventListener() {
+                    databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

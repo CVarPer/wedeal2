@@ -82,21 +82,15 @@ public class inventario_Fragment extends Fragment{
         SharedPreferences pref = mContext.getSharedPreferences("Registro", 0);
         final String Negocio = pref.getString("Negocio", "");
 
-        try {
-            TimeUnit.SECONDS.sleep(1);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
         assert Negocio != null;
-        databaseReference.child(Negocio).addValueEventListener(new ValueEventListener() {
+        databaseReference.child(Negocio).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("Productos de " + Negocio)) {
-                    databaseReference.child(Negocio).child("Productos de " + Negocio).addValueEventListener(new ValueEventListener() {
+                    databaseReference.child(Negocio).child("Productos de " + Negocio).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for (DataSnapshot objSnapshot : dataSnapshot.getChildren()) {

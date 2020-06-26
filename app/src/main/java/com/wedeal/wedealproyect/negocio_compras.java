@@ -44,21 +44,20 @@ public class negocio_compras extends AppCompatActivity implements AdapterView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_ventas_crearventa);
 
-        final String proveedor = getIntent().getStringExtra("proveedor");
-
         gridView = findViewById(R.id.grid_view_crearventa);
         gridView.setOnItemClickListener(this);
         SharedPreferences pref = getSharedPreferences("Registro", 0);
         final String Negocio = pref.getString("Negocio", "");
+        final String proveedor = pref.getString("12345","");
 
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        databaseReference.child(proveedor).addValueEventListener(new ValueEventListener() {
+        databaseReference.child(proveedor).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("Productos de " + proveedor)) {
-                    databaseReference.child(proveedor).child("Productos de " + proveedor).addValueEventListener(new ValueEventListener() {
+                    databaseReference.child(proveedor).child("Productos de " + proveedor).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -149,7 +148,7 @@ public class negocio_compras extends AppCompatActivity implements AdapterView.On
 
                     String negocio = preferences.getString("Negocio", "");
 
-                    final String proveedor = getIntent().getStringExtra("proveedor");
+                    final String proveedor = preferences.getString("12345","");
 
 
                     String codigo = Objects.requireNonNull(dataSnapshot.child(proveedor).child("Productos de " + proveedor).child(info_productos.get(i).getNombre()).child("Código").getValue().toString());

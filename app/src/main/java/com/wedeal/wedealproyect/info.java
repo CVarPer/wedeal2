@@ -81,7 +81,7 @@ public class info extends Fragment {
         final String Negocio = pref.getString("Negocio", "");
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child(Negocio).child("Información negocio").addValueEventListener(new ValueEventListener() {
+        databaseReference.child(Negocio).child("Información del negocio "+Negocio).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -104,14 +104,9 @@ public class info extends Fragment {
         databaseReference.child(Negocio).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child("Información negocio").child("Imagen").exists()){
-                    String imagen = dataSnapshot.child("Información negocio").child("Imagen").getValue(String.class);
-                    Bitmap image = BitmapFactory.decodeFile(imagen);
-                    fotoNeg.setImageBitmap(image);
-                }
-                else{
-                    fotoNeg.setImageBitmap(BitmapFactory.decodeFile(String.valueOf(R.drawable.tienda)));
-                }
+
+                fotoNeg.setImageBitmap(BitmapFactory.decodeFile(String.valueOf(R.drawable.tienda)));
+
             }
 
             @Override

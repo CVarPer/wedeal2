@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -57,7 +56,7 @@ public class solicitudes_Fragment extends Fragment {
         final DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference();
 
 
-        databaseReference.child(Negocio).child("Solicitudes").addValueEventListener(new ValueEventListener() {
+        databaseReference.child(Negocio).child("Solicitudes").addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -68,7 +67,7 @@ public class solicitudes_Fragment extends Fragment {
                     final String telefono = objSnapshot.child("Info").child("Teléfono").getValue().toString();
                     final String Tipo_Cliente = objSnapshot.child("Info").child("Tipo de Cliente").getValue().toString();
 
-                    databaseReference2.child(Negocio).child("Solicitudes").child("Solicitud de "+nombre).child("Productos").addValueEventListener(new ValueEventListener() {
+                    databaseReference2.child(Negocio).child("Solicitudes").child("Solicitud de "+nombre).child("Productos").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for (final DataSnapshot objSnapshot2 : dataSnapshot.getChildren()){
@@ -95,7 +94,7 @@ public class solicitudes_Fragment extends Fragment {
 
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
-                                        Intent intent = new Intent(getActivity(), confirmar_solicitud.class);
+                                        Intent intent = new Intent(getActivity(), solicitudes_confirmar.class);
                                         //Intent intent = new Intent(proveedores.this, negocio_compras.class);
                                         intent.putExtra("cliente", nombre);
                                         requireActivity().startActivity(intent);

@@ -31,7 +31,7 @@ public class venta_tramite extends venta {
         String nombre = getIntent().getStringExtra("nombre");
         String f = getIntent().getStringExtra("f");
 
-        Toast.makeText(venta_tramite.this, "Tiene "+f+" "+nombre+" en su carro de compras", Toast.LENGTH_LONG).show();
+        Toast.makeText(venta_tramite.this, "Tiene "+f+" "+nombre+" en su carro de compras", Toast.LENGTH_SHORT).show();
 
 
         pDatabase.child(negocio).child("Productos en trámite").child(nombre).child("Stock").setValue(f);

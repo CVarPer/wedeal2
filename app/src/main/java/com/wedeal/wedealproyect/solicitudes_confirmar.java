@@ -1,5 +1,6 @@
 package com.wedeal.wedealproyect;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -26,7 +27,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-public class confirmar_solicitud extends AppCompatActivity{
+public class solicitudes_confirmar extends AppCompatActivity{
     FloatingActionButton fab1,fab2;
     private DatabaseReference oDatabase;
     FirebaseDatabase firebaseDatabase;
@@ -58,7 +59,7 @@ public class confirmar_solicitud extends AppCompatActivity{
 
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        databaseReference.child(Negocio).addValueEventListener(new ValueEventListener() {
+        databaseReference.child(Negocio).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -90,7 +91,7 @@ public class confirmar_solicitud extends AppCompatActivity{
 
                             }
 
-                            customAdapterGridViewProductos2 = new CustomAdapter_GridView_Productos(confirmar_solicitud.this, foto_producto, info_productos);
+                            customAdapterGridViewProductos2 = new CustomAdapter_GridView_Productos(solicitudes_confirmar.this, foto_producto, info_productos);
                             gridView.setAdapter(customAdapterGridViewProductos2);
 
                             String ttt = String.valueOf(total);
@@ -125,7 +126,7 @@ public class confirmar_solicitud extends AppCompatActivity{
             public void onClick(View v) {
                 inicializarFirebase();
                 FirebaseDatabase.getInstance().getReference().child(Negocio).child("Solicitudes").child("Solicitud de "+cliente).removeValue();
-                Toast.makeText(confirmar_solicitud.this, "La solicitud de "+cliente+" ha sido rechazada", Toast.LENGTH_LONG).show();
+                Toast.makeText(solicitudes_confirmar.this, "La solicitud de "+cliente+" ha sido rechazada", Toast.LENGTH_LONG).show();
 
 
 
@@ -140,7 +141,7 @@ public class confirmar_solicitud extends AppCompatActivity{
             public void onClick(View v) {
 
 
-                databaseReference.child(Negocio).child("Solicitudes").child("Solicitud de "+cliente).child("Productos").addValueEventListener(new ValueEventListener() {
+                databaseReference.child(Negocio).child("Solicitudes").child("Solicitud de "+cliente).child("Productos").addListenerForSingleValueEvent(new ValueEventListener() {
 
                     DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference();
 
@@ -162,7 +163,7 @@ public class confirmar_solicitud extends AppCompatActivity{
 
 
 
-                            databaseReference2.addValueEventListener(new ValueEventListener() {
+                            databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
 
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -174,12 +175,7 @@ public class confirmar_solicitud extends AppCompatActivity{
 
                                     if(p <= 0){
                                         databaseReference2.child(Negocio).child("Productos de "+Negocio).child(nombre).removeValue();
-                                        try {
-                                            TimeUnit.SECONDS.sleep(2);
-                                        } catch (InterruptedException e) {
-                                            e.printStackTrace();
-                                        }
-                                        finish();
+
                                     }
 
                                     else{
@@ -190,6 +186,9 @@ public class confirmar_solicitud extends AppCompatActivity{
 
                                     databaseReference2.child(Negocio).child("Solicitudes").child("Solicitud de "+cliente).removeValue();
 
+                                    Toast.makeText(solicitudes_confirmar.this, "La solicitud de "+cliente+" ha sido aceptada y los productos han sido vendidos", Toast.LENGTH_LONG).show();
+
+
                                 }
 
                                 @Override
@@ -198,11 +197,6 @@ public class confirmar_solicitud extends AppCompatActivity{
                                 }
                             });
 
-                            try {
-                                TimeUnit.SECONDS.sleep(2);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
 
 
                         }

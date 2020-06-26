@@ -54,12 +54,12 @@ public class venta extends AppCompatActivity implements AdapterView.OnItemClickL
 
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        databaseReference.child(Negocio).addValueEventListener(new ValueEventListener() {
+        databaseReference.child(Negocio).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("Productos de " + Negocio)) {
-                    databaseReference.child(Negocio).child("Productos de " + Negocio).addValueEventListener(new ValueEventListener() {
+                    databaseReference.child(Negocio).child("Productos de " + Negocio).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -76,13 +76,8 @@ public class venta extends AppCompatActivity implements AdapterView.OnItemClickL
                                 modelo.setPrecio(precio);
                                 modelo.setStock(stock);
 
-                                if (objSnapshot.child("Imagen").exists()) {
-                                    String imagen = objSnapshot.child("Imagen").getValue(String.class);
-                                    Bitmap image = BitmapFactory.decodeFile(imagen);
-                                    modelo.setFotoProd(image);
-                                } else {
-                                    modelo.setFotoProd(BitmapFactory.decodeFile(String.valueOf(R.drawable.product)));
-                                }
+                                modelo.setFotoProd(BitmapFactory.decodeFile(String.valueOf(R.drawable.product)));
+
 
 
                                 info_productos.add(modelo);
@@ -176,7 +171,7 @@ public class venta extends AppCompatActivity implements AdapterView.OnItemClickL
                     databaseReference.child(negocio).child("Productos en trámite").child(info_productos.get(i).getNombre()).child("Código").setValue(codigo);
                     databaseReference.child(negocio).child("Productos en trámite").child(info_productos.get(i).getNombre()).child("Stock").setValue("0");
 
-                    int b = Integer.valueOf(existencias);
+                    int b = Integer.parseInt(existencias);
 
                     if (!preferences.contains(nombre)) {
                         SharedPreferences.Editor edit = preferences.edit();

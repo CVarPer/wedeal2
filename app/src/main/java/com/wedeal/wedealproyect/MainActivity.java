@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-            mDatabase.addValueEventListener(new ValueEventListener() {
+            mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
 
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                     else {
 
 
-                        mDatabase.addValueEventListener(new ValueEventListener() {
+                        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
 
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -125,12 +125,6 @@ public class MainActivity extends AppCompatActivity {
                                 String contrasenaenfirebase = Objects.requireNonNull(dataSnapshot.child(negocio).child("Usuarios de " + negocio).child(user.replace(".", "")).child("Contraseña").getValue()).toString();
 
                                 if (user.replace(".", "").equals(usuarioenfirebase) && pass.equals(contrasenaenfirebase)) {
-
-                                    SharedPreferences.Editor edit = preferences.edit();
-                                    edit.putString("Usuario", user);
-                                    edit.putString("Contraseña", pass);
-                                    edit.putString("Negocio", negocio);
-                                    edit.apply();
 
                                     String permiso = Objects.requireNonNull(dataSnapshot.child(negocio).child("Usuarios de " + negocio).child(user.replace(".", "")).child("Permisos").getValue()).toString();
 

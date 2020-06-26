@@ -54,12 +54,12 @@ public class negocio_compras_carrito extends AppCompatActivity{
 
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        databaseReference.child(Negocio).addValueEventListener(new ValueEventListener() {
+        databaseReference.child(Negocio).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("Solicitud a " +proveedor)) {
-                    databaseReference.child(Negocio).child("Solicitud a "+proveedor).addValueEventListener(new ValueEventListener() {
+                    databaseReference.child(Negocio).child("Solicitud a "+proveedor).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -138,16 +138,16 @@ public class negocio_compras_carrito extends AppCompatActivity{
             public void onClick(View v) {
             oDatabase = FirebaseDatabase.getInstance().getReference();
 
-                oDatabase.addValueEventListener(new ValueEventListener() {
+                oDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
 
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        final String tele = Objects.requireNonNull(dataSnapshot.child(Negocio).child("Información negocio").child("Teléfono").getValue()).toString();
-                        final String perm = Objects.requireNonNull(dataSnapshot.child(Negocio).child("Usuarios de "+Negocio).child(Usuario).child("Permisos").getValue()).toString();
+                        final String tele = Objects.requireNonNull(dataSnapshot.child(Negocio).child("Información del negocio "+Negocio).child("Teléfono").getValue()).toString();
+                        final String perm = Objects.requireNonNull(dataSnapshot.child(Negocio).child("Usuarios de "+Negocio).child(Usuario.replace(".", "")).child("Permisos").getValue()).toString();
 
 
-                        databaseReference.child(Negocio).child("Solicitud a "+proveedor).addValueEventListener(new ValueEventListener() {
+                        databaseReference.child(Negocio).child("Solicitud a "+proveedor).addListenerForSingleValueEvent(new ValueEventListener() {
 
                             DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference();
 

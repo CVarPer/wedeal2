@@ -54,7 +54,7 @@ public class crear_nuevo_proveedor extends AppCompatActivity {
                 else{
 
                     assert negocio != null;
-                    databaseReference.addValueEventListener(new ValueEventListener() {
+                    databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 

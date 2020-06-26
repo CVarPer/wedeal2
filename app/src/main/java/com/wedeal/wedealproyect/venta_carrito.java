@@ -1,5 +1,6 @@
 package com.wedeal.wedealproyect;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -57,12 +58,12 @@ public class venta_carrito extends AppCompatActivity{
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
         assert Negocio != null;
-        databaseReference.child(Negocio).addValueEventListener(new ValueEventListener() {
+        databaseReference.child(Negocio).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("Productos en trámite")) {
-                    databaseReference.child(Negocio).child("Productos en trámite").addValueEventListener(new ValueEventListener() {
+                    databaseReference.child(Negocio).child("Productos en trámite").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -158,7 +159,6 @@ public class venta_carrito extends AppCompatActivity{
 
 
                             String codigo = Objects.requireNonNull(objSnapshot.child("Código").getValue()).toString();
-                            Toast.makeText(venta_carrito.this, codigo, Toast.LENGTH_LONG).show();
 
                             final String existencias = Objects.requireNonNull(objSnapshot.child("Stock").getValue()).toString();
                             String precio = Objects.requireNonNull(objSnapshot.child("Precio").getValue()).toString();
@@ -198,6 +198,12 @@ public class venta_carrito extends AppCompatActivity{
                                     }
 
                                     databaseReference2.child(Negocio).child("Productos en trámite").removeValue();
+
+                                    Toast.makeText(venta_carrito.this, "Solicitud enviada con éxito", Toast.LENGTH_LONG).show();
+
+                                    Intent intent = new Intent(venta_carrito.this, proveedores.class);
+                                    startActivity(intent);
+
 
                                 }
 

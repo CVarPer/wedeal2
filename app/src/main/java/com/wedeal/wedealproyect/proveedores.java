@@ -56,13 +56,13 @@ public class proveedores extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         mListView = getView().findViewById(R.id.listView2);
-        SharedPreferences pref = getActivity().getSharedPreferences("Registro", 0);
+        final SharedPreferences pref = getActivity().getSharedPreferences("Registro", 0);
         String Negocio = pref.getString("Negocio", "");
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
 
-        databaseReference.child(Negocio).child("Proveedores de "+Negocio).addValueEventListener(new ValueEventListener() {
+        databaseReference.child(Negocio).child("Proveedores de "+Negocio).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -70,36 +70,32 @@ public class proveedores extends Fragment {
                 for (DataSnapshot objSnapshot : dataSnapshot.getChildren()) {
 
 
-                    try {
-                        TimeUnit.MILLISECONDS.sleep(300);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-
                     final String nombre = objSnapshot.child("Nombre").getValue().toString();
                     String telefono = objSnapshot.child("Teléfono").getValue().toString();
                     String direccion = objSnapshot.child("Dirección").getValue().toString();
 
+                    SharedPreferences.Editor edit = pref.edit();
+                    edit.putString("12345", nombre);
+                    edit.apply();
+
                     mLista.add(new modelo_negocio(nombre,direccion,telefono,R.drawable.empleado_ej1));
                     mAdapter = new CustomAdapter_Negocios(requireActivity().getApplicationContext(), R.layout.elemento_listas_negocios,mLista);
 
-                    mListView.setAdapter(mAdapter);
-
-                    mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
-                            Intent intent = new Intent(getActivity(), negocio_compras.class);
-                            //Intent intent = new Intent(proveedores.this, negocio_compras.class);
-                            intent.putExtra("proveedor", nombre);
-                            requireActivity().startActivity(intent);
-                        }
-                    });
-
-
-
                 }
+
+                mListView.setAdapter(mAdapter);
+
+                mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
+                        Intent intent = new Intent(getActivity(), negocio_compras.class);
+                        //Intent intent = new Intent(proveedores.this, negocio_compras.class);
+
+                        requireActivity().startActivity(intent);
+                    }
+                });
             }
 
             @Override

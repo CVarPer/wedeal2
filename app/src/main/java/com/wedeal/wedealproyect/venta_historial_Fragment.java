@@ -51,11 +51,11 @@ public class venta_historial_Fragment extends Fragment {
         final String Negocio = pref.getString("Negocio", "");
 
         final DatabaseReference DbRef = FirebaseDatabase.getInstance().getReference();
-        DbRef.child(Negocio).addValueEventListener(new ValueEventListener() {
+        DbRef.child(Negocio).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("Productos vendidos")){
-                    DbRef.child(Negocio).child("Productos vendidos").addValueEventListener(new ValueEventListener() {
+                    DbRef.child(Negocio).child("Productos vendidos").addListenerForSingleValueEvent(new ValueEventListener() {
 
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

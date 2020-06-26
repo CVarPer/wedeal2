@@ -21,13 +21,12 @@ public class negocio_compras_tramite extends AppCompatActivity {
         String nombre = getIntent().getStringExtra("nombre");
         String f = getIntent().getStringExtra("f");
 
-        Toast.makeText(negocio_compras_tramite.this, "Tiene "+f+" "+nombre+" en su carro de compras", Toast.LENGTH_LONG).show();
+        Toast.makeText(negocio_compras_tramite.this, "Tiene "+f+" "+nombre+" en su carro de compras", Toast.LENGTH_SHORT).show();
 
 
         pDatabase.child(negocio).child("Solicitud a "+ proveedor).child(nombre).child("Stock").setValue(f);
 
         Intent intent = new Intent(negocio_compras_tramite.this, negocio_compras.class);
-
         startActivity(intent);
 
     }

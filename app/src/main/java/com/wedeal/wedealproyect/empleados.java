@@ -48,7 +48,7 @@ public class empleados extends Fragment {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
 
-        databaseReference.child(Negocio).child("Usuarios de " + Negocio).addValueEventListener(new ValueEventListener() {
+        databaseReference.child(Negocio).child("Usuarios de " + Negocio).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

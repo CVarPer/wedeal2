@@ -37,7 +37,6 @@ public class CustomAdapter_GridView_Productos extends ArrayAdapter<modelo_produc
             view = thisInflater.inflate( R.layout.elemento_lista_producto, parent, false );
         }
 
-
         modelo_producto modelo = mList.get(position);
 
         ImageView imgs = view.findViewById((R.id.foto_producto));
@@ -51,12 +50,17 @@ public class CustomAdapter_GridView_Productos extends ArrayAdapter<modelo_produc
         textoNombre.setText(prod);
 
         TextView textoPrecio = view.findViewById((R.id.precio_producto));
-        String precio = "Precio venta: $" + modelo.getPrecio();
+        String precio = "Precio: $" + modelo.getPrecio();
         textoPrecio.setText(precio);
 
         TextView textoStock = view.findViewById((R.id.stock_producto));
         String stock = "Existencias: " + modelo.getStock();
         textoStock.setText(stock);
+
+        TextView textoFecha = view.findViewById((R.id.fecha_producto));
+        String fecha = modelo.getFecha();
+        textoFecha.setText(fecha);
+
 
         return view;
 

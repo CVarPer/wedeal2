@@ -2,25 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="180dp"
-    android:layout_height="247dp"
-    android:orientation="vertical"
-    android:background="@drawable/borde_textos">
+    android:layout_width="160dp"
+    android:layout_height="255dp"
+    android:background="@drawable/borde_textos"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="247dp"
+        android:layout_height="255dp"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/codigo_prod"
+            android:id="@+id/nombre_producto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
             android:layout_marginRight="10dp"
-            android:text="Código: "
+            android:text="Nombre: "
             android:textColor="@color/colorPrimaryText"
             tools:ignore="HardcodedText" />
 
@@ -39,12 +38,19 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/nombre_producto"
+                android:id="@+id/codigo_prod"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nombre:"
+                android:text="Código: "
                 android:textColor="@color/colorPrimaryText"
-                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/stock_producto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Stock:"
+                android:textColor="@color/colorPrimaryText"
                 tools:ignore="HardcodedText" />
 
             <TextView
@@ -56,10 +62,10 @@
                 tools:ignore="HardcodedText" />
 
             <TextView
-                android:id="@+id/stock_producto"
+                android:id="@+id/fecha_producto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Stock:"
+                android:text="Stockt"
                 android:textColor="@color/colorPrimaryText"
                 tools:ignore="HardcodedText" />
         </LinearLayout>

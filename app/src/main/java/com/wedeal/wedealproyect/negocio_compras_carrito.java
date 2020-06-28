@@ -157,11 +157,10 @@ public class negocio_compras_carrito extends AppCompatActivity{
 
 
                                     String codigo = Objects.requireNonNull(objSnapshot.child("Código").getValue()).toString();
-                                    Toast.makeText(negocio_compras_carrito.this, codigo, Toast.LENGTH_LONG).show();
-
                                     final String existencias = Objects.requireNonNull(objSnapshot.child("Stock").getValue()).toString();
                                     String precio = Objects.requireNonNull(objSnapshot.child("Precio").getValue()).toString();
                                     final String nombre = Objects.requireNonNull(objSnapshot.child("Nombre").getValue()).toString();
+
 
                                     databaseReference2.child(proveedor).child("Solicitudes").child("Solicitud de "+Negocio).child("Productos").child(nombre).child("Código").setValue(codigo);
                                     databaseReference2.child(proveedor).child("Solicitudes").child("Solicitud de "+Negocio).child("Productos").child(nombre).child("Nombre").setValue(nombre);
@@ -180,7 +179,8 @@ public class negocio_compras_carrito extends AppCompatActivity{
 
                                     }
 
-                                    databaseReference2.child(Negocio).child("Solicitud a "+proveedor).removeValue();
+                                    databaseReference2.child(Negocio).child("Encargos").child("Solicitud a "+proveedor).child("Nombre").setValue(nombre);
+                                    databaseReference2.child(Negocio).child("Encargos").child("Solicitud a "+proveedor).child("Stock").setValue(existencias);
 
 
                                 }

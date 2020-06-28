@@ -169,8 +169,6 @@ public class venta_carrito extends AppCompatActivity{
                             databaseReference2.child(Negocio).child("Productos vendidos").child(nombre).child("Precio").setValue(precio);
                             databaseReference2.child(Negocio).child("Productos vendidos").child(nombre).child("Stock").setValue(existencias);
 
-
-
                             databaseReference.addValueEventListener(new ValueEventListener() {
 
                                 @Override
@@ -183,12 +181,7 @@ public class venta_carrito extends AppCompatActivity{
 
                                     if(p <= 0){
                                         databaseReference2.child(Negocio).child("Productos de "+Negocio).child(nombre).removeValue();
-                                        try {
-                                            TimeUnit.SECONDS.sleep(2);
-                                        } catch (InterruptedException e) {
-                                            e.printStackTrace();
-                                        }
-                                        finish();
+
                                     }
 
                                     else{
@@ -203,7 +196,6 @@ public class venta_carrito extends AppCompatActivity{
 
                                     Intent intent = new Intent(venta_carrito.this, proveedores.class);
                                     startActivity(intent);
-
 
                                 }
 

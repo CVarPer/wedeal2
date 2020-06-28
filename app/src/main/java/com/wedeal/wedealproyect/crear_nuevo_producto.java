@@ -3,6 +3,7 @@ package com.wedeal.wedealproyect;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +15,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class crear_nuevo_producto extends AppCompatActivity {
@@ -54,11 +56,19 @@ public class crear_nuevo_producto extends AppCompatActivity {
                     Toast.makeText(crear_nuevo_producto.this, "Ingrese un precio", Toast.LENGTH_LONG).show();
                 } else {
 
+
+
+                    Date d = new Date();
+                    String fecha  = (String) DateFormat.format("MMMM d, yyyy ", d.getTime());
+                    String mes = (String) DateFormat.format("MMMM", d.getTime());
+
                     databaseReference.child(negocio).child("Productos de " + negocio).child(producto).child("Código").setValue(codigo);
                     databaseReference.child(negocio).child("Productos de " + negocio).child(producto).child("Nombre").setValue(producto);
-                    databaseReference.child(negocio).child("Productos de " + negocio).child(producto).child("Precio").setValue(precio);
+                    databaseReference.child(negocio).child("Productos de " + negocio).child(producto).child("Precio".replace(".","").replace(" ","")).setValue(precio);
                     databaseReference.child(negocio).child("Productos de " + negocio).child(producto).child("Stock").setValue(numeroejemplares);
                     databaseReference.child(negocio).child("Productos de " + negocio).child(producto).child("Descripción").setValue(descripcion);
+                    databaseReference.child(negocio).child("Productos de " + negocio).child(producto).child("Fecha").setValue(fecha);
+                    databaseReference.child(negocio).child("Productos de " + negocio).child(producto).child("Mes").setValue(mes);
 
                     try {
                         TimeUnit.SECONDS.sleep(2);
@@ -66,7 +76,7 @@ public class crear_nuevo_producto extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    Intent inventario = new Intent(crear_nuevo_producto.this, inventario_Fragment.class);
+                    Intent inventario = new Intent(crear_nuevo_producto.this, sesion_de_dueno.class);
                     startActivity(inventario);
 
 

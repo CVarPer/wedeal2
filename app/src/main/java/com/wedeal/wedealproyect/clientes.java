@@ -2,15 +2,19 @@ package com.wedeal.wedealproyect;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.Date;
 
 
 /**
@@ -19,6 +23,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class clientes extends Fragment {
     ListView listView;
     CustomAdapter_Clientes CustomAdapter_Clientes;
+
     FloatingActionButton fab;
     private String[][]  info_cliente = {
             {"Camilo Romero", "3146661248", "1000372988", "5"},

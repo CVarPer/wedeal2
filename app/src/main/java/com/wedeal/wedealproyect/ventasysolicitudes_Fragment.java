@@ -83,6 +83,8 @@ public class ventasysolicitudes_Fragment extends Fragment {
                     return new venta_historial_Fragment();
                 case 1:
                     return new solicitudes_Fragment();
+                case 2:
+                    return new encargos_Fragment();
                 default:
                     return null;
             }

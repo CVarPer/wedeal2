@@ -14,12 +14,14 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,7 +34,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -79,6 +83,7 @@ public class inventario_Fragment extends Fragment{
         gridView = requireView().findViewById(R.id.grid_view_image_text);
 
 
+
         SharedPreferences pref = mContext.getSharedPreferences("Registro", 0);
         final String Negocio = pref.getString("Negocio", "");
 
@@ -100,12 +105,14 @@ public class inventario_Fragment extends Fragment{
                                 String precio = objSnapshot.child("Precio").getValue(String.class);
                                 String stock = objSnapshot.child("Stock").getValue(String.class);
                                 String nombree = objSnapshot.child("Nombre").getValue(String.class);
+                                String fechaprod = objSnapshot.child("Fecha").getValue(String.class);
 
                                 modelo = new modelo_producto();
                                 modelo.setCodigo(codigo);
                                 modelo.setNombre(nombree);
                                 modelo.setPrecio(precio);
                                 modelo.setStock(stock);
+                                modelo.setFecha(fechaprod);
 
                                 if(objSnapshot.child("Imagen").exists()){
                                     String imagen = objSnapshot.child("Imagen").getValue(String.class);

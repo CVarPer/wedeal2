@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -76,9 +77,11 @@ public class venta extends AppCompatActivity implements AdapterView.OnItemClickL
                                 modelo.setPrecio(precio);
                                 modelo.setStock(stock);
 
-                                modelo.setFotoProd(BitmapFactory.decodeFile(String.valueOf(R.drawable.product)));
-
-
+                                if(objSnapshot.child("Imagen").exists()){
+                                    String urlImagen = objSnapshot.child("Imagen").getValue(String.class);
+                                    Uri imagen = Uri.parse(urlImagen);
+                                    modelo.setFotoProd(imagen);
+                                }
 
                                 info_productos.add(modelo);
 

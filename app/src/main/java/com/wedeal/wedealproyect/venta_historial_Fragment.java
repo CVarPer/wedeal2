@@ -61,10 +61,10 @@ public class venta_historial_Fragment extends Fragment {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for(DataSnapshot snapshot : dataSnapshot.getChildren()){
 
-                                String nombre = snapshot.child("Nombre").getValue().toString();
-                                String codigo = snapshot.child("Código").getValue().toString();
-                                String precio = snapshot.child("Precio").getValue().toString();
-                                String Cantidad = snapshot.child("Stock").getValue().toString();
+                                String nombre = snapshot.child("Nombre").getValue(String.class);
+                                String codigo = snapshot.child("Código").getValue(String.class);
+                                String precio = snapshot.child("Precio").getValue(String.class);
+                                String Cantidad = snapshot.child("Stock").getValue(String.class);
 
 
                                 lista_ventas.add(new modelo_producto_vendido(nombre,codigo,precio,Cantidad));

@@ -1,6 +1,7 @@
 package com.wedeal.wedealproyect;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -11,16 +12,32 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class sesion_de_dueno extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
-
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dueno);
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+
+            /* perform your actions here*/
+
+
+        } else {
+            signInAsAnonymous();
+        }
+
 
         //Como se quitó la ActionBar en esta pantalla, se agrega una barra de herramientas en su lugar, de la siguiente manera
         Toolbar barra = findViewById(R.id.barra_tareas);
@@ -42,6 +59,23 @@ public class sesion_de_dueno extends AppCompatActivity implements NavigationView
             nav_view.setCheckedItem(R.id.nav_informacion);
         }
     }
+
+    private void signInAsAnonymous() {
+        mAuth.signInAnonymously().addOnSuccessListener(this, new OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+                /* perform your actions here*/
+
+            }
+        })
+                .addOnFailureListener(this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        Log.e("MainActivity", "signFailed****** ", exception);
+                    }
+                });
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
@@ -81,6 +115,4 @@ public class sesion_de_dueno extends AppCompatActivity implements NavigationView
         super.onBackPressed();
 
     }
-
-
 }

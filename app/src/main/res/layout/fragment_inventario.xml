@@ -20,7 +20,8 @@
             android:layout_weight="1"
             android:text="Productos"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            tools:ignore="HardcodedText" />
     </LinearLayout>
 
     <GridView
@@ -34,7 +35,8 @@
         android:columnWidth="110dp"
         android:gravity="center"
         android:numColumns="2"
-        android:backgroundTint="@color/colorPrimary"/>
+        android:backgroundTint="@color/colorPrimary"
+        android:verticalSpacing="10dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_inventario"

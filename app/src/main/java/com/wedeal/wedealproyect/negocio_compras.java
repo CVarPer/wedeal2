@@ -3,10 +3,13 @@ package com.wedeal.wedealproyect;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.Toast;
 
@@ -38,6 +41,7 @@ public class negocio_compras extends AppCompatActivity implements AdapterView.On
     int foto_producto;
     Boolean click = false;
     modelo_producto modelo;
+    ImageView imageView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,6 +50,7 @@ public class negocio_compras extends AppCompatActivity implements AdapterView.On
 
         gridView = findViewById(R.id.grid_view_crearventa);
         gridView.setOnItemClickListener(this);
+        imageView = findViewById(R.id.foto_producto);
         SharedPreferences pref = getSharedPreferences("Registro", 0);
         final String Negocio = pref.getString("Negocio", "");
         final String proveedor = pref.getString("12345","");
@@ -63,18 +68,21 @@ public class negocio_compras extends AppCompatActivity implements AdapterView.On
 
                             for (DataSnapshot objSnapshot : dataSnapshot.getChildren()) {
 
-                                String codigo = objSnapshot.child("Código").getValue().toString();
-                                String nombre = objSnapshot.child("Nombre").getValue().toString();
-                                String precio = objSnapshot.child("Precio").getValue().toString();
-                                String stock = objSnapshot.child("Stock").getValue().toString();
+                                String codigo = objSnapshot.child("Código").getValue(String.class);
+                                String nombre = objSnapshot.child("Nombre").getValue(String.class);
+                                String precio = objSnapshot.child("Precio").getValue(String.class);
+                                String stock = objSnapshot.child("Stock").getValue(String.class);
 
                                 modelo = new modelo_producto();
                                 modelo.setCodigo(codigo);
                                 modelo.setNombre(nombre);
                                 modelo.setPrecio(precio);
                                 modelo.setStock(stock);
-                                modelo.setFotoProd(BitmapFactory.decodeFile(String.valueOf(R.drawable.product)));
-
+                                if(objSnapshot.child("Imagen").exists()){
+                                    String urlImagen = objSnapshot.child("Imagen").getValue(String.class);
+                                    Uri imagen = Uri.parse(urlImagen);
+                                    modelo.setFotoProd(imagen);
+                                }
                                 info_productos.add(modelo);
 
                             }

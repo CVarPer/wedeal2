@@ -2,6 +2,7 @@ package com.wedeal.wedealproyect;
 
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.GridView;
@@ -65,13 +66,15 @@ public class negocio_compras_carrito extends AppCompatActivity{
 
                             for (DataSnapshot objSnapshot : dataSnapshot.getChildren()) {
 
-                                String codigo = objSnapshot.child("Código").getValue().toString();
-                                String nombre = objSnapshot.child("Nombre").getValue().toString();
-                                String precio = objSnapshot.child("Precio").getValue().toString();
-                                String stock = objSnapshot.child("Stock").getValue().toString();
+                                String codigo = objSnapshot.child("Código").getValue(String.class);
+                                String nombre = objSnapshot.child("Nombre").getValue(String.class);
+                                String precio = objSnapshot.child("Precio").getValue(String.class);
+                                String stock = objSnapshot.child("Stock").getValue(String.class);
 
                                 int t;
 
+                                assert stock != null;
+                                assert precio != null;
                                 t = Integer.parseInt(precio) * Integer.parseInt(stock);
 
                                 total = total + t;
@@ -81,8 +84,15 @@ public class negocio_compras_carrito extends AppCompatActivity{
                                 modelo.setNombre(nombre);
                                 modelo.setPrecio(precio);
                                 modelo.setStock(stock);
-                                modelo.setFotoProd(BitmapFactory.decodeFile(String.valueOf(R.drawable.product)));
 
+                                if(objSnapshot.child("Imagen").exists()){
+                                    String urlImagen = objSnapshot.child("Imagen").getValue(String.class);
+                                    Uri imagen = Uri.parse(urlImagen);
+                                    modelo.setFotoProd(imagen);
+                                }
+                                else{
+
+                                }
                                 info_productos.add(modelo);
 
                             }
@@ -90,7 +100,7 @@ public class negocio_compras_carrito extends AppCompatActivity{
                             customAdapterGridViewProductos2 = new CustomAdapter_GridView_Productos(negocio_compras_carrito.this, foto_producto, info_productos);
                             gridView.setAdapter(customAdapterGridViewProductos2);
 
-                            String ttt = String.valueOf(total);
+                            String ttt = "Total:"+ total;
                             TextView tootal = findViewById((R.id.total));
                             tootal.setText(ttt);
 
@@ -157,11 +167,10 @@ public class negocio_compras_carrito extends AppCompatActivity{
 
 
                                     String codigo = Objects.requireNonNull(objSnapshot.child("Código").getValue()).toString();
-                                    Toast.makeText(negocio_compras_carrito.this, codigo, Toast.LENGTH_LONG).show();
-
                                     final String existencias = Objects.requireNonNull(objSnapshot.child("Stock").getValue()).toString();
                                     String precio = Objects.requireNonNull(objSnapshot.child("Precio").getValue()).toString();
                                     final String nombre = Objects.requireNonNull(objSnapshot.child("Nombre").getValue()).toString();
+
 
                                     databaseReference2.child(proveedor).child("Solicitudes").child("Solicitud de "+Negocio).child("Productos").child(nombre).child("Código").setValue(codigo);
                                     databaseReference2.child(proveedor).child("Solicitudes").child("Solicitud de "+Negocio).child("Productos").child(nombre).child("Nombre").setValue(nombre);
@@ -180,7 +189,8 @@ public class negocio_compras_carrito extends AppCompatActivity{
 
                                     }
 
-                                    databaseReference2.child(Negocio).child("Solicitud a "+proveedor).removeValue();
+                                    databaseReference2.child(Negocio).child("Encargos").child("Solicitud a "+proveedor).child("Nombre").setValue(nombre);
+                                    databaseReference2.child(Negocio).child("Encargos").child("Solicitud a "+proveedor).child("Stock").setValue(existencias);
 
 
                                 }

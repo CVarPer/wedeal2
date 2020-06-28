@@ -3,9 +3,11 @@ package com.wedeal.wedealproyect;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +39,7 @@ public class solicitudes_confirmar extends AppCompatActivity{
     CustomAdapter_GridView_Productos customAdapterGridViewProductos2;
     private List<modelo_producto> info_productos = new ArrayList<>();
     int foto_producto;
+    ImageView imageView;
     ListAdapter m;
     Boolean click = false;
     modelo_producto modelo;
@@ -48,14 +51,10 @@ public class solicitudes_confirmar extends AppCompatActivity{
         setContentView(R.layout.fragment_ventas_carrito);
 
         gridView = findViewById(R.id.grid_view_carrito);
+        imageView = findViewById(R.id.foto_producto);
         SharedPreferences pref = getSharedPreferences("Registro", 0);
         final String Negocio = pref.getString("Negocio", "");
         final String cliente = getIntent().getStringExtra("cliente");
-
-
-
-
-
 
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -85,7 +84,11 @@ public class solicitudes_confirmar extends AppCompatActivity{
                                 modelo.setNombre(nombre);
                                 modelo.setPrecio(precio);
                                 modelo.setStock(stock);
-                                modelo.setFotoProd(BitmapFactory.decodeFile(String.valueOf(R.drawable.product)));
+                                if(objSnapshot.child("Imagen").exists()){
+                                    String urlImagen = objSnapshot.child("Imagen").getValue(String.class);
+                                    Uri imagen = Uri.parse(urlImagen);
+                                    modelo.setFotoProd(imagen);
+                                }
 
                                 info_productos.add(modelo);
 

@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,17 +43,18 @@ public class venta_carrito extends AppCompatActivity{
     ListAdapter m;
     modelo_producto modelo;
     int total = 0;
-
+    ImageView imageView;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_ventas_carrito);
 
         gridView = findViewById(R.id.grid_view_carrito);
+
         SharedPreferences pref = getSharedPreferences("Registro", 0);
         final String Negocio = pref.getString("Negocio", "");
 
-
+        imageView = findViewById(R.id.foto_producto);
 
 
 
@@ -88,13 +91,11 @@ public class venta_carrito extends AppCompatActivity{
                                 modelo.setPrecio(precio);
                                 modelo.setStock(stock);
                                 if(objSnapshot.child("Imagen").exists()){
-                                    String imagen = objSnapshot.child("Imagen").getValue(String.class);
-                                    Bitmap image = BitmapFactory.decodeFile(imagen);
-                                    modelo.setFotoProd(image);
+                                    String urlImagen = objSnapshot.child("Imagen").getValue(String.class);
+                                    Uri imagen = Uri.parse(urlImagen);
+                                    modelo.setFotoProd(imagen);
                                 }
-                                else{
-                                    modelo.setFotoProd(BitmapFactory.decodeFile(String.valueOf(R.drawable.product)));
-                                }
+
                                 info_productos.add(modelo);
 
                             }
@@ -102,7 +103,7 @@ public class venta_carrito extends AppCompatActivity{
                             customAdapterGridViewProductos2 = new CustomAdapter_GridView_Productos(com.wedeal.wedealproyect.venta_carrito.this, foto_producto, info_productos);
                             gridView.setAdapter(customAdapterGridViewProductos2);
 
-                            String ttt = String.valueOf(total);
+                            String ttt = "Total: $"+ total;
                             TextView tootal = findViewById((R.id.total));
                             tootal.setText(ttt);
 
@@ -169,8 +170,6 @@ public class venta_carrito extends AppCompatActivity{
                             databaseReference2.child(Negocio).child("Productos vendidos").child(nombre).child("Precio").setValue(precio);
                             databaseReference2.child(Negocio).child("Productos vendidos").child(nombre).child("Stock").setValue(existencias);
 
-
-
                             databaseReference.addValueEventListener(new ValueEventListener() {
 
                                 @Override
@@ -183,12 +182,7 @@ public class venta_carrito extends AppCompatActivity{
 
                                     if(p <= 0){
                                         databaseReference2.child(Negocio).child("Productos de "+Negocio).child(nombre).removeValue();
-                                        try {
-                                            TimeUnit.SECONDS.sleep(2);
-                                        } catch (InterruptedException e) {
-                                            e.printStackTrace();
-                                        }
-                                        finish();
+
                                     }
 
                                     else{
@@ -203,7 +197,6 @@ public class venta_carrito extends AppCompatActivity{
 
                                     Intent intent = new Intent(venta_carrito.this, proveedores.class);
                                     startActivity(intent);
-
 
                                 }
 

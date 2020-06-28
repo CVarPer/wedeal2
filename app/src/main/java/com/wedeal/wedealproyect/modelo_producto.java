@@ -1,19 +1,22 @@
 package com.wedeal.wedealproyect;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 
 public class modelo_producto {
     private String codigo;
     private String nombre;
     private String precio;
     private String stock;
-    private Bitmap fotoProd;
+    private String fecha;
+    private Uri fotoProd;
 
-    public modelo_producto(String codigo, String nombre, String precio, String stock, Bitmap fotoProd) {
+    public modelo_producto(String codigo, String nombre, String precio, String stock, String fecha, Uri fotoProd) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.precio = precio;
         this.stock = stock;
+        this.fecha = fecha;
         this.fotoProd = fotoProd;
     }
 
@@ -53,11 +56,19 @@ public class modelo_producto {
         this.stock = stock;
     }
 
-    public Bitmap getFotoProd() {
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public Uri getFotoProd() {
         return fotoProd;
     }
 
-    public void setFotoProd(Bitmap fotoProd) {
+    public void setFotoProd(Uri fotoProd) {
         this.fotoProd = fotoProd;
     }
 }

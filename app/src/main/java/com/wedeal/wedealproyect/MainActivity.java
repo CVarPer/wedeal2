@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
+        assert userSHP != null;
         if (userSHP.length()>2) {
 
 

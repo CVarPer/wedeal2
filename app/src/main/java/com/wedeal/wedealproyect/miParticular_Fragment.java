@@ -18,30 +18,32 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener;
 
 
-public class ventasysolicitudes_Fragment extends Fragment {
-    TabItem ventas, solicitudes;
+public class miParticular_Fragment extends Fragment {
+    TabItem perfil, misnegocios,otrosnegocios;
     ViewPager viewPager;
-    TabLayout tablayout2;
+    TabLayout tablayout;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_ventasysolicitudes, container, false);
+        View view = inflater.inflate(R.layout.fragment_miparticular, container, false);
 
-        tablayout2 = view.findViewById(R.id.tab_layout2);
+        tablayout = view.findViewById(R.id.tab_layout);
         //tablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        viewPager = view.findViewById(R.id.vista_pags2);
+        viewPager = view.findViewById(R.id.vista_pags);
         //tablayout.setupWithViewPager(viewPager);
 
-        ventas = view.findViewById(R.id.tab_ventas);
-        solicitudes = view.findViewById(R.id.tab_solicitudes);
-        tablayout2.setTabTextColors(Color.parseColor("#000000"), Color.parseColor("#ffffff"));
+        perfil = view.findViewById(R.id.tab_perfil);
+        misnegocios = view.findViewById(R.id.tab_misnegocios);
+        otrosnegocios = view.findViewById(R.id.tab_otrosnegocios);
+        tablayout.setTabTextColors(Color.parseColor("#000000"), Color.parseColor("#ffffff"));
 
-        viewPager.setAdapter(new PagerAdapter(getChildFragmentManager(), tablayout2.getTabCount())); //setAdapter(PagerAdapter)
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tablayout2));
+        viewPager.setAdapter(new PagerAdapter(getChildFragmentManager(), tablayout.getTabCount())); //setAdapter(PagerAdapter)
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tablayout));
 
-        tablayout2.addOnTabSelectedListener(new OnTabSelectedListener() {
+        tablayout.addOnTabSelectedListener(new OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
@@ -79,11 +81,11 @@ public class ventasysolicitudes_Fragment extends Fragment {
 
             switch (position) {
                 case 0:
-                    return new venta_historial_Fragment();
+                    return new perfil();
                 case 1:
-                    return new solicitudes_Fragment();
+                    return new proveedores();
                 case 2:
-                    return new encargos_Fragment();
+                    return new todoslosnegocios();
                 default:
                     return null;
             }

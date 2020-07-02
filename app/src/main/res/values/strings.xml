@@ -10,5 +10,6 @@
     <string name="direcci_n">Dirección</string>
     <string name="tel_fono">Teléfono</string>
     <string name="todo">TODO</string>
+    <string name="nombre">Nombre</string>
 
 </resources>

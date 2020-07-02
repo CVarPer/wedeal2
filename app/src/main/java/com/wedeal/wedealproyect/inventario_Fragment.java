@@ -4,6 +4,8 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,6 +20,7 @@ import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -27,12 +30,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -115,13 +123,9 @@ public class inventario_Fragment extends Fragment{
                                 modelo.setFecha(fechaprod);
 
                                 if(objSnapshot.child("Imagen").exists()){
-                                    String imagen = objSnapshot.child("Imagen").getValue(String.class);
-                                    Bitmap image = BitmapFactory.decodeFile(imagen);
-                                    modelo.setFotoProd(image);
-
-                                }
-                                else{
-                                    modelo.setFotoProd(BitmapFactory.decodeFile(String.valueOf(R.drawable.product)));
+                                    String urlImagen = objSnapshot.child("Imagen").getValue(String.class);
+                                    Uri imagen = Uri.parse(urlImagen);
+                                    modelo.setFotoProd(imagen);
                                 }
 
                                 info_productos.add(modelo);
@@ -207,27 +211,65 @@ public class inventario_Fragment extends Fragment{
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-            Uri selectedImage = data.getData();
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            final Uri selectedImage = data.getData();
 
-            assert selectedImage != null;
-            Cursor cursor = mContext.getContentResolver().query(selectedImage,
-                    filePathColumn, null, null, null);
-            assert cursor != null;
-            cursor.moveToFirst();
-
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            final String picturePath = cursor.getString(columnIndex);
-            cursor.close();
-
-            final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+            ContentResolver cr = mContext.getContentResolver();
+            MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
 
             SharedPreferences pref = mContext.getSharedPreferences("Registro", 0);
             final String Negocio = pref.getString("Negocio", "");
 
-            assert Negocio != null;
+            if (selectedImage != null) {
+                //displaying a progress dialog while upload is going on
+                final ProgressDialog progressDialog = new ProgressDialog(mContext);
+                progressDialog.setTitle("Subiendo a Firebase");
+                progressDialog.show();
 
-            databaseReference.child(Negocio).child("Productos de "+Negocio).child(nombre).child("Imagen").setValue(picturePath);
+                final StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
+                //Declaramos el nombre del archivo
+                final StorageReference ref_producto = mStorageRef.child("imagenes_de_" + Negocio + "/" + nombre + "." +
+                        mimeTypeMap.getExtensionFromMimeType(cr.getType(selectedImage)));
+
+                final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
+                ref_producto.putFile(selectedImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        progressDialog.dismiss();
+                        ref_producto.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                assert Negocio != null;
+                                databaseReference.child(Negocio).child("Productos de "+Negocio).child(nombre).child("Imagen").setValue(uri.toString());
+                                modelo.setFotoProd(uri);
+                            }
+                        });
+                    }
+                })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                            }
+                        });
+            }
+            /*String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            Cursor cursor = mContext.getContentResolver().query(selectedImage,
+                    filePathColumn, null, null, null);
+            assert cursor != null;
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            final String picturePath = cursor.getString(columnIndex);
+            cursor.close();*/
+
+
+
+            //
+
+
+
+            //assert Negocio != null;
+            //
 
             //imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
         }

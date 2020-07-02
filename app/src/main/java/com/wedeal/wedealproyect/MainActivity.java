@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-            mDatabase.addValueEventListener(new ValueEventListener() {
+            mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
 
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -52,7 +52,9 @@ public class MainActivity extends AppCompatActivity {
                     String usuarioSHP = preferences.getString("Usuario", "");
                     String contraSHP = preferences.getString("Contraseña", "");
 
-                    String permiso = Objects.requireNonNull(dataSnapshot.child(negocio).child("Usuarios de " + negocio).child(usuarioSHP.replace(".", "")).child("Permisos").getValue()).toString();
+                    String permiso = Objects.requireNonNull(dataSnapshot.child(negocio.replace(".", ""))
+                            .child("Usuarios de " + negocio.replace(".", ""))
+                            .child(usuarioSHP.replace(".", "")).child("Permisos").getValue()).toString();
 
                     SharedPreferences.Editor preferencesEditor = preferences.edit();
                     preferencesEditor.clear();
@@ -72,6 +74,10 @@ public class MainActivity extends AppCompatActivity {
                         Intent empleado = new Intent(MainActivity.this, sesion_de_empleado.class);
                         startActivity(empleado);
                     }
+                    else if (permiso.equals("Particular")){
+                        Intent empleado = new Intent(MainActivity.this, sesion_de_particular.class);
+                        startActivity(empleado);
+                    }
                 }
 
                 @Override
@@ -86,13 +92,22 @@ public class MainActivity extends AppCompatActivity {
             contra_log = (EditText) findViewById(R.id.password);
             neg_log = (EditText) findViewById(R.id.neg);
             Button registro = findViewById(R.id.registro);
+            Button registro_cliente = findViewById(R.id.registro_cliente);
             mDatabase = FirebaseDatabase.getInstance().getReference();
 
             registro.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent selec_usuario = new Intent(MainActivity.this, registro_negocio.class);
-                    startActivity(selec_usuario);
+                    Intent reg = new Intent(MainActivity.this, registro_negocio.class);
+                    startActivity(reg);
+                }
+            });
+
+            registro_cliente.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent regc = new Intent(MainActivity.this, registro_particular.class);
+                    startActivity(regc);
                 }
             });
 
@@ -102,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
 
 
-                    mDatabase.addValueEventListener(new ValueEventListener() {
+                    mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
 
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -114,13 +129,16 @@ public class MainActivity extends AppCompatActivity {
                             String pass = contra_log.getText().toString().trim();
 
 
+                            if (negocio.length() == 0){
+                                negocio = user;
+                            }
 
-                            if (user.length() == 0 | pass.length() == 0 | negocio.length() == 0) {
+                            if (user.length() == 0 | pass.length() == 0) {
                                 Toast.makeText(MainActivity.this, "Porfavor llenar todos los campos", Toast.LENGTH_LONG).show();
                             }
                             else {
-                                String usuarioenfirebase = Objects.requireNonNull(dataSnapshot.child(negocio).child("Usuarios de " + negocio).child(user.replace(".", "")).child("Usuario").getValue()).toString();
-                                String contrasenaenfirebase = Objects.requireNonNull(dataSnapshot.child(negocio).child("Usuarios de " + negocio).child(user.replace(".", "")).child("Contraseña").getValue()).toString();
+                                String usuarioenfirebase = Objects.requireNonNull(dataSnapshot.child(negocio.replace(".", "")).child("Usuarios de " + negocio.replace(".", "")).child(user.replace(".", "")).child("Usuario").getValue()).toString();
+                                String contrasenaenfirebase = Objects.requireNonNull(dataSnapshot.child(negocio.replace(".", "")).child("Usuarios de " + negocio.replace(".", "")).child(user.replace(".", "")).child("Contraseña").getValue()).toString();
 
                                 if (user.replace(".", "").equals(usuarioenfirebase) && pass.equals(contrasenaenfirebase)) {
 
@@ -130,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                                     edit.putString("Negocio", negocio);
                                     edit.apply();
 
-                                    String permiso = Objects.requireNonNull(dataSnapshot.child(negocio).child("Usuarios de " + negocio).child(user.replace(".", "")).child("Permisos").getValue()).toString();
+                                    String permiso = Objects.requireNonNull(dataSnapshot.child(negocio.replace(".", "")).child("Usuarios de " + negocio.replace(".", "")).child(user.replace(".", "")).child("Permisos").getValue()).toString();
 
                                     SharedPreferences.Editor preferencesEditor = preferences.edit();
                                     preferencesEditor.clear();
@@ -148,6 +166,10 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                     else if (permiso.equals("Empleado")){
                                         Intent empleado = new Intent(MainActivity.this, sesion_de_empleado.class);
+                                        startActivity(empleado);
+                                    }
+                                    else if (permiso.equals("Particular")){
+                                        Intent empleado = new Intent(MainActivity.this, sesion_de_particular.class);
                                         startActivity(empleado);
                                     }
                                 }

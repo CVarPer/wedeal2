@@ -18,6 +18,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 public class crear_nuevo_proveedor extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase;
@@ -41,9 +43,12 @@ public class crear_nuevo_proveedor extends AppCompatActivity {
 
                 SharedPreferences pref = getSharedPreferences("Registro", 0);
 
-                final String negocio = pref.getString("Negocio", "");
+                final String negocio = pref.getString("Negocio", "").replace(".","");
+
+                final String usuarioSHP = pref.getString("Usuario", "");
 
                 final String nombreprov = ((EditText) findViewById(R.id.nombreproveedor)).getText().toString().trim();
+
 
 
                 if(nombreprov.length() <= 0 ){
@@ -58,20 +63,23 @@ public class crear_nuevo_proveedor extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                            String telefonoprov = dataSnapshot.child(nombreprov).child("Información del negocio "+nombreprov).child("Teléfono").getValue().toString();
-                            String direccionprov = dataSnapshot.child(nombreprov).child("Información del negocio "+nombreprov).child("Dirección").getValue().toString();
+                            String telefonoprov = dataSnapshot.child(nombreprov.replace(".","")).child("Información").child("Teléfono").getValue().toString();
+                            String direccionprov = dataSnapshot.child(nombreprov.replace(".","")).child("Información").child("Dirección").getValue().toString();
 
-
+                            String permiso = Objects.requireNonNull(dataSnapshot.child(negocio).child("Usuarios de " + negocio.replace(".","")).child(usuarioSHP.replace(".", "")).child("Permisos").getValue()).toString();
 
                             databaseReference.child(negocio).child("Proveedores de " + negocio).child(nombreprov).child("Nombre").setValue(nombreprov);
                             databaseReference.child(negocio).child("Proveedores de " + negocio).child(nombreprov).child("Teléfono").setValue(telefonoprov);
                             databaseReference.child(negocio).child("Proveedores de " + negocio).child(nombreprov).child("Dirección").setValue(direccionprov);
 
-
-                            finish();
-                            Toast.makeText(crear_nuevo_proveedor.this, "Proveedor registrado con éxito", Toast.LENGTH_LONG).show();
-                            Intent acceso = new Intent(crear_nuevo_proveedor.this, sesion_de_dueno.class);
-                            startActivity(acceso);
+                            if (permiso.equals("Admin")){
+                                Intent dueno = new Intent(crear_nuevo_proveedor.this, sesion_de_dueno.class);
+                                startActivity(dueno);
+                            }
+                            else{
+                                Intent part = new Intent(crear_nuevo_proveedor.this, sesion_de_particular.class);
+                                startActivity(part);
+                            }
 
                         }
                         @Override

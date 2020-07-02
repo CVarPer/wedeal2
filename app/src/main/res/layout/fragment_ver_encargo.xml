@@ -5,27 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".inventario_Fragment">
+    tools:context=".encargos_vistaproductos">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/productos_head"
+            android:id="@+id/encargo_head"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
-            android:text="Productos"
+            android:text="Encargo"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="20sp"
-            tools:ignore="HardcodedText" />
+            android:textSize="20sp" />
     </LinearLayout>
 
     <GridView
-        android:id="@+id/grid_view_image_text"
+        android:id="@+id/grid_ver_encargo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
@@ -34,22 +33,6 @@
         android:layout_marginBottom="10dp"
         android:columnWidth="110dp"
         android:gravity="center"
-        android:numColumns="2"
-        android:backgroundTint="@color/colorPrimary"
-        android:verticalSpacing="10dp"/>
+        android:numColumns="2" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_inventario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom|right"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:src="@drawable/agregar"
-        app:backgroundTint="#E91E63" />
 </RelativeLayout>

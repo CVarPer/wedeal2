@@ -1,40 +1,88 @@
 package com.wedeal.wedealproyect;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class clientes extends Fragment {
-    ListView listView;
-    CustomAdapter_Clientes CustomAdapter_Clientes;
 
-    FloatingActionButton fab;
-    private String[][]  info_cliente = {
-            {"Camilo Romero", "3146661248", "1000372988", "5"},
-            {"Sebastián Arango", "3158662830", "51743448", "3"},
-            {"María Jesusa", "3183976980 ", "270156370", "1"}
-    };
+    private ListView mListView;
+    private List<modelo_cliente> mLista = new ArrayList<>();
+    ListAdapter mAdapter;
+    modelo_cliente modelo;
 
-    private int[] foto_cliente = {R.drawable.cliente_generico,R.drawable.cliente_generico,R.drawable.cliente_generico};
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-    public clientes() {
-        // Required empty public constructor
+
+        mListView = getView().findViewById(R.id.listView);
+        SharedPreferences pref = getActivity().getSharedPreferences("Registro", 0);
+        String Negocio = pref.getString("Negocio", "");
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
+
+        databaseReference.child(Negocio).child("Clientes de " + Negocio).addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot objSnapshot : dataSnapshot.getChildren()) {
+
+                        String nombre = objSnapshot.child("Nombre").getValue().toString();
+                        String telefono = objSnapshot.child("Teléfono").getValue().toString();
+                        String nm_compras = objSnapshot.child("Compras").getValue().toString();
+                        String tipo_cliente = objSnapshot.child("Tipo de cliente").getValue().toString();
+
+                        modelo = new modelo_cliente();
+                        modelo.setTelefono(telefono);
+                        modelo.setNombre(nombre);
+                        modelo.setNm_Compras(nm_compras);
+                        modelo.setTipo_Cliente(tipo_cliente);
+                        modelo.setImgs(R.drawable.empleado_ej1);
+
+                        mLista.add(modelo);
+
+                        //Toast.makeText(requireActivity().getApplicationContext(), "hola"+mLista, Toast.LENGTH_SHORT).show();
+                        mAdapter = new CustomAdapter_Clientes(getActivity(), R.layout.elemento_listas_empleados, mLista);
+
+                        mListView.setAdapter(mAdapter);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseerror) {
+
+            }
+
+        });
+
     }
 
 
@@ -42,25 +90,8 @@ public class clientes extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_clientes, container, false);
+        return inflater.inflate(R.layout.fragment_empleados, container, false);
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        listView = requireView().findViewById(R.id.listView);
-        CustomAdapter_Clientes = new CustomAdapter_Clientes(requireActivity().getApplicationContext(), info_cliente, foto_cliente);
-        listView.setAdapter(CustomAdapter_Clientes);
-        fab = requireView().findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                //Snackbar.make(v, "Agregar empleado", Snackbar.LENGTH_LONG).setAction("Action",null).show();
-                Intent intent = new Intent(getActivity(),crear_nuevo_cliente.class);
-                requireActivity().startActivity(intent);
-            }
-        });
-
-    }
 }

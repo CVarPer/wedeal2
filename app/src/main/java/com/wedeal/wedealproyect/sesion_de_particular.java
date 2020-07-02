@@ -19,7 +19,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class sesion_de_dueno extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class sesion_de_particular extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
     private FirebaseAuth mAuth;
@@ -27,7 +27,8 @@ public class sesion_de_dueno extends AppCompatActivity implements NavigationView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dueno);
+        setContentView(R.layout.activity_particular);
+
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
@@ -55,7 +56,7 @@ public class sesion_de_dueno extends AppCompatActivity implements NavigationView
         //Rota el hamburger icon (el cuadro que abre el drawer)
         tog.syncState();
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.cont_fragmentos, new miTienda_Fragment()).commit(); //Inicia con la actividad información en primer lugar, no vacío
+            getSupportFragmentManager().beginTransaction().replace(R.id.cont_fragmentos, new miParticular_Fragment()).commit(); //Inicia con la actividad información en primer lugar, no vacío
             nav_view.setCheckedItem(R.id.nav_informacion);
         }
     }
@@ -75,27 +76,21 @@ public class sesion_de_dueno extends AppCompatActivity implements NavigationView
                     }
                 });
     }
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.nav_informacion:
-                getSupportFragmentManager().beginTransaction().replace(R.id.cont_fragmentos, new miTienda_Fragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.cont_fragmentos, new miParticular_Fragment()).commit();
                 break;
-            case R.id.nav_ventas:
-                getSupportFragmentManager().beginTransaction().replace(R.id.cont_fragmentos, new ventasysolicitudes_Fragment()).commit();
+            case R.id.nav_compras:
+                getSupportFragmentManager().beginTransaction().replace(R.id.cont_fragmentos, new encargos_Fragment()).commit();
                 break;
-            case R.id.nav_inventario:
-                getSupportFragmentManager().beginTransaction().replace(R.id.cont_fragmentos, new inventario_Fragment()).commit();
-                break;
-            case R.id.nav_informes:
-                getSupportFragmentManager().beginTransaction().replace(R.id.cont_fragmentos, new informes_Fragment()).commit();
-                break;
+
             case R.id.nav_share:
                 Toast.makeText(this, "Compartir", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_ajustes:
-                getSupportFragmentManager().beginTransaction().replace(R.id.cont_fragmentos, new ajustes_Fragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.cont_fragmentos, new ajustes_empleadoFragment()).commit();
                 break;
 
         }

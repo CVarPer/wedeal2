@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 
@@ -40,7 +42,8 @@ public class CustomAdapter_GridView_Productos extends ArrayAdapter<modelo_produc
         modelo_producto modelo = mList.get(position);
 
         ImageView imgs = view.findViewById((R.id.foto_producto));
-        imgs.setImageBitmap(modelo.getFotoProd());
+        Picasso.get().load(modelo.getFotoProd()).into(imgs);
+        notifyDataSetChanged();
 
         TextView textoCodigo = view.findViewById((R.id.codigo_prod));
         textoCodigo.setText(modelo.getCodigo());

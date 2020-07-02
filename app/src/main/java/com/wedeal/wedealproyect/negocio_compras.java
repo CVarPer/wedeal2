@@ -3,6 +3,7 @@ package com.wedeal.wedealproyect;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -48,9 +49,10 @@ public class negocio_compras extends AppCompatActivity implements AdapterView.On
         gridView.setOnItemClickListener(this);
         SharedPreferences pref = getSharedPreferences("Registro", 0);
         final String Negocio = pref.getString("Negocio", "");
-        final String proveedor = pref.getString("12345","");
+        final String proveedor = getIntent().getStringExtra("proveedor");
 
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
 
         databaseReference.child(proveedor).addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -73,9 +75,13 @@ public class negocio_compras extends AppCompatActivity implements AdapterView.On
                                 modelo.setNombre(nombre);
                                 modelo.setPrecio(precio);
                                 modelo.setStock(stock);
-                                modelo.setFotoProd(BitmapFactory.decodeFile(String.valueOf(R.drawable.product)));
-
+                                if(objSnapshot.child("Imagen").exists()){
+                                    String urlImagen = objSnapshot.child("Imagen").getValue(String.class);
+                                    Uri imagen = Uri.parse(urlImagen);
+                                    modelo.setFotoProd(imagen);
+                                }
                                 info_productos.add(modelo);
+
 
                             }
 
@@ -146,7 +152,7 @@ public class negocio_compras extends AppCompatActivity implements AdapterView.On
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     SharedPreferences preferences = getSharedPreferences("Registro", 0);
 
-                    String negocio = preferences.getString("Negocio", "");
+                    String negocio = preferences.getString("Negocio", "").replace(".","");
 
                     final String proveedor = preferences.getString("12345","");
 

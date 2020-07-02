@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.GridView;
@@ -41,6 +42,7 @@ public class venta_carrito extends AppCompatActivity{
     ListAdapter m;
     modelo_producto modelo;
     int total = 0;
+    boolean b = true;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,12 +90,9 @@ public class venta_carrito extends AppCompatActivity{
                                 modelo.setPrecio(precio);
                                 modelo.setStock(stock);
                                 if(objSnapshot.child("Imagen").exists()){
-                                    String imagen = objSnapshot.child("Imagen").getValue(String.class);
-                                    Bitmap image = BitmapFactory.decodeFile(imagen);
-                                    modelo.setFotoProd(image);
-                                }
-                                else{
-                                    modelo.setFotoProd(BitmapFactory.decodeFile(String.valueOf(R.drawable.product)));
+                                    String urlImagen = objSnapshot.child("Imagen").getValue(String.class);
+                                    Uri imagen = Uri.parse(urlImagen);
+                                    modelo.setFotoProd(imagen);
                                 }
                                 info_productos.add(modelo);
 
@@ -173,28 +172,37 @@ public class venta_carrito extends AppCompatActivity{
 
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    String ext = Objects.requireNonNull(dataSnapshot.child(Negocio).child("Productos de " + Negocio).child(nombre).child("Stock").getValue()).toString();
-                                    int p = Integer.parseInt(ext);
-                                    int q = Integer.parseInt(existencias);
+                                    if(dataSnapshot.child(Negocio).child("Productos de " + Negocio).child(nombre).child("Stock").exists()){
+                                        String ext = Objects.requireNonNull(dataSnapshot.child(Negocio).child("Productos de " + Negocio).child(nombre).child("Stock").getValue()).toString();
+                                        int p = Integer.parseInt(ext);
+                                        int q = Integer.parseInt(existencias);
 
-                                    p = p-q;
+                                        if(b){
+                                            b = false;
+                                            p = p-q;
 
-                                    if(p <= 0){
-                                        databaseReference2.child(Negocio).child("Productos de "+Negocio).child(nombre).removeValue();
+                                            if(p <= 0){
+                                                databaseReference2.child(Negocio).child("Productos de "+Negocio).child(nombre).removeValue();
+
+                                            }
+
+                                            else{
+
+                                                String ext2 = String.valueOf(p);
+                                                databaseReference2.child(Negocio).child("Productos de "+Negocio).child(nombre).child("Stock").setValue(ext2);
+                                            }
+
+                                        }
+
 
                                     }
 
-                                    else{
-
-                                        String ext2 = String.valueOf(p);
-                                        databaseReference2.child(Negocio).child("Productos de "+Negocio).child(nombre).child("Stock").setValue(ext2);
-                                    }
 
                                     databaseReference2.child(Negocio).child("Productos en trámite").removeValue();
 
                                     Toast.makeText(venta_carrito.this, "Solicitud enviada con éxito", Toast.LENGTH_LONG).show();
 
-                                    Intent intent = new Intent(venta_carrito.this, proveedores.class);
+                                    Intent intent = new Intent(venta_carrito.this, sesion_de_dueno.class);
                                     startActivity(intent);
 
                                 }
@@ -204,12 +212,6 @@ public class venta_carrito extends AppCompatActivity{
 
                                 }
                             });
-
-                            try {
-                                TimeUnit.SECONDS.sleep(2);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
 
 
                         }

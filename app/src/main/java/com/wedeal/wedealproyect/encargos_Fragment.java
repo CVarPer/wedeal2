@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -31,7 +32,7 @@ import java.util.List;
 public class encargos_Fragment extends Fragment {
 
     private ListView mListView;
-    private List<modelo_solicitud_cliente> mLista = new ArrayList<>();
+    private List<modelo_encargo> mLista = new ArrayList<>();
     ListAdapter mAdapter;
     boolean b = true;
     int suma = 0;
@@ -40,34 +41,41 @@ public class encargos_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_solicitudes, container, false);
+        return inflater.inflate(R.layout.fragment_encargos, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mListView = getView().findViewById(R.id.listView3);
+        mListView = getView().findViewById(R.id.listView4);
         SharedPreferences pref = getActivity().getSharedPreferences("Registro", 0);
-        final String Negocio = pref.getString("Negocio", "");
+        final String Negocio = pref.getString("Negocio", "").replace(".","");
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
         final DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference();
 
+        /*try {
+            TimeUnit.MILLISECONDS.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
 
-        databaseReference.child(Negocio).child("Solicitudes").addListenerForSingleValueEvent(new ValueEventListener() {
+
+        databaseReference.child(Negocio).child("Encargos").addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for (final DataSnapshot objSnapshot : dataSnapshot.getChildren()) {
 
-                    final String nombre = objSnapshot.child("Info").child("Cliente").getValue().toString();
-                    final String telefono = objSnapshot.child("Info").child("Teléfono").getValue().toString();
-                    final String Tipo_Cliente = objSnapshot.child("Info").child("Tipo de Cliente").getValue().toString();
+                    final String estado = objSnapshot.child("Info").child("Estado").getValue(String.class);
+                    final String fecha = objSnapshot.child("Info").child("Fecha").getValue(String.class);
+                    final String proveedor = objSnapshot.child("Info").child("Nombre").getValue(String.class);
 
-                    databaseReference2.child(Negocio).child("Encargos").child("Solicitud a "+nombre).child("Productos").addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    databaseReference2.child(Negocio).child("Encargos").child("Solicitud a "+proveedor).child("Productos").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for (final DataSnapshot objSnapshot2 : dataSnapshot.getChildren()){
@@ -82,11 +90,9 @@ public class encargos_Fragment extends Fragment {
                                     mLista.remove(0);
                                 }
 
-                                mLista.add(new modelo_solicitud_cliente(telefono,Tipo_Cliente,Valor_Compra,nombre,R.drawable.empleado_ej1));
+                                mLista.add(new modelo_encargo(estado,fecha,Valor_Compra,proveedor));
 
-
-                                Toast.makeText(requireActivity().getApplicationContext(), "hola"+mLista, Toast.LENGTH_SHORT).show();
-                                mAdapter = new CustomAdapter_Solicitudes(requireActivity().getApplicationContext(), R.layout.elemento_listas_solicitudes_clientes,mLista);
+                                mAdapter = new CustomAdapter_Encargos(requireActivity().getApplicationContext(), R.layout.elemento_listas_encargos,mLista);
 
                                 mListView.setAdapter(mAdapter);
 
@@ -94,9 +100,9 @@ public class encargos_Fragment extends Fragment {
 
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
-                                        Intent intent = new Intent(getActivity(), solicitudes_confirmar.class);
+                                        Intent intent = new Intent(getActivity(), encargos_vistaproductos.class);
                                         //Intent intent = new Intent(proveedores.this, negocio_compras.class);
-                                        intent.putExtra("cliente", nombre);
+                                        intent.putExtra("proveedor", proveedor);
                                         requireActivity().startActivity(intent);
                                     }
                                 });

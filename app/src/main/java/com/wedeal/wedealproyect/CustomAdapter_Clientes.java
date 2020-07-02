@@ -4,67 +4,57 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-public class CustomAdapter_Clientes extends BaseAdapter {
 
-    //Aquí podemos instanciar el xml con la plantilla para los elementos del listview
-    LayoutInflater inflater;
-    Context contexto;
-    String[][] datos_clients;
-    int[] imgs;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
-    public CustomAdapter_Clientes(Context contexto, String[][] datos_clients, int[] imgs) {
-        this.contexto = contexto;
-        this.datos_clients = datos_clients;
-        this.imgs = imgs;
-        //Inicializamos el inflater. Es necesario hacer un cast a LayoutInflater
-        inflater = (LayoutInflater) contexto.getSystemService(contexto.LAYOUT_INFLATER_SERVICE); //LAYOUT_INFLATER_SERVICE instancia el xml
+import java.util.List;
+
+
+public class CustomAdapter_Clientes extends ArrayAdapter<modelo_cliente> {
+
+    private List<modelo_cliente> mList;
+    private Context mContext;
+    private int resourceLayout;
+
+    public CustomAdapter_Clientes(@NonNull Context context, int resource, List<modelo_cliente> objects) {
+        super(context, resource, objects);
+        this.mList = objects;
+        this.mContext = context;
+        this.resourceLayout = resource;
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View view = inflater.inflate(R.layout.elemento_listas_clientes,null);
-        TextView nombretxt = view.findViewById(R.id.nombre_cliente);
-        TextView telefonotxt = view.findViewById(R.id.tel_client);
-        TextView cedula = view.findViewById(R.id.cedula);
-        TextView compras = view.findViewById(R.id.num_compras);
-        ImageView foto = view.findViewById(R.id.foto_cliente);
-        //Designamos el contenido que aparecerá en cada coso xd
-        nombretxt.setText(datos_clients[position][0]);
-        telefonotxt.setText("Teléfono: "+datos_clients[position][1]);
-        cedula.setText("Cédula: "+datos_clients[position][2]);
-        compras.setText("Compras: "+datos_clients[position][3]);
-        //Foto de cada empleado
-        foto.setImageResource(imgs[position]);
-        foto.setTag(position);
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        View view = convertView;
+        if (view == null)
+            view = LayoutInflater.from(mContext).inflate(resourceLayout, null);
 
-        /*foto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent verFoto = new Intent(contexto, VerFoto.class);
-                verFoto.putExtra("IMG",imgs[(Integer)v.getTag()]);
-            }
-        });*/
+        modelo_cliente modelo = mList.get(position);
+
+        ImageView imgs = view.findViewById((R.id.foto_empl));
+        imgs.setImageResource(modelo.getImgs());
+
+        TextView textoNombre = view.findViewById((R.id.nombre_empl));
+        textoNombre.setText(modelo.getNombre());
+
+        TextView textoTelefono = view.findViewById((R.id.tel_empl));
+        String tel = "Teléfono: " + modelo.getTelefono();
+        textoTelefono.setText(tel);
+
+        TextView textoTipo_Cliente = view.findViewById((R.id.salario_empl));
+        String salario = "Tipo de cliente: " + modelo.getTipo_Cliente();
+        textoTipo_Cliente.setText(salario);
+
+        TextView textoNm_Compras = view.findViewById((R.id.rol));
+        String cargo = "Número de compras: " + modelo.getNm_Compras();
+        textoNm_Compras.setText(cargo);
 
         return view;
+
     }
-
-    @Override
-    public int getCount() {
-        return imgs.length;
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return null;
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-
 }

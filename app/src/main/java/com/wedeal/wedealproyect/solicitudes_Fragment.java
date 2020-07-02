@@ -94,9 +94,14 @@ public class solicitudes_Fragment extends Fragment {
 
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
+
+                                        databaseReference2.child(nombre).child("Encargos").child("Solicitud a "+Negocio).child("Info").child("Estado").setValue("Visto");
+
                                         Intent intent = new Intent(getActivity(), solicitudes_confirmar.class);
                                         //Intent intent = new Intent(proveedores.this, negocio_compras.class);
                                         intent.putExtra("cliente", nombre);
+                                        intent.putExtra("telefono",telefono);
+                                        intent.putExtra("TP",Tipo_Cliente);
                                         requireActivity().startActivity(intent);
                                     }
                                 });

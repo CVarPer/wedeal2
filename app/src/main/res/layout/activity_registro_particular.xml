@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".registro_particular">
+
+
+    <LinearLayout
+        android:id="@+id/creacion_prod"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="0dp"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:id="@+id/wedeal3"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="0dp"
+            android:backgroundTint="#FFFFFF"
+            android:clickable="false"
+            app:layout_constraintBottom_toTopOf="@id/nombreproducto"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/wedeal_icon_" />
+
+        <EditText
+            android:id="@+id/nombre_particular"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="30dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:hint="Nombre y Apellido"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:textColor="@color/colorPrimaryText" />
+
+        <EditText
+            android:id="@+id/tel_particular"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:hint="Teléfono"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:textColor="@color/colorPrimaryText" />
+
+
+        <EditText
+            android:id="@+id/correo_particular"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:hint="Correo"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:textColor="@color/colorPrimaryText" />
+
+        <EditText
+            android:id="@+id/contra_particular"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:hint="Contraseña"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:textColor="@color/colorPrimaryText" />
+
+        <EditText
+            android:id="@+id/confir_contra_particular"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:hint="Confirmar contraseña"
+            android:inputType="textMultiLine"
+            android:paddingLeft="10dp"
+            android:textAlignment="textStart"
+            android:textColor="@color/colorPrimaryText" />
+
+        <Button
+            android:id="@+id/registrar_particular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/delinear_boton"
+            android:text="Registrarse" />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

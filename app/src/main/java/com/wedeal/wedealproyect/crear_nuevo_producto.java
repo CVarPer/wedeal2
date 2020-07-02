@@ -64,17 +64,17 @@ public class crear_nuevo_producto extends AppCompatActivity {
 
                     databaseReference.child(negocio).child("Productos de " + negocio).child(producto).child("Código").setValue(codigo);
                     databaseReference.child(negocio).child("Productos de " + negocio).child(producto).child("Nombre").setValue(producto);
-                    databaseReference.child(negocio).child("Productos de " + negocio).child(producto).child("Precio".replace(".","").replace(" ","")).setValue(precio);
+                    databaseReference.child(negocio).child("Productos de " + negocio).child(producto).child("Precio").setValue(precio.replace(".","").replace(" ",""));
                     databaseReference.child(negocio).child("Productos de " + negocio).child(producto).child("Stock").setValue(numeroejemplares);
                     databaseReference.child(negocio).child("Productos de " + negocio).child(producto).child("Descripción").setValue(descripcion);
                     databaseReference.child(negocio).child("Productos de " + negocio).child(producto).child("Fecha").setValue(fecha);
                     databaseReference.child(negocio).child("Productos de " + negocio).child(producto).child("Mes").setValue(mes);
 
-                    try {
+                    /*try {
                         TimeUnit.SECONDS.sleep(2);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
-                    }
+                    }*/
 
                     Intent inventario = new Intent(crear_nuevo_producto.this, sesion_de_dueno.class);
                     startActivity(inventario);

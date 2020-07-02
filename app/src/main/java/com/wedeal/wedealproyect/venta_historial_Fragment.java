@@ -48,7 +48,7 @@ public class venta_historial_Fragment extends Fragment {
 
         listView = getView().findViewById(R.id.listView_Ventas);
         SharedPreferences pref = getActivity().getSharedPreferences("Registro", 0);
-        final String Negocio = pref.getString("Negocio", "");
+        final String Negocio = pref.getString("Negocio", "").replace(".","");
 
         final DatabaseReference DbRef = FirebaseDatabase.getInstance().getReference();
         DbRef.child(Negocio).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -61,13 +61,13 @@ public class venta_historial_Fragment extends Fragment {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for(DataSnapshot snapshot : dataSnapshot.getChildren()){
 
-                                String nombre = snapshot.child("Nombre").getValue().toString();
-                                String codigo = snapshot.child("Código").getValue().toString();
-                                String precio = snapshot.child("Precio").getValue().toString();
-                                String Cantidad = snapshot.child("Stock").getValue().toString();
+                                String nombre = snapshot.child("Nombre").getValue(String.class);
+                                String codigo = snapshot.child("Código").getValue(String.class);
+                                String precio = snapshot.child("Precio").getValue(String.class);
+                                String Cantidad = snapshot.child("Stock").getValue(String.class);
 
 
-                                lista_ventas.add(new modelo_producto_vendido(nombre,codigo,precio,Cantidad));
+                                lista_ventas.add(new modelo_producto_vendido(codigo,nombre,precio,Cantidad));
 
                             }
 

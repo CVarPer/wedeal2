@@ -34,13 +34,14 @@ public class clientes extends Fragment {
     private List<modelo_cliente> mLista = new ArrayList<>();
     ListAdapter mAdapter;
     modelo_cliente modelo;
+    FloatingActionButton faba;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
 
-        mListView = getView().findViewById(R.id.listView);
+        mListView = getView().findViewById(R.id.listView4);
         SharedPreferences pref = getActivity().getSharedPreferences("Registro", 0);
         String Negocio = pref.getString("Negocio", "");
 
@@ -83,14 +84,26 @@ public class clientes extends Fragment {
 
         });
 
-    }
+        faba = getView().findViewById(R.id.fab4);
+        faba.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Snackbar.make(v, "Agregar empleado", Snackbar.LENGTH_LONG).setAction("Action",null).show();
+                Intent intent = new Intent(getActivity(), crear_nuevo_cliente.class);
+                getActivity().startActivity(intent);
+            }
+        });
 
+
+
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_empleados, container, false);
+        return inflater.inflate(R.layout.fragment_clientes, container, false);
     }
 
 

@@ -8,15 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -25,15 +22,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.wedeal.wedealproyect.CustomAdapter_Empleados;
-import com.wedeal.wedealproyect.R;
-import com.wedeal.wedealproyect.crear_nuevo_empleado;
-import com.wedeal.wedealproyect.modelo_empleado;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -72,17 +63,11 @@ public class proveedores extends Fragment {
 
                 for (DataSnapshot objSnapshot : dataSnapshot.getChildren()) {
 
-                    SharedPreferences settings = requireActivity().getSharedPreferences("PreferencesName", Context.MODE_PRIVATE);
-                    settings.edit().remove("12345").apply();
 
 
                     final String nombre = objSnapshot.child("Nombre").getValue(String.class);
                     String telefono = objSnapshot.child("Teléfono").getValue(String.class);
                     String direccion = objSnapshot.child("Dirección").getValue(String.class);
-
-                    SharedPreferences.Editor edit = pref.edit();
-                    edit.putString("12345", nombre);
-                    edit.apply();
 
                     mLista.add(new modelo_negocio(nombre,direccion,telefono,R.drawable.proveedores));
                     mAdapter = new CustomAdapter_Negocios(requireActivity().getApplicationContext(), R.layout.elemento_listas_negocios,mLista);

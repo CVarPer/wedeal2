@@ -2,10 +2,9 @@ package com.wedeal.wedealproyect;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ListAdapter;
@@ -25,9 +24,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 public class venta_carrito extends AppCompatActivity{
     FloatingActionButton fab1,fab2;
@@ -101,7 +100,7 @@ public class venta_carrito extends AppCompatActivity{
                             customAdapterGridViewProductos2 = new CustomAdapter_GridView_Productos(com.wedeal.wedealproyect.venta_carrito.this, foto_producto, info_productos);
                             gridView.setAdapter(customAdapterGridViewProductos2);
 
-                            String ttt = String.valueOf(total);
+                            String ttt = "Total venta: " + total;
                             TextView tootal = findViewById((R.id.total));
                             tootal.setText(ttt);
 
@@ -133,10 +132,8 @@ public class venta_carrito extends AppCompatActivity{
             public void onClick(View v) {
                 inicializarFirebase();
                 FirebaseDatabase.getInstance().getReference().child(Negocio).child("Productos en trámite").removeValue();
+                FirebaseDatabase.getInstance().getReference().child(Negocio).child("Informac").child("Productos en trámite").removeValue();
                 Toast.makeText(venta_carrito.this, "El carro de compras ha sido vaciado", Toast.LENGTH_LONG).show();
-
-
-
             }
         });
 
@@ -160,7 +157,7 @@ public class venta_carrito extends AppCompatActivity{
                             String codigo = Objects.requireNonNull(objSnapshot.child("Código").getValue()).toString();
 
                             final String existencias = Objects.requireNonNull(objSnapshot.child("Stock").getValue()).toString();
-                            String precio = Objects.requireNonNull(objSnapshot.child("Precio").getValue()).toString();
+                            final String precio = Objects.requireNonNull(objSnapshot.child("Precio").getValue()).toString();
                             final String nombre = Objects.requireNonNull(objSnapshot.child("Nombre").getValue()).toString();
 
                             databaseReference2.child(Negocio).child("Productos vendidos").child(nombre).child("Código").setValue(codigo);
@@ -168,28 +165,58 @@ public class venta_carrito extends AppCompatActivity{
                             databaseReference2.child(Negocio).child("Productos vendidos").child(nombre).child("Precio").setValue(precio);
                             databaseReference2.child(Negocio).child("Productos vendidos").child(nombre).child("Stock").setValue(existencias);
 
-                            databaseReference.addValueEventListener(new ValueEventListener() {
+                            Date d = new Date();
+                            String fecha = (String) DateFormat.format("MMMM d, yyyy ", d.getTime());
+                            String mes = (String) DateFormat.format("MMMM", d.getTime());
+                            databaseReference2.child(Negocio).child("Productos vendidos").child(nombre).child("Fecha").setValue(fecha);
+                            databaseReference2.child(Negocio).child("Productos vendidos").child(nombre).child("Mes").setValue(mes);
+                            databaseReference2.addValueEventListener(new ValueEventListener() {
 
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    if(dataSnapshot.child(Negocio).child("Productos de " + Negocio).child(nombre).child("Stock").exists()){
+                                    if (dataSnapshot.child(Negocio).child("Productos de " + Negocio).child(nombre).child("Stock").exists()) {
                                         String ext = Objects.requireNonNull(dataSnapshot.child(Negocio).child("Productos de " + Negocio).child(nombre).child("Stock").getValue()).toString();
                                         int p = Integer.parseInt(ext);
                                         int q = Integer.parseInt(existencias);
 
-                                        if(b){
+                                        Date d = new Date();
+                                        final String mes = (String) DateFormat.format("MMMM", d.getTime());
+
+
+                                        if (b) {
                                             b = false;
-                                            p = p-q;
 
-                                            if(p <= 0){
-                                                databaseReference2.child(Negocio).child("Productos de "+Negocio).child(nombre).removeValue();
+                                            databaseReference2.child(Negocio).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                    if (snapshot.child("Informes de " + mes).child("Total ventas").exists()) {
+                                                        String Ventas = snapshot.child("Informes de " + mes).child("Total ventas").getValue(String.class);
+                                                        long ventaTotal = Long.parseLong(Ventas);
+                                                        ventaTotal += Long.parseLong(precio) * Long.parseLong(existencias);
+                                                        databaseReference2.child(Negocio).child("Informes de " + mes).child("Total ventas").setValue(String.valueOf(ventaTotal));
+                                                    } else {
 
-                                            }
 
-                                            else{
+                                                        databaseReference2.child(Negocio).child("Informes de " + mes).child("Total ventas").setValue(String.valueOf(Integer.parseInt(precio) * Integer.parseInt(existencias)));
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                }
+                                            });
+
+
+                                            p = p - q;
+
+                                            if (p <= 0) {
+                                                databaseReference2.child(Negocio).child("Productos de " + Negocio).child(nombre).removeValue();
+
+                                            } else {
 
                                                 String ext2 = String.valueOf(p);
-                                                databaseReference2.child(Negocio).child("Productos de "+Negocio).child(nombre).child("Stock").setValue(ext2);
+                                                databaseReference2.child(Negocio).child("Productos de " + Negocio).child(nombre).child("Stock").setValue(ext2);
                                             }
 
                                         }

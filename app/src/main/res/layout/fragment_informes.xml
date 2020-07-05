@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:orientation="vertical"
+    tools:context=".informes_Fragment">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <ListView
+        android:id="@+id/listView_Informes"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Informes"
-        android:textAlignment="center"
-        android:textSize="30sp" />
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="10dp"
+        android:divider="@drawable/list_divider" />
+
 
 </RelativeLayout>

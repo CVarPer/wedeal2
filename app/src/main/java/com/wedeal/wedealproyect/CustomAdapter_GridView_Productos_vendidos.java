@@ -38,9 +38,13 @@ public class CustomAdapter_GridView_Productos_vendidos extends ArrayAdapter<mode
         TextView textoCodigo = view.findViewById((R.id.codigoProducto));
         textoCodigo.setText(modelo.getCodigo());
 
-        TextView textoNombre = view.findViewById((R.id.fecha_venta));
+        TextView textoNombre = view.findViewById((R.id.nombre_prod));
         String prod = modelo.getNombre();
         textoNombre.setText(prod);
+
+        TextView fechatxt = view.findViewById(R.id.fecha_venta);
+        String fecha = modelo.getFecha();
+        fechatxt.setText(fecha);
 
         TextView textoPrecio = view.findViewById((R.id.precio_unidad));
         String precio = "Precio venta: $" + modelo.getPrecio();

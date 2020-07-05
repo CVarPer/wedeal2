@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
                     String usuarioSHP = preferences.getString("Usuario", "");
                     String contraSHP = preferences.getString("Contraseña", "");
 
+                    assert negocio != null;
                     String permiso = Objects.requireNonNull(dataSnapshot.child(negocio.replace(".", ""))
                             .child("Usuarios de " + negocio.replace(".", ""))
                             .child(usuarioSHP.replace(".", "")).child("Permisos").getValue()).toString();
@@ -67,17 +68,21 @@ public class MainActivity extends AppCompatActivity {
                     preferencesEditor.apply();
 
 
-                    if (permiso.equals("Admin")){
-                        Intent dueno = new Intent(MainActivity.this, sesion_de_dueno.class);
-                        startActivity(dueno);
-                    }
-                    else if (permiso.equals("Empleado")){
-                        Intent empleado = new Intent(MainActivity.this, sesion_de_empleado.class);
-                        startActivity(empleado);
-                    }
-                    else if (permiso.equals("Particular")){
-                        Intent empleado = new Intent(MainActivity.this, sesion_de_particular.class);
-                        startActivity(empleado);
+                    switch (permiso) {
+                        case "Admin":
+                            Intent dueno = new Intent(MainActivity.this, sesion_de_dueno.class);
+                            startActivity(dueno);
+                            break;
+                        case "Empleado": {
+                            Intent empleado = new Intent(MainActivity.this, sesion_de_empleado.class);
+                            startActivity(empleado);
+                            break;
+                        }
+                        case "Particular": {
+                            Intent empleado = new Intent(MainActivity.this, sesion_de_particular.class);
+                            startActivity(empleado);
+                            break;
+                        }
                     }
                 }
 
@@ -89,9 +94,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         else {
-            usuario_log = (EditText) findViewById(R.id.email);
-            contra_log = (EditText) findViewById(R.id.password);
-            neg_log = (EditText) findViewById(R.id.neg);
+            usuario_log = findViewById(R.id.email);
+            contra_log = findViewById(R.id.password);
+            neg_log = findViewById(R.id.neg);
             Button registro = findViewById(R.id.registro);
             Button registro_cliente = findViewById(R.id.registro_cliente);
             mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -138,8 +143,12 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this, "Porfavor llenar todos los campos", Toast.LENGTH_LONG).show();
                             }
                             else {
-                                String usuarioenfirebase = Objects.requireNonNull(dataSnapshot.child(negocio.replace(".", "")).child("Usuarios de " + negocio.replace(".", "")).child(user.replace(".", "")).child("Usuario").getValue()).toString();
-                                String contrasenaenfirebase = Objects.requireNonNull(dataSnapshot.child(negocio.replace(".", "")).child("Usuarios de " + negocio.replace(".", "")).child(user.replace(".", "")).child("Contraseña").getValue()).toString();
+                                String usuarioenfirebase = Objects.requireNonNull(dataSnapshot.child(negocio.replace(".", ""))
+                                        .child("Usuarios de " + negocio.replace(".", "")).child(user.replace(".", ""))
+                                        .child("Usuario").getValue(String.class));
+                                String contrasenaenfirebase = Objects.requireNonNull(dataSnapshot.child(negocio.replace(".", ""))
+                                        .child("Usuarios de " + negocio.replace(".", "")).child(user.replace(".", ""))
+                                        .child("Contraseña").getValue(String.class));
 
                                 if (user.replace(".", "").equals(usuarioenfirebase) && pass.equals(contrasenaenfirebase)) {
 
@@ -149,7 +158,9 @@ public class MainActivity extends AppCompatActivity {
                                     edit.putString("Negocio", negocio);
                                     edit.apply();
 
-                                    String permiso = Objects.requireNonNull(dataSnapshot.child(negocio.replace(".", "")).child("Usuarios de " + negocio.replace(".", "")).child(user.replace(".", "")).child("Permisos").getValue()).toString();
+                                    String permiso = Objects.requireNonNull(dataSnapshot.child(negocio.replace(".", ""))
+                                            .child("Usuarios de " + negocio.replace(".", "")).child(user.replace(".", ""))
+                                            .child("Permisos").getValue()).toString();
 
                                     SharedPreferences.Editor preferencesEditor = preferences.edit();
                                     preferencesEditor.clear();
@@ -161,17 +172,21 @@ public class MainActivity extends AppCompatActivity {
                                     preferencesEditor.apply();
 
 
-                                    if (permiso.equals("Admin")){
-                                        Intent dueno = new Intent(MainActivity.this, sesion_de_dueno.class);
-                                        startActivity(dueno);
-                                    }
-                                    else if (permiso.equals("Empleado")){
-                                        Intent empleado = new Intent(MainActivity.this, sesion_de_empleado.class);
-                                        startActivity(empleado);
-                                    }
-                                    else if (permiso.equals("Particular")){
-                                        Intent empleado = new Intent(MainActivity.this, sesion_de_particular.class);
-                                        startActivity(empleado);
+                                    switch (permiso) {
+                                        case "Admin":
+                                            Intent dueno = new Intent(MainActivity.this, sesion_de_dueno.class);
+                                            startActivity(dueno);
+                                            break;
+                                        case "Empleado": {
+                                            Intent empleado = new Intent(MainActivity.this, sesion_de_empleado.class);
+                                            startActivity(empleado);
+                                            break;
+                                        }
+                                        case "Particular": {
+                                            Intent empleado = new Intent(MainActivity.this, sesion_de_particular.class);
+                                            startActivity(empleado);
+                                            break;
+                                        }
                                     }
                                 }
                                 else{

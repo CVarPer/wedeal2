@@ -2,13 +2,11 @@ package com.wedeal.wedealproyect;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.GridView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 public class negocio_compras_carrito extends AppCompatActivity{
     FloatingActionButton fab1,fab2;
@@ -40,8 +37,6 @@ public class negocio_compras_carrito extends AppCompatActivity{
     CustomAdapter_GridView_Productos customAdapterGridViewProductos2;
     private List<modelo_producto> info_productos = new ArrayList<>();
     int foto_producto;
-    ListAdapter m;
-    Boolean click = false;
     modelo_producto modelo;
     int total = 0;
 
@@ -69,10 +64,10 @@ public class negocio_compras_carrito extends AppCompatActivity{
 
                             for (DataSnapshot objSnapshot : dataSnapshot.getChildren()) {
 
-                                String codigo = objSnapshot.child("Código").getValue().toString();
-                                String nombre = objSnapshot.child("Nombre").getValue().toString();
-                                String precio = objSnapshot.child("Precio").getValue().toString();
-                                String stock = objSnapshot.child("Stock").getValue().toString();
+                                String codigo = objSnapshot.child("Código").getValue(String.class);
+                                String nombre = objSnapshot.child("Nombre").getValue(String.class);
+                                String precio = objSnapshot.child("Precio").getValue(String.class);
+                                String stock = objSnapshot.child("Stock").getValue(String.class);
 
                                 int t;
 
@@ -90,8 +85,6 @@ public class negocio_compras_carrito extends AppCompatActivity{
                                     Uri imagen = Uri.parse(urlImagen);
                                     modelo.setFotoProd(imagen);
                                 }
-                                info_productos.add(modelo);
-
                                 info_productos.add(modelo);
 
                             }
@@ -120,7 +113,7 @@ public class negocio_compras_carrito extends AppCompatActivity{
             @Override
             public void onCancelled(@NonNull DatabaseError databaseerror) {
 
-            };
+            }
 
 
         });
@@ -133,10 +126,8 @@ public class negocio_compras_carrito extends AppCompatActivity{
                 FirebaseDatabase.getInstance().getReference().child(Negocio).child("Solicitud a "+proveedor).removeValue();
                 Toast.makeText(negocio_compras_carrito.this, "El carro de compras ha sido vaciado", Toast.LENGTH_LONG).show();
 
-                Intent intent = new Intent(negocio_compras_carrito.this, proveedores.class);
+                Intent intent = new Intent(negocio_compras_carrito.this, sesion_de_dueno.class);
                 startActivity(intent);
-
-
 
             }
         });
@@ -163,7 +154,7 @@ public class negocio_compras_carrito extends AppCompatActivity{
 
                         databaseReference.child(Negocio).child("Solicitud a "+proveedor).addListenerForSingleValueEvent(new ValueEventListener() {
 
-                            DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference();
+                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -172,54 +163,51 @@ public class negocio_compras_carrito extends AppCompatActivity{
 
                                     String codigo = Objects.requireNonNull(objSnapshot.child("Código").getValue()).toString();
                                     final String existencias = Objects.requireNonNull(objSnapshot.child("Stock").getValue()).toString();
-                                    String precio = Objects.requireNonNull(objSnapshot.child("Precio").getValue()).toString();
+                                    final String precio = Objects.requireNonNull(objSnapshot.child("Precio").getValue()).toString();
                                     final String nombre = Objects.requireNonNull(objSnapshot.child("Nombre").getValue()).toString();
+
                                     Date d = new Date();
-                                    String fecha  = (String) DateFormat.format("MMMM d, yyyy ", d.getTime());
-                                    String mes = (String) DateFormat.format("MMMM", d.getTime());
+                                    String fecha = (String) DateFormat.format("MMMM d, yyyy ", d.getTime());
+                                    final String mes = (String) DateFormat.format("MMMM", d.getTime());
 
 
-                                    databaseReference2.child(proveedor).child("Solicitudes").child("Solicitud de "+Negocio).child("Productos").child(nombre).child("Código").setValue(codigo);
-                                    databaseReference2.child(proveedor).child("Solicitudes").child("Solicitud de "+Negocio).child("Productos").child(nombre).child("Nombre").setValue(nombre);
-                                    databaseReference2.child(proveedor).child("Solicitudes").child("Solicitud de "+Negocio).child("Productos").child(nombre).child("Precio").setValue(precio);
-                                    databaseReference2.child(proveedor).child("Solicitudes").child("Solicitud de "+Negocio).child("Productos").child(nombre).child("Stock").setValue(existencias);
+                                    databaseReference.child(proveedor).child("Solicitudes").child("Solicitud de " + Negocio).child("Productos").child(nombre).child("Código").setValue(codigo);
+                                    databaseReference.child(proveedor).child("Solicitudes").child("Solicitud de " + Negocio).child("Productos").child(nombre).child("Nombre").setValue(nombre);
+                                    databaseReference.child(proveedor).child("Solicitudes").child("Solicitud de " + Negocio).child("Productos").child(nombre).child("Precio").setValue(precio);
+                                    databaseReference.child(proveedor).child("Solicitudes").child("Solicitud de " + Negocio).child("Productos").child(nombre).child("Stock").setValue(existencias);
 
-                                    databaseReference2.child(proveedor).child("Solicitudes").child("Solicitud de "+Negocio).child("Info").child("Cliente").setValue(Negocio);
-                                    databaseReference2.child(proveedor).child("Solicitudes").child("Solicitud de "+Negocio).child("Info").child("Teléfono").setValue(tele);
-                                    databaseReference2.child(proveedor).child("Solicitudes").child("Solicitud de "+Negocio).child("Info").child("Fecha").setValue(fecha);
-                                    databaseReference2.child(proveedor).child("Solicitudes").child("Solicitud de "+Negocio).child("Info").child("Mes").setValue(mes);
+                                    databaseReference.child(proveedor).child("Solicitudes").child("Solicitud de " + Negocio).child("Info").child("Cliente").setValue(Negocio);
+                                    databaseReference.child(proveedor).child("Solicitudes").child("Solicitud de " + Negocio).child("Info").child("Teléfono").setValue(tele);
+                                    databaseReference.child(proveedor).child("Solicitudes").child("Solicitud de " + Negocio).child("Info").child("Fecha").setValue(fecha);
+                                    databaseReference.child(proveedor).child("Solicitudes").child("Solicitud de " + Negocio).child("Info").child("Mes").setValue(mes);
 
                                     if (perm.equals("Admin") | perm.equals("Empleado")) {
-                                        databaseReference2.child(proveedor).child("Solicitudes").child("Solicitud de " + Negocio).child("Info").child("Tipo de Cliente").setValue("Negocio");
-                                    }
-
-                                    else{
-                                        databaseReference2.child(proveedor).child("Solicitudes").child("Solicitud de " + Negocio).child("Info").child("Tipo de Cliente").setValue("Particular");
+                                        databaseReference.child(proveedor).child("Solicitudes").child("Solicitud de " + Negocio).child("Info").child("Tipo de Cliente").setValue("Negocio");
+                                    } else {
+                                        databaseReference.child(proveedor).child("Solicitudes").child("Solicitud de " + Negocio).child("Info").child("Tipo de Cliente").setValue("Particular");
 
                                     }
 
 
-                                    databaseReference2.child(Negocio).child("Encargos").child("Solicitud a "+proveedor).child("Productos").child(nombre).child("Stock").setValue(existencias);
-                                    databaseReference2.child(Negocio).child("Encargos").child("Solicitud a "+proveedor).child("Productos").child(nombre).child("Precio").setValue(precio);
-                                    databaseReference2.child(Negocio).child("Encargos").child("Solicitud a "+proveedor).child("Productos").child(nombre).child("Nombre").setValue(nombre);
-                                    databaseReference2.child(Negocio).child("Encargos").child("Solicitud a "+proveedor).child("Productos").child(nombre).child("Código").setValue(codigo);
+                                    databaseReference.child(Negocio).child("Encargos").child("Solicitud a " + proveedor).child("Productos").child(nombre).child("Stock").setValue(existencias);
+                                    databaseReference.child(Negocio).child("Encargos").child("Solicitud a " + proveedor).child("Productos").child(nombre).child("Precio").setValue(precio);
+                                    databaseReference.child(Negocio).child("Encargos").child("Solicitud a " + proveedor).child("Productos").child(nombre).child("Nombre").setValue(nombre);
+                                    databaseReference.child(Negocio).child("Encargos").child("Solicitud a " + proveedor).child("Productos").child(nombre).child("Código").setValue(codigo);
 
-                                    databaseReference2.child(Negocio).child("Encargos").child("Solicitud a "+proveedor).child("Info").child("Nombre").setValue(proveedor);
-                                    databaseReference2.child(Negocio).child("Encargos").child("Solicitud a "+proveedor).child("Info").child("Estado").setValue("Enviado");
-                                    databaseReference2.child(Negocio).child("Encargos").child("Solicitud a "+proveedor).child("Info").child("Fecha").setValue(fecha);
-                                    databaseReference2.child(Negocio).child("Encargos").child("Solicitud a "+proveedor).child("Info").child("Mes").setValue(mes);
+                                    databaseReference.child(Negocio).child("Encargos").child("Solicitud a " + proveedor).child("Info").child("Nombre").setValue(proveedor);
+                                    databaseReference.child(Negocio).child("Encargos").child("Solicitud a " + proveedor).child("Info").child("Estado").setValue("Enviado");
+                                    databaseReference.child(Negocio).child("Encargos").child("Solicitud a " + proveedor).child("Info").child("Fecha").setValue(fecha);
+                                    databaseReference.child(Negocio).child("Encargos").child("Solicitud a " + proveedor).child("Info").child("Mes").setValue(mes);
 
 
-
-                                    databaseReference2.child(Negocio).child("Solicitud a "+proveedor).removeValue();
+                                    databaseReference.child(Negocio).child("Solicitud a " + proveedor).removeValue();
 
                                     Toast.makeText(negocio_compras_carrito.this, "Solicitud enviada con éxito", Toast.LENGTH_LONG).show();
 
-                                    if (permiso.equals("Admin")){
+                                    if (permiso.equals("Admin")) {
                                         Intent dueno = new Intent(negocio_compras_carrito.this, sesion_de_dueno.class);
                                         startActivity(dueno);
-                                    }
-                                    else{
+                                    } else {
                                         Intent part = new Intent(negocio_compras_carrito.this, sesion_de_particular.class);
                                         startActivity(part);
                                     }

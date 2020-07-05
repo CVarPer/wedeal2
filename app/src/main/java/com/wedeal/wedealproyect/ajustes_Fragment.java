@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment;
  * A simple {@link Fragment} subclass.
  */
 public class ajustes_Fragment extends Fragment {
-    Button permisoespecial, cerrarsesion, modificarempleado, eliminarempleado, eliminar_proveedor;
+    Button permisoespecial, cerrarsesion, modificarempleado, eliminarempleado, eliminar_proveedor, eliminar_cliente;
     Context mContext;
 
     public ajustes_Fragment() {
@@ -92,6 +92,18 @@ public class ajustes_Fragment extends Fragment {
             public void onClick(View v) {
 
                 Intent intent = new Intent(getActivity(), ajustes_eliminar_proveedor.class);
+                requireActivity().startActivity(intent);
+            }
+
+
+        });
+
+        eliminar_cliente = getView().findViewById(R.id.eliminarcliente);
+        eliminar_cliente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getActivity(), ajustes_eliminar_cliente.class);
                 requireActivity().startActivity(intent);
             }
 

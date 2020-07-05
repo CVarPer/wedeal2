@@ -1,13 +1,12 @@
 package com.wedeal.wedealproyect;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,9 +17,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class registro_negocio extends AppCompatActivity {
 
@@ -73,25 +69,24 @@ public class registro_negocio extends AppCompatActivity {
                             else if(Negocio.length() <= 0){
                                 Toast.makeText(registro_negocio.this, "Ingrese el nombre de su negocio", Toast.LENGTH_LONG).show();
                             }
-                            else if (Direccion.length() <=0){
+                            else if (Direccion.length() <= 0) {
                                 Toast.makeText(registro_negocio.this, "Ingrese la dirección del negocio", Toast.LENGTH_LONG).show();
-                            }
-                            else if (Telefono.length() != 7 && Telefono.length() != 9){
+                            } else if (Telefono.length() != 7 && Telefono.length() != 9) {
                                 Toast.makeText(registro_negocio.this, "Ingrese un téléfono válido para su negocio", Toast.LENGTH_LONG).show();
-                            }
-
-                            else if (password.equals(confpass)){
+                            } else if (password.equals(confpass)) {
 
 
-                                databaseReference.child(Negocio).child("Usuarios de " + Negocio).child(usuario.replace(".","")).child("Usuario").setValue(usuario.replace(".",""));
-                                databaseReference.child(Negocio).child("Usuarios de " + Negocio).child(usuario.replace(".","")).child("Contraseña").setValue(password);
-                                databaseReference.child(Negocio).child("Usuarios de " + Negocio).child(usuario.replace(".","")).child("Permisos").setValue("Admin");
+                                databaseReference.child(Negocio).child("Usuarios de " + Negocio).child(usuario.replace(".", ""))
+                                        .child("Usuario").setValue(usuario.replace(".", ""));
+                                databaseReference.child(Negocio).child("Usuarios de " + Negocio).child(usuario.replace(".", ""))
+                                        .child("Contraseña").setValue(password);
+                                databaseReference.child(Negocio).child("Usuarios de " + Negocio).child(usuario.replace(".", ""))
+                                        .child("Permisos").setValue("Admin");
 
                                 databaseReference.child(Negocio).child("Información").child("Dirección").setValue(Direccion);
                                 databaseReference.child(Negocio).child("Información").child("Teléfono").setValue(Telefono);
                                 databaseReference.child(Negocio).child("Información").child("Nombre").setValue(Negocio);
                                 databaseReference.child(Negocio).child("Información").child("Negocio").setValue("Si");
-
 
 
                                 SharedPreferences.Editor edit = preferences.edit();
@@ -138,39 +133,3 @@ public class registro_negocio extends AppCompatActivity {
     }
 }
 
-            /*@Override
-            public void onClick(View v) {
-                SharedPreferences preferences = getSharedPreferences("Registro",0);
-                String usuario = ((EditText) findViewById(R.id.registro_user)).getText().toString().trim();
-                String password = ((EditText) findViewById(R.id.contra)).getText().toString().trim();
-                String confpass = ((EditText) findViewById(R.id.confir_contra)).getText().toString().trim();
-
-                if(usuario.length() <= 0){
-                    Toast.makeText(registro_usuario.this, "Ingrese un correo válido", Toast.LENGTH_LONG).show();
-                }
-                else if (password.length() <=0){
-                    Toast.makeText(registro_usuario.this, "Ingrese una contraseña válida", Toast.LENGTH_LONG).show();
-                }
-                else if (confpass.length() <=0){
-                    Toast.makeText(registro_usuario.this, "Confirme su contraseña", Toast.LENGTH_LONG).show();
-                }
-                else if (password.equals(confpass)){
-                    SharedPreferences.Editor edit = preferences.edit();
-                    edit.putString("Usuario",usuario);
-                    edit.putString("Contraseña",password);
-                    edit.putString("Confirmación de contraseña",confpass);
-                    edit.apply();
-
-                    finish();
-                    Toast.makeText(registro_usuario.this, "Usuario creado con éxito", Toast.LENGTH_LONG).show();
-                    Intent acceso = new Intent(registro_usuario.this, Dueno.class);
-                    startActivity(acceso);
-                }
-                else{
-                    Toast.makeText(registro_usuario.this, "Las contraseñas no coinciden", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-    }
-};*/

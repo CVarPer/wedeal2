@@ -1,5 +1,9 @@
 package com.wedeal.wedealproyect;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -31,10 +35,6 @@ public class sesion_de_dueno extends AppCompatActivity implements NavigationView
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
-
-            /* perform your actions here*/
-
-
         } else {
             signInAsAnonymous();
         }
@@ -47,7 +47,6 @@ public class sesion_de_dueno extends AppCompatActivity implements NavigationView
 
         NavigationView nav_view = findViewById(R.id.nav_view);
         nav_view.setNavigationItemSelectedListener(this);
-
 
         //(contexto, variable drawer, variable toolbar, las strings que definimos anteriormene.
         ActionBarDrawerToggle tog = new ActionBarDrawerToggle(this, drawer, barra, R.string.nav_drawer_open,R.string.nav_drawer_close);
@@ -106,13 +105,27 @@ public class sesion_de_dueno extends AppCompatActivity implements NavigationView
     //El siguiente método permite que, cuando nuestro drawer está abierto, y al presionar "volver" en nuestro teléfono, este layout se cierre, como es común.
     @Override
     public void onBackPressed(){
-        if(drawer.isDrawerOpen(GravityCompat.START)){
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else {
+            final CharSequence[] opciones = {"Cerrar Sesión", "Cancelar"};
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Elige una opción");
+            builder.setItems(opciones, new DialogInterface.OnClickListener() {
+                @SuppressLint("IntentReset")
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    if (opciones[i] == "Cerrar Sesión") {
+                        Intent intent = new Intent(sesion_de_dueno.this, ajustes_cerrar_sesion.class);
+                        startActivity(intent);
+
+                    } else if (opciones[i] == "Cancelar") {
+                        dialogInterface.dismiss();
+                    }
+                }
+            });
+            builder.show();
         }
-        else{
-            super.onBackPressed();
-        }
-        super.onBackPressed();
 
     }
 

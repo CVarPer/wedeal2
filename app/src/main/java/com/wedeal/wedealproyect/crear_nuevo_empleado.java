@@ -18,9 +18,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class crear_nuevo_empleado extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase;
@@ -66,7 +63,17 @@ public class crear_nuevo_empleado extends AppCompatActivity {
                             databaseReference.child(negocio).child("Usuarios de " + negocio).child(emp.replace(".", "")).child("Nombre").setValue(nombreemp.replace(".", ""));
                             databaseReference.child(negocio).child("Usuarios de " + negocio).child(emp.replace(".", "")).child("Cargo").setValue(cargoemp.replace(".", ""));
                             databaseReference.child(negocio).child("Usuarios de " + negocio).child(emp.replace(".", "")).child("Teléfono").setValue(telefonoemp);
-                            databaseReference.child(negocio).child("Usuarios de " + negocio).child(emp.replace(".", "")).child("Salario").setValue(salarioemp);
+                            databaseReference.child(negocio).child("Usuarios de " + negocio).child(emp.replace(".", "")).child("Salario").setValue(salarioemp.replace(".", "")
+                                    .replace(" ", ""));
+                            //Posible error al ver
+                            if (dataSnapshot.child(negocio).child("Información").child("Salarios").exists()) {
+                                String salarioActual = dataSnapshot.child(negocio).child("Usuarios de " + negocio).child("Salarios").getValue().toString();
+                                int salariosTotal = Integer.parseInt(salarioemp) + Integer.parseInt(salarioActual);
+                                databaseReference.child(negocio).child("Información").child("Salarios").setValue(String.valueOf(salariosTotal));
+                            } else {
+                                databaseReference.child(negocio).child("Información").child("Salarios").setValue(String.valueOf(salarioemp));
+                            }
+
 
                             databaseReference.child(negocio).child("Usuarios de " + negocio).child(emp.replace(".", "")).child("Usuario").setValue(emp.replace(".", ""));
                             databaseReference.child(negocio).child("Usuarios de " + negocio).child(emp.replace(".", "")).child("Contraseña").setValue(passemp);

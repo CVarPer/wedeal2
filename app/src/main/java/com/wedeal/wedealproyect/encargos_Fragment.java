@@ -1,5 +1,6 @@
 package com.wedeal.wedealproyect;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,7 +23,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -36,6 +35,14 @@ public class encargos_Fragment extends Fragment {
     ListAdapter mAdapter;
     boolean b = true;
     int suma = 0;
+    Context mContext;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,19 +56,10 @@ public class encargos_Fragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         mListView = getView().findViewById(R.id.listView4);
-        SharedPreferences pref = getActivity().getSharedPreferences("Registro", 0);
-        final String Negocio = pref.getString("Negocio", "").replace(".","");
-
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-
+        SharedPreferences pref = mContext.getSharedPreferences("Registro", 0);
+        final String Negocio = pref.getString("Negocio", "").replace(".", "");
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         final DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference();
-
-        /*try {
-            TimeUnit.MILLISECONDS.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
-
 
         databaseReference.child(Negocio).child("Encargos").addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -78,21 +76,22 @@ public class encargos_Fragment extends Fragment {
                     databaseReference2.child(Negocio).child("Encargos").child("Solicitud a "+proveedor).child("Productos").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for (final DataSnapshot objSnapshot2 : dataSnapshot.getChildren()){
+                            for (final DataSnapshot objSnapshot2 : dataSnapshot.getChildren()) {
                                 int precio = Integer.parseInt(objSnapshot2.child("Precio").getValue().toString());
                                 int unidades = Integer.parseInt(objSnapshot2.child("Stock").getValue().toString());
                                 int d = precio * unidades;
 
                                 suma = suma + d;
-                                String Valor_Compra = String.valueOf(suma);
+                                final String Valor_Compra = String.valueOf(suma);
 
-                                if (mLista.size() > 0){
+
+                                if (mLista.size() > 0) {
                                     mLista.remove(0);
                                 }
 
-                                mLista.add(new modelo_encargo(estado,fecha,Valor_Compra,proveedor));
+                                mLista.add(new modelo_encargo(estado, fecha, Valor_Compra, proveedor));
 
-                                mAdapter = new CustomAdapter_Encargos(requireActivity().getApplicationContext(), R.layout.elemento_listas_encargos,mLista);
+                                mAdapter = new CustomAdapter_Encargos(requireActivity().getApplicationContext(), R.layout.elemento_listas_encargos, mLista);
 
                                 mListView.setAdapter(mAdapter);
 

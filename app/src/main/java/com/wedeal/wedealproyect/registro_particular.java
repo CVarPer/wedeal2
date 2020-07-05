@@ -71,9 +71,12 @@ public class registro_particular extends AppCompatActivity {
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
-                                        databaseReference.child(part.replace(".", "")).child("Usuarios de "+part.replace(".", "")).child(part.replace(".", "")).child("Usuario").setValue(part.replace(".", ""));
-                                        databaseReference.child(part.replace(".", "")).child("Usuarios de "+part.replace(".", "")).child(part.replace(".", "")).child("Contraseña").setValue(passpart.replace(".", ""));
-                                        databaseReference.child(part.replace(".", "")).child("Usuarios de "+part.replace(".", "")).child(part.replace(".", "")).child("Permisos").setValue("Particular");
+                                        databaseReference.child(part.replace(".", "")).child("Usuarios de " + part.replace(".", ""))
+                                                .child(part.replace(".", "")).child("Usuario").setValue(part.replace(".", ""));
+                                        databaseReference.child(part.replace(".", "")).child("Usuarios de " + part.replace(".", ""))
+                                                .child(part.replace(".", "")).child("Contraseña").setValue(passpart.replace(".", ""));
+                                        databaseReference.child(part.replace(".", "")).child("Usuarios de " + part.replace(".", ""))
+                                                .child(part.replace(".", "")).child("Permisos").setValue("Particular");
 
                                         databaseReference.child(part.replace(".", "")).child("Información").child("Nombre").setValue(nombrepart);
                                         databaseReference.child(part.replace(".", "")).child("Información").child("Teléfono").setValue(telpart);
@@ -81,7 +84,7 @@ public class registro_particular extends AppCompatActivity {
 
                                         databaseReference.child(part.replace(".", "")).child("Información").child("Negocio").setValue("No");
 
-                                        Toast.makeText(registro_particular.this, "Usuario "+nombrepart+" registrado con éxito", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(registro_particular.this, "Usuario " + nombrepart + " registrado con éxito", Toast.LENGTH_LONG).show();
                                         Intent acceso = new Intent(registro_particular.this, sesion_de_particular.class);
                                         startActivity(acceso);
                                     }

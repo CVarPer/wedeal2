@@ -1,13 +1,12 @@
 package com.wedeal.wedealproyect;
 
-import android.content.Intent;
+
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.GridView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,25 +23,19 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 public class solicitudes_confirmar extends AppCompatActivity{
     FloatingActionButton fab1,fab2;
     FirebaseDatabase firebaseDatabase;
-
-    FirebaseDatabase firebaseDatabase2;
-    private DatabaseReference oDatabase;
-
-
+    DatabaseReference oDatabase;
 
     private GridView gridView;
     CustomAdapter_GridView_Productos customAdapterGridViewProductos2;
     private List<modelo_producto> info_productos = new ArrayList<>();
     int foto_producto;
-    ListAdapter m;
-    Boolean click = false;
     modelo_producto modelo;
     int total = 0;
     boolean b = true;
@@ -59,6 +52,8 @@ public class solicitudes_confirmar extends AppCompatActivity{
         final String tel_cliente = getIntent().getStringExtra("telefono");
         final String tipo_cliente = getIntent().getStringExtra("TP");
 
+        Date d = new Date();
+        final String mes = (String) DateFormat.format("MMMM", d.getTime());
 
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         final DatabaseReference databRef = FirebaseDatabase.getInstance().getReference();
@@ -67,37 +62,37 @@ public class solicitudes_confirmar extends AppCompatActivity{
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                databaseReference.child(Negocio).child("Solicitudes").child("Solicitud de "+cliente).child("Productos").addValueEventListener(new ValueEventListener() {
+                databaseReference.child(Negocio).child("Solicitudes").child("Solicitud de " + cliente).child("Productos").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                            for (DataSnapshot objSnapshot : dataSnapshot.getChildren()) {
+                        for (DataSnapshot objSnapshot : dataSnapshot.getChildren()) {
 
-                                String codigo = objSnapshot.child("Código").getValue().toString();
-                                String nombre = objSnapshot.child("Nombre").getValue().toString();
-                                String precio = objSnapshot.child("Precio").getValue().toString();
-                                String stock = objSnapshot.child("Stock").getValue().toString();
+                            String codigo = objSnapshot.child("Código").getValue(String.class);
+                            String nombre = objSnapshot.child("Nombre").getValue(String.class);
+                            String precio = objSnapshot.child("Precio").getValue(String.class);
+                            String stock = objSnapshot.child("Stock").getValue(String.class);
 
-                                int t;
+                            int t;
 
-                                t = Integer.parseInt(precio) * Integer.parseInt(stock);
+                            t = Integer.parseInt(precio) * Integer.parseInt(stock);
+                            total = total + t;
+                            final String Valor_Compra = String.valueOf(total);
 
-                                total = total + t;
-
-                                modelo = new modelo_producto();
-                                modelo.setCodigo(codigo);
-                                modelo.setNombre(nombre);
-                                modelo.setPrecio(precio);
-                                modelo.setStock(stock);
-                                if(objSnapshot.child("Imagen").exists()){
-                                    String urlImagen = objSnapshot.child("Imagen").getValue(String.class);
-                                    Uri imagen = Uri.parse(urlImagen);
-                                    modelo.setFotoProd(imagen);
-                                }
-
-                                info_productos.add(modelo);
-
+                            modelo = new modelo_producto();
+                            modelo.setCodigo(codigo);
+                            modelo.setNombre(nombre);
+                            modelo.setPrecio(precio);
+                            modelo.setStock(stock);
+                            if (objSnapshot.child("Imagen").exists()) {
+                                String urlImagen = objSnapshot.child("Imagen").getValue(String.class);
+                                Uri imagen = Uri.parse(urlImagen);
+                                modelo.setFotoProd(imagen);
                             }
+
+                            info_productos.add(modelo);
+
+                        }
 
                             customAdapterGridViewProductos2 = new CustomAdapter_GridView_Productos(solicitudes_confirmar.this, foto_producto, info_productos);
                             gridView.setAdapter(customAdapterGridViewProductos2);
@@ -123,7 +118,7 @@ public class solicitudes_confirmar extends AppCompatActivity{
             @Override
             public void onCancelled(@NonNull DatabaseError databaseerror) {
 
-            };
+            }
 
 
         });
@@ -176,6 +171,7 @@ public class solicitudes_confirmar extends AppCompatActivity{
                 databRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        assert cliente != null;
                         final String nombrecliente = snapshot.child(cliente).child("Información").child("Nombre").getValue().toString();
                         databaseReference.child(Negocio).child("Solicitudes").child("Solicitud de "+cliente).child("Productos").addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -189,7 +185,7 @@ public class solicitudes_confirmar extends AppCompatActivity{
                                     String codigo = Objects.requireNonNull(objSnapshot.child("Código").getValue()).toString();
 
                                     final String existencias = Objects.requireNonNull(objSnapshot.child("Stock").getValue()).toString();
-                                    String precio = Objects.requireNonNull(objSnapshot.child("Precio").getValue()).toString();
+                                    final String precio = Objects.requireNonNull(objSnapshot.child("Precio").getValue()).toString();
                                     final String nombre = Objects.requireNonNull(objSnapshot.child("Nombre").getValue()).toString();
 
 
@@ -209,21 +205,37 @@ public class solicitudes_confirmar extends AppCompatActivity{
                                             if(dataSnapshot.child(Negocio).child("Productos de " + Negocio).child(nombre).child("Stock").exists()){
                                                 String ext = Objects.requireNonNull(dataSnapshot.child(Negocio).child("Productos de " + Negocio).child(nombre).child("Stock").getValue()).toString();
                                                 int p = Integer.parseInt(ext);
-                                                int q = Integer.parseInt(existencias);
+                                                final int q = Integer.parseInt(existencias);
 
-                                                if(b){
+                                                if (b) {
                                                     b = false;
-                                                    p = p-q;
+                                                    p = p - q;
+                                                    databaseReference.child(cliente).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                            if (snapshot.child("Informes de " + mes).child("Gastos compras").exists()) {
+                                                                String gasto = snapshot.child("Informes").child("Gastos compras").getValue().toString();
+                                                                int SolicitudesSuma = Integer.parseInt(gasto);
+                                                                SolicitudesSuma += total;
+                                                                databaseReference.child(cliente).child("Informes de " + mes).child("Gastos compras").setValue(String.valueOf(SolicitudesSuma));
+                                                            } else {
+                                                                int precio_ = Integer.parseInt(precio) * q;
+                                                                databaseReference.child(cliente).child("Informes de " + mes).child("Gastos compras").setValue(String.valueOf(precio_));
+                                                            }
+                                                        }
 
-                                                    if(p <= 0){
-                                                        databaseReference2.child(Negocio).child("Productos de "+Negocio).child(nombre).removeValue();
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError error) {
 
-                                                    }
+                                                        }
+                                                    });
+                                                    if (p <= 0) {
+                                                        databaseReference2.child(Negocio).child("Productos de " + Negocio).child(nombre).removeValue();
 
-                                                    else{
+                                                    } else {
 
                                                         String ext2 = String.valueOf(p);
-                                                        databaseReference2.child(Negocio).child("Productos de "+Negocio).child(nombre).child("Stock").setValue(ext2);
+                                                        databaseReference2.child(Negocio).child("Productos de " + Negocio).child(nombre).child("Stock").setValue(ext2);
                                                     }
 
                                                 }

@@ -2,10 +2,9 @@ package com.wedeal.wedealproyect;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -25,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -81,6 +81,7 @@ public class venta extends AppCompatActivity implements AdapterView.OnItemClickL
                                     String urlImagen = objSnapshot.child("Imagen").getValue(String.class);
                                     Uri imagen = Uri.parse(urlImagen);
                                     modelo.setFotoProd(imagen);
+
                                 }
 
 
@@ -166,15 +167,27 @@ public class venta extends AppCompatActivity implements AdapterView.OnItemClickL
                     */
 
 
-                    String codigo = Objects.requireNonNull(dataSnapshot.child(negocio).child("Productos de " + negocio).child(info_productos.get(i).getNombre()).child("Código").getValue().toString());
-                    String existencias = Objects.requireNonNull(dataSnapshot.child(negocio).child("Productos de " + negocio).child(info_productos.get(i).getNombre()).child("Stock").getValue()).toString();
-                    String precio = Objects.requireNonNull(dataSnapshot.child(negocio).child("Productos de " + negocio).child(info_productos.get(i).getNombre()).child("Precio").getValue().toString());
-                    String nombre = Objects.requireNonNull(dataSnapshot.child(negocio).child("Productos de " + negocio).child(info_productos.get(i).getNombre()).child("Nombre").getValue().toString());
+                    String codigo = Objects.requireNonNull(dataSnapshot.child(negocio).child("Productos de " + negocio).child(info_productos.get(i).getNombre()).child("Código").getValue(String.class));
+                    String existencias = Objects.requireNonNull(dataSnapshot.child(negocio).child("Productos de " + negocio).child(info_productos.get(i).getNombre()).child("Stock").getValue(String.class));
+                    String precio = Objects.requireNonNull(dataSnapshot.child(negocio).child("Productos de " + negocio).child(info_productos.get(i).getNombre()).child("Precio").getValue(String.class));
+                    String nombre = Objects.requireNonNull(dataSnapshot.child(negocio).child("Productos de " + negocio).child(info_productos.get(i).getNombre()).child("Nombre").getValue(String.class));
 
                     databaseReference.child(negocio).child("Productos en trámite").child(info_productos.get(i).getNombre()).child("Nombre").setValue(nombre);
                     databaseReference.child(negocio).child("Productos en trámite").child(info_productos.get(i).getNombre()).child("Precio").setValue(precio);
                     databaseReference.child(negocio).child("Productos en trámite").child(info_productos.get(i).getNombre()).child("Código").setValue(codigo);
                     databaseReference.child(negocio).child("Productos en trámite").child(info_productos.get(i).getNombre()).child("Stock").setValue("0");
+                    Date d = new Date();
+                    String fecha = (String) DateFormat.format("MMMM d, yyyy ", d.getTime());
+                    String mes = (String) DateFormat.format("MMMM", d.getTime());
+                    databaseReference.child(negocio).child("Productos en trámite").child(info_productos.get(i).getNombre()).child("Fecha").setValue(fecha);
+                    databaseReference.child(negocio).child("Productos en trámite").child(info_productos.get(i).getNombre()).child("Mes").setValue(mes);
+
+
+                    if (dataSnapshot.child(negocio).child("Productos de " + negocio).child(info_productos.get(i).getNombre()).child("Imagen").exists()) {
+                        String imagen = dataSnapshot.child(negocio).child("Productos de " + negocio).child(info_productos.get(i).getNombre()).child("Imagen").getValue(String.class);
+                        databaseReference.child(negocio).child("Productos en trámite").child(info_productos.get(i).getNombre()).child("Imagen").setValue(imagen);
+                    }
+
 
                     int b = Integer.parseInt(existencias);
 

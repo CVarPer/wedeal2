@@ -5,13 +5,14 @@ public class modelo_producto_vendido {
     private String nombre;
     private String precio;
     private String stock;
-    private int fotoProd;
+    private String fecha;
 
-    public modelo_producto_vendido(String codigo, String nombre, String precio, String stock) {
+    public modelo_producto_vendido(String codigo, String nombre, String precio, String stock, String fecha) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.precio = precio;
         this.stock = stock;
+        this.fecha = fecha;
     }
 
     public modelo_producto_vendido(){
@@ -50,5 +51,11 @@ public class modelo_producto_vendido {
         this.stock = stock;
     }
 
+    public String getFecha() {
+        return fecha;
+    }
 
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
 }

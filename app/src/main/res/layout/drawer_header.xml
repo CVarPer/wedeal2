@@ -19,16 +19,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:text="Dueño"
+        android:text="Menú"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="#FFFFFF"
-        tools:ignore="HardcodedText" />
-
-    <TextView
-        android:id="@+id/correo_usuario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="dueñotienda@contacto.com"
         android:textColor="#FFFFFF"
         tools:ignore="HardcodedText" />
 

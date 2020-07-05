@@ -3,6 +3,7 @@ package com.wedeal.wedealproyect;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +22,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 public class venta_historial_Fragment extends Fragment {
     FloatingActionButton fab;
@@ -48,26 +49,28 @@ public class venta_historial_Fragment extends Fragment {
 
         listView = getView().findViewById(R.id.listView_Ventas);
         SharedPreferences pref = getActivity().getSharedPreferences("Registro", 0);
-        final String Negocio = pref.getString("Negocio", "").replace(".","");
-
+        final String Negocio = pref.getString("Negocio", "").replace(".", "");
+        Date d = new Date();
+        final String mes = (String) DateFormat.format("MMMM", d.getTime());
         final DatabaseReference DbRef = FirebaseDatabase.getInstance().getReference();
         DbRef.child(Negocio).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("Productos vendidos")){
+                if (dataSnapshot.hasChild("Productos vendidos")) {
                     DbRef.child(Negocio).child("Productos vendidos").addListenerForSingleValueEvent(new ValueEventListener() {
 
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
                                 String nombre = snapshot.child("Nombre").getValue(String.class);
                                 String codigo = snapshot.child("Código").getValue(String.class);
-                                String precio = snapshot.child("Precio").getValue(String.class);
-                                String Cantidad = snapshot.child("Stock").getValue(String.class);
+                                final String precio = snapshot.child("Precio").getValue(String.class);
+                                final String Cantidad = snapshot.child("Stock").getValue(String.class);
+                                String fecha = snapshot.child("Fecha").getValue(String.class);
 
 
-                                lista_ventas.add(new modelo_producto_vendido(codigo,nombre,precio,Cantidad));
+                                lista_ventas.add(new modelo_producto_vendido(codigo, nombre, precio, Cantidad, fecha));
 
                             }
 

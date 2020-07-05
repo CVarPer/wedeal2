@@ -27,6 +27,7 @@ public class negocio_compras_tramite extends AppCompatActivity {
         pDatabase.child(negocio).child("Solicitud a "+ proveedor).child(nombre).child("Stock").setValue(f);
 
         Intent intent = new Intent(negocio_compras_tramite.this, negocio_compras.class);
+        intent.putExtra("proveedor", proveedor);
         startActivity(intent);
 
     }

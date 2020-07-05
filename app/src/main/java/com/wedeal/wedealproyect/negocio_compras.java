@@ -154,18 +154,18 @@ public class negocio_compras extends AppCompatActivity implements AdapterView.On
 
                     String negocio = preferences.getString("Negocio", "").replace(".","");
 
-                    final String proveedor = preferences.getString("12345","");
+                    String proveedor1 = preferences.getString("12345","");
 
 
-                    String codigo = Objects.requireNonNull(dataSnapshot.child(proveedor).child("Productos de " + proveedor).child(info_productos.get(i).getNombre()).child("Código").getValue().toString());
-                    String existencias = Objects.requireNonNull(dataSnapshot.child(proveedor).child("Productos de " + proveedor).child(info_productos.get(i).getNombre()).child("Stock").getValue()).toString();
-                    String precio = Objects.requireNonNull(dataSnapshot.child(proveedor).child("Productos de " + proveedor).child(info_productos.get(i).getNombre()).child("Precio").getValue().toString());
-                    String nombre = Objects.requireNonNull(dataSnapshot.child(proveedor).child("Productos de " + proveedor).child(info_productos.get(i).getNombre()).child("Nombre").getValue().toString());
+                    String codigo = Objects.requireNonNull(dataSnapshot.child(proveedor1).child("Productos de " + proveedor1).child(info_productos.get(i).getNombre()).child("Código").getValue().toString());
+                    String existencias = Objects.requireNonNull(dataSnapshot.child(proveedor1).child("Productos de " + proveedor1).child(info_productos.get(i).getNombre()).child("Stock").getValue()).toString();
+                    String precio = Objects.requireNonNull(dataSnapshot.child(proveedor1).child("Productos de " + proveedor1).child(info_productos.get(i).getNombre()).child("Precio").getValue().toString());
+                    String nombre = Objects.requireNonNull(dataSnapshot.child(proveedor1).child("Productos de " + proveedor1).child(info_productos.get(i).getNombre()).child("Nombre").getValue().toString());
 
-                    databaseReference.child(negocio).child("Solicitud a " + proveedor).child(info_productos.get(i).getNombre()).child("Nombre").setValue(nombre);
-                    databaseReference.child(negocio).child("Solicitud a " + proveedor).child(info_productos.get(i).getNombre()).child("Precio").setValue(precio);
-                    databaseReference.child(negocio).child("Solicitud a " + proveedor).child(info_productos.get(i).getNombre()).child("Código").setValue(codigo);
-                    databaseReference.child(negocio).child("Solicitud a " + proveedor).child(info_productos.get(i).getNombre()).child("Stock").setValue("0");
+                    databaseReference.child(negocio).child("Solicitud a " + proveedor1).child(info_productos.get(i).getNombre()).child("Nombre").setValue(nombre);
+                    databaseReference.child(negocio).child("Solicitud a " + proveedor1).child(info_productos.get(i).getNombre()).child("Precio").setValue(precio);
+                    databaseReference.child(negocio).child("Solicitud a " + proveedor1).child(info_productos.get(i).getNombre()).child("Código").setValue(codigo);
+                    databaseReference.child(negocio).child("Solicitud a " + proveedor1).child(info_productos.get(i).getNombre()).child("Stock").setValue("0");
 
                     int b =  Integer.parseInt(existencias);
 
@@ -192,7 +192,7 @@ public class negocio_compras extends AppCompatActivity implements AdapterView.On
 
 
                     Intent intent = new Intent(negocio_compras.this, negocio_compras_tramite.class);
-                    intent.putExtra("proveedor", proveedor);
+                    intent.putExtra("proveedor", proveedor1);
                     intent.putExtra("negocio",negocio);
                     intent.putExtra("nombre",nombre);
                     intent.putExtra("f",f);

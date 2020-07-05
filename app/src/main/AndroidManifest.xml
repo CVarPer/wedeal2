@@ -74,6 +74,10 @@
         </activity>
 
         <activity
+            android:name=".ajustes_eliminar_cliente">
+        </activity>
+
+        <activity
             android:name=".venta">
         </activity>
 

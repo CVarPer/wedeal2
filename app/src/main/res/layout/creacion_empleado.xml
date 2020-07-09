@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".registro_usuario">
+    tools:context=".crear_nuevo_empleado">
 
 
     <LinearLayout
@@ -22,12 +22,12 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="30dp"
+            android:autofillHints=""
             android:backgroundTint="@color/colorPrimary"
             android:hint="Nombre"
-            android:inputType="textEmailAddress"
+            android:inputType="text"
             android:paddingLeft="10dp"
-            android:textColor="@color/colorPrimaryText"
-            android:autofillHints="" />
+            android:textColor="@color/colorPrimaryText" />
 
         <EditText
             android:id="@+id/cargoempleado"
@@ -36,12 +36,12 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="30dp"
+            android:autofillHints=""
             android:backgroundTint="@color/colorPrimary"
             android:hint="Cargo"
-            android:inputType="textEmailAddress"
+            android:inputType="text"
             android:paddingLeft="10dp"
-            android:textColor="@color/colorPrimaryText"
-            android:autofillHints="" />
+            android:textColor="@color/colorPrimaryText" />
 
         <EditText
             android:id="@+id/telefonoempleado"
@@ -50,12 +50,12 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="30dp"
+            android:autofillHints=""
             android:backgroundTint="@color/colorPrimary"
             android:hint="Teléfono"
-            android:inputType="textEmailAddress"
+            android:inputType="text"
             android:paddingStart="10dp"
             android:textColor="@color/colorPrimaryText"
-            android:autofillHints=""
             tools:ignore="HardcodedText" />
 
         <EditText
@@ -67,7 +67,7 @@
             android:layout_marginRight="30dp"
             android:backgroundTint="@color/colorPrimary"
             android:hint="Salario"
-            android:inputType="textEmailAddress"
+            android:inputType="text"
             android:paddingLeft="10dp"
             android:textColor="@color/colorPrimaryText"
             tools:ignore="HardcodedText" />

@@ -90,7 +90,7 @@ public class todoslosnegocios extends Fragment {
                     public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
                         Intent intent = new Intent(getActivity(), negocio_compras.class);
                         //Intent intent = new Intent(proveedores.this, negocio_compras.class);
-
+                        intent.putExtra("proveedor", mLista.get(i).getNombre());
                         requireActivity().startActivity(intent);
                     }
                 });

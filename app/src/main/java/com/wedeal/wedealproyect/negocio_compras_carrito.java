@@ -165,6 +165,12 @@ public class negocio_compras_carrito extends AppCompatActivity{
                                     final String existencias = Objects.requireNonNull(objSnapshot.child("Stock").getValue()).toString();
                                     final String precio = Objects.requireNonNull(objSnapshot.child("Precio").getValue()).toString();
                                     final String nombre = Objects.requireNonNull(objSnapshot.child("Nombre").getValue()).toString();
+                                    if(objSnapshot.child("Imagen").exists()){
+                                        String urlImagen = objSnapshot.child("Imagen").getValue(String.class);
+                                        databaseReference.child(Negocio).child("Encargos").child("Solicitud a " + proveedor).child("Productos").child(nombre).child("Imagen").setValue(urlImagen);
+                                        databaseReference.child(proveedor).child("Solicitudes").child("Solicitud de " + Negocio).child("Productos").child(nombre).child("Imagen").setValue(urlImagen);
+                                    }
+
 
                                     Date d = new Date();
                                     String fecha = (String) DateFormat.format("MMMM d, yyyy ", d.getTime());

@@ -50,11 +50,11 @@ public class registro_particular extends AppCompatActivity {
 
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.child(negocio).exists()) {
+                        if (dataSnapshot.child(part.replace(".", "")).exists()) {
                             Toast.makeText(registro_particular.this, "Ya existe un usuario registrado bajo este correo", Toast.LENGTH_LONG).show();
                         }
                         else{
-                            if (part.length() <= 0) {
+                            if (part.replace(".", "").length() <= 0) {
                                 Toast.makeText(registro_particular.this, "Ingrese un correo válido", Toast.LENGTH_LONG).show();
                             }
                             if (telpart.length() != 7 && telpart.length() != 9) {

@@ -80,7 +80,7 @@ public class perfil extends Fragment {
         final String Usuario = pref.getString("Usuario","");
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("Particulares").child("Usuarios de Particulares").child(Usuario.replace(".","")).addValueEventListener(new ValueEventListener() {
+        databaseReference.child(Usuario.replace(".","")).child("Información").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 

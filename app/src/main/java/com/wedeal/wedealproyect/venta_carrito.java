@@ -227,9 +227,9 @@ public class venta_carrito extends AppCompatActivity{
 
                                     databaseReference2.child(Negocio).child("Productos en trámite").removeValue();
 
-                                    Toast.makeText(venta_carrito.this, "Solicitud enviada con éxito", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(venta_carrito.this, "Venta realizada con éxito", Toast.LENGTH_LONG).show();
 
-                                    Intent intent = new Intent(venta_carrito.this, sesion_de_dueno.class);
+                                    Intent intent = new Intent(venta_carrito.this, MainActivity.class);
                                     startActivity(intent);
 
                                 }

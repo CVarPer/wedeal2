@@ -189,6 +189,7 @@ public class solicitudes_confirmar extends AppCompatActivity{
                                     final String nombre = Objects.requireNonNull(objSnapshot.child("Nombre").getValue()).toString();
 
 
+
                                     databaseReference2.child(Negocio).child("Productos vendidos").child(nombre).child("Código").setValue(codigo);
                                     databaseReference2.child(Negocio).child("Productos vendidos").child(nombre).child("Nombre").setValue(nombre);
                                     databaseReference2.child(Negocio).child("Productos vendidos").child(nombre).child("Precio").setValue(precio);
@@ -213,14 +214,14 @@ public class solicitudes_confirmar extends AppCompatActivity{
                                                     databaseReference.child(cliente).addListenerForSingleValueEvent(new ValueEventListener() {
                                                         @Override
                                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                            if (snapshot.child("Informes de " + mes).child("Gastos compras").exists()) {
-                                                                String gasto = snapshot.child("Informes").child("Gastos compras").getValue().toString();
+                                                            if (snapshot.child("Informes de " + mes).child("Total ventas").exists()) {
+                                                                String gasto = snapshot.child("Informes").child("Total ventas").getValue().toString();
                                                                 int SolicitudesSuma = Integer.parseInt(gasto);
                                                                 SolicitudesSuma += total;
-                                                                databaseReference.child(cliente).child("Informes de " + mes).child("Gastos compras").setValue(String.valueOf(SolicitudesSuma));
+                                                                databaseReference.child(cliente).child("Informes de " + mes).child("Total ventas").setValue(String.valueOf(SolicitudesSuma));
                                                             } else {
                                                                 int precio_ = Integer.parseInt(precio) * q;
-                                                                databaseReference.child(cliente).child("Informes de " + mes).child("Gastos compras").setValue(String.valueOf(precio_));
+                                                                databaseReference.child(cliente).child("Informes de " + mes).child("Total ventas").setValue(String.valueOf(precio_));
                                                             }
                                                         }
 

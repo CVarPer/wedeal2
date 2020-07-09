@@ -46,7 +46,7 @@ public class crear_nuevo_cliente extends AppCompatActivity {
 
                 final String usuarioSHP = pref.getString("Usuario", "");
 
-                final String nombrecl = ((EditText) findViewById(R.id.correocliente)).getText().toString().trim();
+                final String nombrecl = ((EditText) findViewById(R.id.correocliente)).getText().toString().trim().replace(".","");
 
 
                 if(nombrecl.length() <= 0 ){

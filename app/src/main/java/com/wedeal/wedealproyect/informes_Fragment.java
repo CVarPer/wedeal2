@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -60,8 +61,8 @@ public class informes_Fragment extends Fragment {
         databaseReference.child(negocio).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.child("Informes de " + mes).exists() && snapshot.child("Informes de " + mes).child("Gastos compras").exists() && snapshot.child("Encargos").exists()
-                        && snapshot.child("Productos vendidos").exists()) {
+                if (snapshot.child("Informes de " + mes).exists() && snapshot.child("Encargos").exists()
+                        && snapshot.child("Información").child("Salarios").exists()) {
 
 
                     String salarios = snapshot.child("Información").child("Salarios").getValue().toString();
@@ -76,6 +77,9 @@ public class informes_Fragment extends Fragment {
 
                     listaInfor.add(new modelo_Informes
                             (mes, gastosProv, salarios, totalGastos, promedioVentas, VentasTotales, gananciasTotales));
+                }
+                else{
+                    Toast.makeText(getActivity(),"Para ver informes necesita: Empleados, haber hecho una venta y haber hecho una compra",Toast.LENGTH_LONG).show();
                 }
                 customAdapter_informes = new CustomAdapter_Informes(requireActivity(), informes, listaInfor);
                 listView.setAdapter(customAdapter_informes);

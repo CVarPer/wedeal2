@@ -29,6 +29,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -150,11 +151,14 @@ public class inventario_Fragment extends Fragment{
                                             public void onClick(DialogInterface dialogInterface, int i) {
                                                 if (opciones[i] == "Elegir de galería") {
                                                     if(EasyPermissions.hasPermissions(mContext, galleryPermissions)){
+
                                                         Intent intent = new Intent(Intent.ACTION_PICK,
                                                                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                                                         intent.setType("image/*");
                                                         intent.putExtra("Nombre",nombre);
                                                         startActivityForResult(Intent.createChooser(intent, "Selecciona app de imágenes"), RESULT_LOAD_IMAGE);
+
+                                                        ;
                                                     }
                                                     else{
                                                         EasyPermissions.requestPermissions((Activity) mContext, "Access for storage",
@@ -202,6 +206,7 @@ public class inventario_Fragment extends Fragment{
                 Intent intent = new Intent(getActivity(), crear_nuevo_producto.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 mContext.startActivity(intent);
+
             }
         });
 
@@ -242,6 +247,7 @@ public class inventario_Fragment extends Fragment{
                                 assert Negocio != null;
                                 databaseReference.child(Negocio).child("Productos de "+Negocio).child(nombre).child("Imagen").setValue(uri.toString());
                                 modelo.setFotoProd(uri);
+                                Toast.makeText(getActivity(), "Se añadió la foto, refresque la página para verla", Toast.LENGTH_LONG).show();
                             }
                         });
                     }
